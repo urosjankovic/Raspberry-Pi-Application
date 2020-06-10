@@ -8,5 +8,7 @@ applications prepared during the course
 **Done by:** 
 
 -Uros Jankovic
+
 -Stephanie Oduah
+
 -Wojciech Szyszka
