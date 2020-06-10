@@ -1,1 +1,1 @@
-This is a folder containing python scripts for getting environmental data from Sense HAT sensors.
+This is a folder containing python scripts to obtain environmental data from Sense HAT sensors.
