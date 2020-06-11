@@ -93,3 +93,14 @@ tr{
     float: left;
     overflow: auto;
 }
+
+th, td {
+    padding: 0.35em;
+    text-align: center;
+}
+
+button#send, button#clear{
+    width: 99%;
+    margin: .25em;
+
+}
