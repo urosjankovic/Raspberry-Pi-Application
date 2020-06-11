@@ -20,9 +20,14 @@
 	<body class="shadow-lg">
         
         <div class="border border-dark p-1 rounded">
-            <button type="button" class="btn btn-dark">Start getting data</button>
-            <button type="button" class="btn btn-dark">Stop getting data</button>
-            <span class="menuitem">Sample time: <span id="sampleTime">-</span>ms</span>
+            <button type="button" class="btn btn-dark">Start</button>
+            <button type="button" class="btn btn-dark">Stop</button>
+            <span class="menuitem">Sample time: 
+                <span id="sampleTime"><input type="text" class="inputfield" maxlength="4" size="3"></span> ms
+            </span>
+            <span class="menuitem">Max no. of samples: 
+                <span id="sampleTime"><input type="text" class="inputfield" maxlength="4" size="3"></span>
+            </span>
             <span  class="menuitem">Unit: 
                 <span class="form-check-inline">
                     <input type="radio" class="form-check-input" name ="oUnit" value="rad" checked>Radians
