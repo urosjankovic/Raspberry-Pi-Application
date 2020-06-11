@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="RpiApp.Views.ConfigView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RpiApp.Views"
+             xmlns:viewmodels="clr-namespace:RpiApp.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!-- Configuration: IoT server ip address and request sample time -->
+        <Grid Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4" HorizontalAlignment="Left" Height="790" Margin="0,10,0,0" Grid.Row="0" VerticalAlignment="Top" Width="800">
+            <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4">
+                <TextBlock 
+                    Text="IP address: " FontSize="30px" Margin="0,50,638,700"/>
+                <TextBox 
+                    Text="{Binding IpAddress}" Margin="162,65,534,705"/>
+                <TextBlock
+                    Text="Sample time: " 
+                    FontSize="30px" Margin="0,150,619,600"/>
+                <TextBox  
+                    Margin="181,165,534,606" 
+                    Text="{Binding SampleTime}"/>
+                <TextBlock 
+                    Margin="234,165,534,606" 
+                    Text=" ms"  
+                    FontSize="15px"/>
+                <TextBlock 
+                    Margin="0,286,442,468"  
+                    Text="Maximum sample number: " 
+                    FontSize="30px"/>
+                <TextBox  
+                    Margin="363,302,364,468" 
+                    Text="{Binding MaxSampleNumber}"/>
+                <Button 
+                Margin="120,441,500,299" 
+                Command="{Binding UpdateConfigButton}" FontSize="20">
+                    UPDATE CONFIG
+                </Button>
+                <Button
+                Width="170" 
+                Margin="500,441,120,299" 
+                Command="{Binding DefaultConfigButton}" FontSize="20">
+                    DEFAULT CONFIG
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
