@@ -1,4 +1,4 @@
-﻿namespace DesktopApp.Model
+﻿namespace RpiApp.Model
 {
     public class ConfigParams
     {
@@ -6,7 +6,8 @@
         public string IpAddress;
         static readonly int sampleTimeDefault = 500;
         public int SampleTime;
-        public readonly int MaxSampleNumber = 100;
+        public readonly int MaxSampleNumberDefault = 100;
+        public int MaxSampleNumber;
         public double XAxisMax
         {
             get
@@ -20,12 +21,15 @@
         {
             IpAddress = ipAddressDefault;
             SampleTime = sampleTimeDefault;
+            MaxSampleNumber = MaxSampleNumberDefault;
+
         }
 
-        public ConfigParams(string ip, int st)
+        public ConfigParams(string ip, int st, int msn)
         {
             IpAddress = ip;
             SampleTime = st;
+            MaxSampleNumber = msn;
         }
     }
 }

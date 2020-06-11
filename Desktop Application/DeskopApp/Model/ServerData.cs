@@ -1,4 +1,4 @@
-﻿namespace DesktopApp.Model
+﻿namespace RpiApp.Model
 {
     /**
      * @brief Simple parseable data model for IoT server response
