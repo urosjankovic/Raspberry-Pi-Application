@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace DesktopApp.ViewModel
+namespace RpiApp.ViewModel
 {
     public class ButtonCommand : ICommand
     {
