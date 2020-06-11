@@ -1,0 +1,316 @@
+﻿<Window x:Class="DesktopApp.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:vm="clr-namespace:DesktopApp.ViewModel"
+        mc:Ignorable="d" 
+        Title="RPi App" Height="800" Width="800">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="659" Margin="0,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="792" RenderTransformOrigin="0.498,0.51">
+            <TabItem Header="Measurements">
+                <Grid Margin="0,0,786,0" RenderTransformOrigin="0.5,0.5">
+                    <Grid.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="-1"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Grid.RenderTransform>
+                    <Grid Background="#FFE5E5E5" Margin="0,0,786,200"/>
+                    <!-- Timeseries linear plot -->
+                    <oxy:PlotView x:Name="Temperature"
+                    Margin="-790,0,0,0" 
+                    Model="{Binding Temp}" Height="210" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+                        <oxy:PlotView.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="-1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </oxy:PlotView.RenderTransform>
+                    </oxy:PlotView>
+
+                    <oxy:PlotView x:Name="Pressure"
+                    Margin="-790,200,0,0" 
+                    Model="{Binding Press}" Height="210" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+                        <oxy:PlotView.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="-1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </oxy:PlotView.RenderTransform>
+                    </oxy:PlotView>
+
+                    <oxy:PlotView x:Name="Humidity"
+                    Margin="-790,400,0,0" 
+                    Model="{Binding Humid}" Height="210" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+                        <oxy:PlotView.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="-1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </oxy:PlotView.RenderTransform>
+                    </oxy:PlotView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Angles">
+                <Grid Margin="0,0,790,3">
+                    <Grid Background="#FFE5E5E5"/>
+                    <oxy:PlotView x:Name="R"
+                    Margin="0,0,-769,0" 
+                    Model="{Binding RPY}" Height="400" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Joystick Data">
+                <Grid Margin="0,0,786,3">
+                </Grid>
+            </TabItem>
+            <TabItem Header="LED Control">
+                <Grid Margin="0,0,786,3">
+                    <!-- LED Matrix buttons implementation -->
+                    <Grid Grid.Column="8" Margin="200,62,-600,230">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Button Grid.Column="0" Grid.Row="0" Height="40" Width="40" Command="{Binding LED00}" Background="#FFAAAAAA" Tag="LED01"/>
+                        <Button Grid.Column="1" Grid.Row="0" Height="40" Width="40" Command="{Binding LED01}" Background="#FFAAAAAA" Tag="LED02"/>
+                        <Button Grid.Column="2" Grid.Row="0" Height="40" Width="40" Command="{Binding LED02}" Background="#FFAAAAAA" Tag="LED03"/>
+                        <Button Grid.Column="3" Grid.Row="0" Height="40" Width="40" Command="{Binding LED03}" Background="#FFAAAAAA" Tag="LED04"/>
+                        <Button Grid.Column="4" Grid.Row="0" Height="40" Width="40" Command="{Binding LED04}" Background="#FFAAAAAA" Tag="LED05"/>
+                        <Button Grid.Column="5" Grid.Row="0" Height="40" Width="40" Command="{Binding LED05}" Background="#FFAAAAAA" Tag="LED06"/>
+                        <Button Grid.Column="6" Grid.Row="0" Height="40" Width="40" Command="{Binding LED06}" Background="#FFAAAAAA" Tag="LED07"/>
+                        <Button Grid.Column="7" Grid.Row="0" Height="40" Width="40" Command="{Binding LED07}" Background="#FFAAAAAA" Tag="LED08"/>
+
+                        <Button Grid.Column="0" Grid.Row="1" Height="40" Width="40" Command="{Binding LED10}" Background="#FFAAAAAA" Tag="LED10"/>
+                        <Button Grid.Column="1" Grid.Row="1" Height="40" Width="40" Command="{Binding LED11}" Background="#FFAAAAAA" Tag="LED11"/>
+                        <Button Grid.Column="2" Grid.Row="1" Height="40" Width="40" Command="{Binding LED12}" Background="#FFAAAAAA" Tag="LED12"/>
+                        <Button Grid.Column="3" Grid.Row="1" Height="40" Width="40" Command="{Binding LED13}" Background="#FFAAAAAA" Tag="LED13"/>
+                        <Button Grid.Column="4" Grid.Row="1" Height="40" Width="40" Command="{Binding LED14}" Background="#FFAAAAAA" Tag="LED14"/>
+                        <Button Grid.Column="5" Grid.Row="1" Height="40" Width="40" Command="{Binding LED15}" Background="#FFAAAAAA" Tag="LED15"/>
+                        <Button Grid.Column="6" Grid.Row="1" Height="40" Width="40" Command="{Binding LED16}" Background="#FFAAAAAA" Tag="LED16"/>
+                        <Button Grid.Column="7" Grid.Row="1" Height="40" Width="40" Command="{Binding LED17}" Background="#FFAAAAAA" Tag="LED17"/>
+
+                        <Button Grid.Row="2" Grid.Column="0" Height="40" Width="40" Command="{Binding LED20}" Background="#FFAAAAAA" Tag="LED20"/>
+                        <Button Grid.Row="2" Grid.Column="1" Height="40" Width="40" Command="{Binding LED21}" Background="#FFAAAAAA" Tag="LED21"/>
+                        <Button Grid.Row="2" Grid.Column="2" Height="40" Width="40" Command="{Binding LED22}" Background="#FFAAAAAA" Tag="LED22"/>
+                        <Button Grid.Row="2" Grid.Column="3" Height="40" Width="40" Command="{Binding LED23}" Background="#FFAAAAAA" Tag="LED23"/>
+                        <Button Grid.Row="2" Grid.Column="4" Height="40" Width="40" Command="{Binding LED24}" Background="#FFAAAAAA" Tag="LED24"/>
+                        <Button Grid.Row="2" Grid.Column="5" Height="40" Width="40" Command="{Binding LED25}" Background="#FFAAAAAA" Tag="LED25"/>
+                        <Button Grid.Row="2" Grid.Column="6" Height="40" Width="40" Command="{Binding LED26}" Background="#FFAAAAAA" Tag="LED26"/>
+                        <Button Grid.Row="2" Grid.Column="7" Height="40" Width="40" Command="{Binding LED27}" Background="#FFAAAAAA" Tag="LED27"/>
+
+                        <Button Grid.Row="3" Grid.Column="0" Height="40" Width="40" Command="{Binding LED30}" Background="#FFAAAAAA" Tag="LED30"/>
+                        <Button Grid.Row="3" Grid.Column="1" Height="40" Width="40" Command="{Binding LED31}" Background="#FFAAAAAA" Tag="LED31"/>
+                        <Button Grid.Row="3" Grid.Column="2" Height="40" Width="40" Command="{Binding LED32}" Background="#FFAAAAAA" Tag="LED32"/>
+                        <Button Grid.Row="3" Grid.Column="3" Height="40" Width="40" Command="{Binding LED33}" Background="#FFAAAAAA" Tag="LED33"/>
+                        <Button Grid.Row="3" Grid.Column="4" Height="40" Width="40" Command="{Binding LED34}" Background="#FFAAAAAA" Tag="LED34"/>
+                        <Button Grid.Row="3" Grid.Column="5" Height="40" Width="40" Command="{Binding LED35}" Background="#FFAAAAAA" Tag="LED35"/>
+                        <Button Grid.Row="3" Grid.Column="6" Height="40" Width="40" Command="{Binding LED36}" Background="#FFAAAAAA" Tag="LED36"/>
+                        <Button Grid.Row="3" Grid.Column="7" Height="40" Width="40" Command="{Binding LED37}" Background="#FFAAAAAA" Tag="LED37"/>
+
+                        <Button Grid.Row="4" Grid.Column="0" Height="40" Width="40" Command="{Binding LED40}" Background="#FFAAAAAA" Tag="LED40"/>
+                        <Button Grid.Row="4" Grid.Column="1" Height="40" Width="40" Command="{Binding LED41}" Background="#FFAAAAAA" Tag="LED41"/>
+                        <Button Grid.Row="4" Grid.Column="2" Height="40" Width="40" Command="{Binding LED42}" Background="#FFAAAAAA" Tag="LED42"/>
+                        <Button Grid.Row="4" Grid.Column="3" Height="40" Width="40" Command="{Binding LED43}" Background="#FFAAAAAA" Tag="LED43"/>
+                        <Button Grid.Row="4" Grid.Column="4" Height="40" Width="40" Command="{Binding LED44}" Background="#FFAAAAAA" Tag="LED44"/>
+                        <Button Grid.Row="4" Grid.Column="5" Height="40" Width="40" Command="{Binding LED45}" Background="#FFAAAAAA" Tag="LED45"/>
+                        <Button Grid.Row="4" Grid.Column="6" Height="40" Width="40" Command="{Binding LED46}" Background="#FFAAAAAA" Tag="LED46"/>
+                        <Button Grid.Row="4" Grid.Column="7" Height="40" Width="40" Command="{Binding LED47}" Background="#FFAAAAAA" Tag="LED47"/>
+
+                        <Button Grid.Row="5" Grid.Column="0" Height="40" Width="40" Command="{Binding LED50}" Background="#FFAAAAAA" Tag="LED50"/>
+                        <Button Grid.Row="5" Grid.Column="1" Height="40" Width="40" Command="{Binding LED51}" Background="#FFAAAAAA" Tag="LED51"/>
+                        <Button Grid.Row="5" Grid.Column="2" Height="40" Width="40" Command="{Binding LED52}" Background="#FFAAAAAA" Tag="LED52"/>
+                        <Button Grid.Row="5" Grid.Column="3" Height="40" Width="40" Command="{Binding LED53}" Background="#FFAAAAAA" Tag="LED53"/>
+                        <Button Grid.Row="5" Grid.Column="4" Height="40" Width="40" Command="{Binding LED54}" Background="#FFAAAAAA" Tag="LED54"/>
+                        <Button Grid.Row="5" Grid.Column="5" Height="40" Width="40" Command="{Binding LED55}" Background="#FFAAAAAA" Tag="LED55"/>
+                        <Button Grid.Row="5" Grid.Column="6" Height="40" Width="40" Command="{Binding LED56}" Background="#FFAAAAAA" Tag="LED56"/>
+                        <Button Grid.Row="5" Grid.Column="7" Height="40" Width="40" Command="{Binding LED57}" Background="#FFAAAAAA" Tag="LED57"/>
+
+                        <Button Grid.Row="6" Grid.Column="0" Height="40" Width="40" Command="{Binding LED61}" Background="#FFAAAAAA" Tag="LED60"/>
+                        <Button Grid.Row="6" Grid.Column="1" Height="40" Width="40" Command="{Binding LED61}" Background="#FFAAAAAA" Tag="LED61"/>
+                        <Button Grid.Row="6" Grid.Column="2" Height="40" Width="40" Command="{Binding LED62}" Background="#FFAAAAAA" Tag="LED62"/>
+                        <Button Grid.Row="6" Grid.Column="3" Height="40" Width="40" Command="{Binding LED63}" Background="#FFAAAAAA" Tag="LED63"/>
+                        <Button Grid.Row="6" Grid.Column="4" Height="40" Width="40" Command="{Binding LED64}" Background="#FFAAAAAA" Tag="LED64"/>
+                        <Button Grid.Row="6" Grid.Column="5" Height="40" Width="40" Command="{Binding LED65}" Background="#FFAAAAAA" Tag="LED65"/>
+                        <Button Grid.Row="6" Grid.Column="6" Height="40" Width="40" Command="{Binding LED66}" Background="#FFAAAAAA" Tag="LED66"/>
+                        <Button Grid.Row="6" Grid.Column="7" Height="40" Width="40" Command="{Binding LED67}" Background="#FFAAAAAA" Tag="LED67"/>
+
+                        <Button Grid.Row="7" Grid.Column="0" Height="40" Width="40" Command="{Binding LED70}" Background="#FFAAAAAA" Tag="LED70"/>
+                        <Button Grid.Row="7" Grid.Column="1" Height="40" Width="40" Command="{Binding LED71}" Background="#FFAAAAAA" Tag="LED71"/>
+                        <Button Grid.Row="7" Grid.Column="2" Height="40" Width="40" Command="{Binding LED72}" Background="#FFAAAAAA" Tag="LED72"/>
+                        <Button Grid.Row="7" Grid.Column="3" Height="40" Width="40" Command="{Binding LED73}" Background="#FFAAAAAA" Tag="LED73"/>
+                        <Button Grid.Row="7" Grid.Column="4" Height="40" Width="40" Command="{Binding LED74}" Background="#FFAAAAAA" Tag="LED74"/>
+                        <Button Grid.Row="7" Grid.Column="5" Height="40" Width="40" Command="{Binding LED75}" Background="#FFAAAAAA" Tag="LED75"/>
+                        <Button Grid.Row="7" Grid.Column="6" Height="40" Width="40" Command="{Binding LED76}" Background="#FFAAAAAA" Tag="LED76"/>
+                        <Button Grid.Row="7" Grid.Column="7" Height="40" Width="40" Command="{Binding LED77}" Background="#FFAAAAAA" Tag="LED77"/>
+                    </Grid>
+                    <Grid Grid.Column="1" Margin="200,420,-530,66">
+                        <Slider x:Name="SeekR" Margin="0,0,0,0" Tag="seekR">
+                            <Slider.Resources>
+                                <SolidColorBrush x:Key="SliderSelectionBackground" Color="Red"/>
+                                <SolidColorBrush x:Key="SliderSelectionBorder" Color="Red" />
+                                <SolidColorBrush x:Key="SliderThumbBackground" Color="Red" />
+                                <SolidColorBrush x:Key="SliderThumbBackgroundDisabled" Color="Red" />
+                                <SolidColorBrush x:Key="SliderThumbBackgroundDragging" Color="Red" />
+                                <SolidColorBrush x:Key="SliderThumbBackgroundHover" Color="Red" />
+                                <SolidColorBrush x:Key="SliderThumbBorder" Color="Red" />
+                                <SolidColorBrush x:Key="SliderThumbBorderDisabled" Color="Red" />
+                                <SolidColorBrush x:Key="SliderThumbBorderDragging" Color="Red" />
+                                <SolidColorBrush x:Key="SliderThumbBorderHover" Color="Red" />
+                            </Slider.Resources>
+                        </Slider>
+                        <Slider x:Name="SeekG" Margin="0,50,0,20" Tag="seekG"></Slider>
+                        <Slider x:Name="SeekB" Margin="0,100,0,20" Tag="seekB"></Slider>
+
+                    </Grid>
+                    <Grid Margin="178,414,-195,66">
+                        <TextBlock FontSize="20" HorizontalAlignment="Right" Margin="0,0,0,115">R</TextBlock>
+                        <TextBlock FontSize="20" HorizontalAlignment="Right" Margin="0,52,0,62">G</TextBlock>
+                        <TextBlock FontSize="20" HorizontalAlignment="Right" Margin="0,101,0,17">B</TextBlock>
+                    </Grid>
+                    <Grid Grid.Column="1" Margin="195,562,-530,30">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button 
+                             Grid.Column="0" 
+                             Width="140"
+                             Margin="0,0,28,0" 
+                             Command="{Binding SendButton}" HorizontalAlignment="Right">
+                            SEND
+                        </Button>
+                        <Button 
+                             Grid.Column="1" 
+                             Width="140"
+                             Margin="0,0,-150,0" 
+                             Command="{Binding ClearButton}" HorizontalAlignment="Right">
+                             CLEAR
+                        </Button>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- Configuration: IoT server ip address and request sample time -->
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock 
+                Grid.Column="0" 
+                Margin="20,10,0,10" 
+                Text="IP address: " VerticalAlignment="Center"/>
+            <TextBox 
+                Grid.Column="1" 
+                Margin="0,10,0,10" 
+                Width="100" 
+                HorizontalAlignment="Left" 
+                Text="{Binding IpAddress}"/>
+            <TextBlock 
+                Grid.Column="2" 
+                Margin="0,10,0,10"  
+                Text="Sample time: " 
+                HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <TextBox 
+                Grid.Column="3" 
+                Margin="0,10,0,10" 
+                Width="50" 
+                HorizontalAlignment="Left" 
+                Text="{Binding SampleTime}"/>
+            <TextBlock
+                Grid.Column="4" 
+                Margin="0,10,20,10" 
+                Text=" ms"  
+                HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        </Grid>
+        <!-- Bottom button menu: start data acquisition / stop data acquisition / update configuration -->
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button 
+                Grid.Column="0"
+                Height="30" 
+                Width="150"
+                Margin="0,10,30,10" 
+                Command="{Binding StartButton}" HorizontalAlignment="Right">
+                START
+            </Button>
+            <Button 
+                Grid.Column="1" 
+                Height="30" 
+                Width="150" 
+                Margin="0,10,15,10" 
+                Command="{Binding StopButton}">
+                STOP
+            </Button>
+            <Button 
+                Grid.Column="2" 
+                Height="30"
+                Width="150" 
+                Margin="15,10,0,10" 
+                Command="{Binding UpdateConfigButton}" HorizontalAlignment="Left">
+                UPDATE CONFIG
+            </Button>
+            <Button 
+                Grid.Column="3" 
+                Height="30"
+                Width="150" 
+                Margin="30,10,0,10" 
+                Command="{Binding DefaultConfigButton}" HorizontalAlignment="Left">
+                DEFAULT CONFIG
+            </Button>
+        </Grid>
+
+    </Grid>
+</Window>
+    
