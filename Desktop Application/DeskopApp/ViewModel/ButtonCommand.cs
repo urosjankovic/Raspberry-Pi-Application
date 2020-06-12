@@ -3,6 +3,7 @@ using System.Windows.Input;
 
 namespace RpiApp.ViewModel
 {
+
     public class ButtonCommand : ICommand
     {
         /// Delegate command to register method to be executed

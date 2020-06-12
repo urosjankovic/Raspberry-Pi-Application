@@ -126,6 +126,7 @@ namespace RpiApp.ViewModels
         private void UpdatePlotR(double t, double d)
         {
             LineSeries lineSeries = RPY.Series[0] as LineSeries;
+            
 
             lineSeries.Points.Add(new DataPoint(t, d));
 
@@ -137,6 +138,10 @@ namespace RpiApp.ViewModels
             {
                 RPY.Axes[0].Minimum = (t - config.XAxisMax);
                 RPY.Axes[0].Maximum = t + config.SampleTime / 1000.0;
+                RPY.Axes[1].Minimum = (t - config.XAxisMax);
+                RPY.Axes[1].Maximum = t + config.SampleTime / 1000.0;
+                RPY.Axes[2].Minimum = (t - config.XAxisMax);
+                RPY.Axes[2].Maximum = t + config.SampleTime / 1000.0;
             }
 
             RPY.InvalidatePlot(true);
@@ -173,7 +178,7 @@ namespace RpiApp.ViewModels
             if (t >= config.XAxisMax)
             {
                 RPY.Axes[2].Minimum = (t - config.XAxisMax);
-                RPY.Axes[2].Maximum = t + config.SampleTime / 1000.0; ;
+                RPY.Axes[2].Maximum = t + config.SampleTime / 1000.0; 
             }
 
             RPY.InvalidatePlot(true);

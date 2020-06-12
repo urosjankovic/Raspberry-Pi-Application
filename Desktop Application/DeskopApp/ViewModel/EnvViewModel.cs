@@ -99,8 +99,6 @@ namespace RpiApp.ViewModels
             Press = new PlotModel { Title = "Pressure" };
             Humid = new PlotModel { Title = "Humidity" };
 
-            
-
 
             Temp.Axes.Add(new LinearAxis()
             {
