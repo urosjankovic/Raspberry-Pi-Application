@@ -44,77 +44,77 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Button Grid.Column="0" Grid.Row="0" Height="40" Width="40" Command="{Binding LED00}" Background="#FFAAAAAA" Tag="LED01"/>
-                <Button Grid.Column="1" Grid.Row="0" Height="40" Width="40" Command="{Binding LED01}" Background="#FFAAAAAA" Tag="LED02"/>
-                <Button Grid.Column="2" Grid.Row="0" Height="40" Width="40" Command="{Binding LED02}" Background="#FFAAAAAA" Tag="LED03"/>
-                <Button Grid.Column="3" Grid.Row="0" Height="40" Width="40" Command="{Binding LED03}" Background="#FFAAAAAA" Tag="LED04"/>
-                <Button Grid.Column="4" Grid.Row="0" Height="40" Width="40" Command="{Binding LED04}" Background="#FFAAAAAA" Tag="LED05"/>
-                <Button Grid.Column="5" Grid.Row="0" Height="40" Width="40" Command="{Binding LED05}" Background="#FFAAAAAA" Tag="LED06"/>
-                <Button Grid.Column="6" Grid.Row="0" Height="40" Width="40" Command="{Binding LED06}" Background="#FFAAAAAA" Tag="LED07"/>
-                <Button Grid.Column="7" Grid.Row="0" Height="40" Width="40" Command="{Binding LED07}" Background="#FFAAAAAA" Tag="LED08"/>
+                <Button Grid.Column="0" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED01"/>
+                <Button Grid.Column="1" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED02"/>
+                <Button Grid.Column="2" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED03"/>
+                <Button Grid.Column="3" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED04"/>
+                <Button Grid.Column="4" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED05"/>
+                <Button Grid.Column="5" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED06"/>
+                <Button Grid.Column="6" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED07"/>
+                <Button Grid.Column="7" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED08"/>
 
-                <Button Grid.Column="0" Grid.Row="1" Height="40" Width="40" Command="{Binding LED10}" Background="#FFAAAAAA" Tag="LED10"/>
-                <Button Grid.Column="1" Grid.Row="1" Height="40" Width="40" Command="{Binding LED11}" Background="#FFAAAAAA" Tag="LED11"/>
-                <Button Grid.Column="2" Grid.Row="1" Height="40" Width="40" Command="{Binding LED12}" Background="#FFAAAAAA" Tag="LED12"/>
-                <Button Grid.Column="3" Grid.Row="1" Height="40" Width="40" Command="{Binding LED13}" Background="#FFAAAAAA" Tag="LED13"/>
-                <Button Grid.Column="4" Grid.Row="1" Height="40" Width="40" Command="{Binding LED14}" Background="#FFAAAAAA" Tag="LED14"/>
-                <Button Grid.Column="5" Grid.Row="1" Height="40" Width="40" Command="{Binding LED15}" Background="#FFAAAAAA" Tag="LED15"/>
-                <Button Grid.Column="6" Grid.Row="1" Height="40" Width="40" Command="{Binding LED16}" Background="#FFAAAAAA" Tag="LED16"/>
-                <Button Grid.Column="7" Grid.Row="1" Height="40" Width="40" Command="{Binding LED17}" Background="#FFAAAAAA" Tag="LED17"/>
+                <Button Grid.Column="0" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED10"/>
+                <Button Grid.Column="1" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED11"/>
+                <Button Grid.Column="2" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED12"/>
+                <Button Grid.Column="3" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED13"/>
+                <Button Grid.Column="4" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED14"/>
+                <Button Grid.Column="5" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED15"/>
+                <Button Grid.Column="6" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED16"/>
+                <Button Grid.Column="7" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED17"/>
 
-                <Button Grid.Row="2" Grid.Column="0" Height="40" Width="40" Command="{Binding LED20}" Background="#FFAAAAAA" Tag="LED20"/>
-                <Button Grid.Row="2" Grid.Column="1" Height="40" Width="40" Command="{Binding LED21}" Background="#FFAAAAAA" Tag="LED21"/>
-                <Button Grid.Row="2" Grid.Column="2" Height="40" Width="40" Command="{Binding LED22}" Background="#FFAAAAAA" Tag="LED22"/>
-                <Button Grid.Row="2" Grid.Column="3" Height="40" Width="40" Command="{Binding LED23}" Background="#FFAAAAAA" Tag="LED23"/>
-                <Button Grid.Row="2" Grid.Column="4" Height="40" Width="40" Command="{Binding LED24}" Background="#FFAAAAAA" Tag="LED24"/>
-                <Button Grid.Row="2" Grid.Column="5" Height="40" Width="40" Command="{Binding LED25}" Background="#FFAAAAAA" Tag="LED25"/>
-                <Button Grid.Row="2" Grid.Column="6" Height="40" Width="40" Command="{Binding LED26}" Background="#FFAAAAAA" Tag="LED26"/>
-                <Button Grid.Row="2" Grid.Column="7" Height="40" Width="40" Command="{Binding LED27}" Background="#FFAAAAAA" Tag="LED27"/>
+                <Button Grid.Row="2" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED20"/>
+                <Button Grid.Row="2" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED21"/>
+                <Button Grid.Row="2" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED22"/>
+                <Button Grid.Row="2" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED23"/>
+                <Button Grid.Row="2" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED24"/>
+                <Button Grid.Row="2" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED25"/>
+                <Button Grid.Row="2" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED26"/>
+                <Button Grid.Row="2" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED27"/>
 
-                <Button Grid.Row="3" Grid.Column="0" Height="40" Width="40" Command="{Binding LED30}" Background="#FFAAAAAA" Tag="LED30"/>
-                <Button Grid.Row="3" Grid.Column="1" Height="40" Width="40" Command="{Binding LED31}" Background="#FFAAAAAA" Tag="LED31"/>
-                <Button Grid.Row="3" Grid.Column="2" Height="40" Width="40" Command="{Binding LED32}" Background="#FFAAAAAA" Tag="LED32"/>
-                <Button Grid.Row="3" Grid.Column="3" Height="40" Width="40" Command="{Binding LED33}" Background="#FFAAAAAA" Tag="LED33"/>
-                <Button Grid.Row="3" Grid.Column="4" Height="40" Width="40" Command="{Binding LED34}" Background="#FFAAAAAA" Tag="LED34"/>
-                <Button Grid.Row="3" Grid.Column="5" Height="40" Width="40" Command="{Binding LED35}" Background="#FFAAAAAA" Tag="LED35"/>
-                <Button Grid.Row="3" Grid.Column="6" Height="40" Width="40" Command="{Binding LED36}" Background="#FFAAAAAA" Tag="LED36"/>
-                <Button Grid.Row="3" Grid.Column="7" Height="40" Width="40" Command="{Binding LED37}" Background="#FFAAAAAA" Tag="LED37"/>
+                <Button Grid.Row="3" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED30"/>
+                <Button Grid.Row="3" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED31"/>
+                <Button Grid.Row="3" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED32"/>
+                <Button Grid.Row="3" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED33"/>
+                <Button Grid.Row="3" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED34"/>
+                <Button Grid.Row="3" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED35"/>
+                <Button Grid.Row="3" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED36"/>
+                <Button Grid.Row="3" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED37"/>
 
-                <Button Grid.Row="4" Grid.Column="0" Height="40" Width="40" Command="{Binding LED40}" Background="#FFAAAAAA" Tag="LED40"/>
-                <Button Grid.Row="4" Grid.Column="1" Height="40" Width="40" Command="{Binding LED41}" Background="#FFAAAAAA" Tag="LED41"/>
-                <Button Grid.Row="4" Grid.Column="2" Height="40" Width="40" Command="{Binding LED42}" Background="#FFAAAAAA" Tag="LED42"/>
-                <Button Grid.Row="4" Grid.Column="3" Height="40" Width="40" Command="{Binding LED43}" Background="#FFAAAAAA" Tag="LED43"/>
-                <Button Grid.Row="4" Grid.Column="4" Height="40" Width="40" Command="{Binding LED44}" Background="#FFAAAAAA" Tag="LED44"/>
-                <Button Grid.Row="4" Grid.Column="5" Height="40" Width="40" Command="{Binding LED45}" Background="#FFAAAAAA" Tag="LED45"/>
-                <Button Grid.Row="4" Grid.Column="6" Height="40" Width="40" Command="{Binding LED46}" Background="#FFAAAAAA" Tag="LED46"/>
-                <Button Grid.Row="4" Grid.Column="7" Height="40" Width="40" Command="{Binding LED47}" Background="#FFAAAAAA" Tag="LED47"/>
+                <Button Grid.Row="4" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED40"/>
+                <Button Grid.Row="4" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED41"/>
+                <Button Grid.Row="4" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED42"/>
+                <Button Grid.Row="4" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED43"/>
+                <Button Grid.Row="4" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED44"/>
+                <Button Grid.Row="4" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED45"/>
+                <Button Grid.Row="4" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED46"/>
+                <Button Grid.Row="4" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED47"/>
 
-                <Button Grid.Row="5" Grid.Column="0" Height="40" Width="40" Command="{Binding LED50}" Background="#FFAAAAAA" Tag="LED50"/>
-                <Button Grid.Row="5" Grid.Column="1" Height="40" Width="40" Command="{Binding LED51}" Background="#FFAAAAAA" Tag="LED51"/>
-                <Button Grid.Row="5" Grid.Column="2" Height="40" Width="40" Command="{Binding LED52}" Background="#FFAAAAAA" Tag="LED52"/>
-                <Button Grid.Row="5" Grid.Column="3" Height="40" Width="40" Command="{Binding LED53}" Background="#FFAAAAAA" Tag="LED53"/>
-                <Button Grid.Row="5" Grid.Column="4" Height="40" Width="40" Command="{Binding LED54}" Background="#FFAAAAAA" Tag="LED54"/>
-                <Button Grid.Row="5" Grid.Column="5" Height="40" Width="40" Command="{Binding LED55}" Background="#FFAAAAAA" Tag="LED55"/>
-                <Button Grid.Row="5" Grid.Column="6" Height="40" Width="40" Command="{Binding LED56}" Background="#FFAAAAAA" Tag="LED56"/>
-                <Button Grid.Row="5" Grid.Column="7" Height="40" Width="40" Command="{Binding LED57}" Background="#FFAAAAAA" Tag="LED57"/>
+                <Button Grid.Row="5" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED50"/>
+                <Button Grid.Row="5" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED51"/>
+                <Button Grid.Row="5" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED52"/>
+                <Button Grid.Row="5" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED53"/>
+                <Button Grid.Row="5" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED54"/>
+                <Button Grid.Row="5" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED55"/>
+                <Button Grid.Row="5" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED56"/>
+                <Button Grid.Row="5" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED57"/>
 
-                <Button Grid.Row="6" Grid.Column="0" Height="40" Width="40" Command="{Binding LED61}" Background="#FFAAAAAA" Tag="LED60"/>
-                <Button Grid.Row="6" Grid.Column="1" Height="40" Width="40" Command="{Binding LED61}" Background="#FFAAAAAA" Tag="LED61"/>
-                <Button Grid.Row="6" Grid.Column="2" Height="40" Width="40" Command="{Binding LED62}" Background="#FFAAAAAA" Tag="LED62"/>
-                <Button Grid.Row="6" Grid.Column="3" Height="40" Width="40" Command="{Binding LED63}" Background="#FFAAAAAA" Tag="LED63"/>
-                <Button Grid.Row="6" Grid.Column="4" Height="40" Width="40" Command="{Binding LED64}" Background="#FFAAAAAA" Tag="LED64"/>
-                <Button Grid.Row="6" Grid.Column="5" Height="40" Width="40" Command="{Binding LED65}" Background="#FFAAAAAA" Tag="LED65"/>
-                <Button Grid.Row="6" Grid.Column="6" Height="40" Width="40" Command="{Binding LED66}" Background="#FFAAAAAA" Tag="LED66"/>
-                <Button Grid.Row="6" Grid.Column="7" Height="40" Width="40" Command="{Binding LED67}" Background="#FFAAAAAA" Tag="LED67"/>
+                <Button Grid.Row="6" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED60"/>
+                <Button Grid.Row="6" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED61"/>
+                <Button Grid.Row="6" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED62"/>
+                <Button Grid.Row="6" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED63"/>
+                <Button Grid.Row="6" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED64"/>
+                <Button Grid.Row="6" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED65"/>
+                <Button Grid.Row="6" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED66"/>
+                <Button Grid.Row="6" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED67"/>
 
-                <Button Grid.Row="7" Grid.Column="0" Height="40" Width="40" Command="{Binding LED70}" Background="#FFAAAAAA" Tag="LED70"/>
-                <Button Grid.Row="7" Grid.Column="1" Height="40" Width="40" Command="{Binding LED71}" Background="#FFAAAAAA" Tag="LED71"/>
-                <Button Grid.Row="7" Grid.Column="2" Height="40" Width="40" Command="{Binding LED72}" Background="#FFAAAAAA" Tag="LED72"/>
-                <Button Grid.Row="7" Grid.Column="3" Height="40" Width="40" Command="{Binding LED73}" Background="#FFAAAAAA" Tag="LED73"/>
-                <Button Grid.Row="7" Grid.Column="4" Height="40" Width="40" Command="{Binding LED74}" Background="#FFAAAAAA" Tag="LED74"/>
-                <Button Grid.Row="7" Grid.Column="5" Height="40" Width="40" Command="{Binding LED75}" Background="#FFAAAAAA" Tag="LED75"/>
-                <Button Grid.Row="7" Grid.Column="6" Height="40" Width="40" Command="{Binding LED76}" Background="#FFAAAAAA" Tag="LED76"/>
-                <Button Grid.Row="7" Grid.Column="7" Height="40" Width="40" Command="{Binding LED77}" Background="#FFAAAAAA" Tag="LED77"/>
+                <Button Grid.Row="7" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED70"/>
+                <Button Grid.Row="7" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED71"/>
+                <Button Grid.Row="7" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED72"/>
+                <Button Grid.Row="7" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED73"/>
+                <Button Grid.Row="7" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED74"/>
+                <Button Grid.Row="7" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED75"/>
+                <Button Grid.Row="7" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED76"/>
+                <Button Grid.Row="7" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED77"/>
             </Grid>
             <Grid Margin="230,480,230,170">
                 <Slider x:Name="SeekR" Margin="0,0,0,120" Tag="seekR" Maximum="255" Background="Red" >
