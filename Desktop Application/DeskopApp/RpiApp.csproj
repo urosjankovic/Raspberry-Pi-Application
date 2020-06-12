@@ -128,6 +128,7 @@
     <Compile Include="ViewModels\ButtonCommand.cs" />
     <Compile Include="ViewModels\ConfigViewModel.cs" />
     <Compile Include="ViewModels\EnvViewModel.cs" />
+    <Compile Include="ViewModels\LEDViewModel.cs" />
     <Compile Include="Views\AnglesView.xaml.cs">
       <DependentUpon>AnglesView.xaml</DependentUpon>
     </Compile>
@@ -136,6 +137,9 @@
     </Compile>
     <Compile Include="Views\EnvVieww.xaml.cs">
       <DependentUpon>EnvVieww.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LEDcontrolView.xaml.cs">
+      <DependentUpon>LEDcontrolView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -198,6 +202,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EnvVieww.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LEDcontrolView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

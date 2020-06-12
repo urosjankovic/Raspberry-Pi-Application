@@ -40,5 +40,10 @@ namespace RpiApp
         {
             DataContext = new ConfigViewModel();
         }
+
+        private void LEDBtn_click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new LEDViewModel();
+        }
     }
 }
