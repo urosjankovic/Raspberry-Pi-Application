@@ -15,13 +15,13 @@
         <!-- Chart.js library -->
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
         
-        <script type="text/javascript" src="scripts/ed_table.js"></script>
+        <script type="text/javascript" src="scripts/od_graph.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/rpi.css">
     </head>
 
 	<!-- HTML file body: web page content -->
 	<body>
-        <div class="border border-dark p-1 rounded fixed-top">
+        <div class="border border-dark p-1 rounded fixed-top" id="menu">
             <button type="button" class="btn btn-dark" onclick="startTimer()">Start</button>
             <button type="button" class="btn btn-dark" onclick="stopTimer()">Stop</button>
             <button type="button" class="btn btn-dark" onclick="resetButton()">Reset</button>
@@ -41,9 +41,21 @@
             </span>
         </div>
 
-        <div class="border border-dark p-1 rounded">
-            <canvas id="Achart"></canvas>
-            <canvas id="Mchart"></canvas>
-            <canvas id="Gchart"></canvas>
+        <div class="border border-dark p-1 rounded centerchild" id="graphs">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Accelerometer</td>
+                        <td>Magnetometer</td>
+                        <td>Gyroscope</td>
+                    </tr>
+                    <tr>
+                        <td><div class="chartcontainer"><canvas id="Achart"></canvas></div></td>
+                        <td><div class="chartcontainer"><canvas id="Mchart"></canvas></div></td>
+                        <td><div class="chartcontainer"><canvas id="Gchart"></canvas></div></td>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
     </body>

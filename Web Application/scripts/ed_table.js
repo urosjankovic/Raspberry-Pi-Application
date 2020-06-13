@@ -4,7 +4,7 @@ var presUnit = "hPa";
 var humUnit = "P";
 var sampleTime = 1000;
 var maxStoredSamples = 1000;
-
+var url;
 
 $(document).ready(function() {
 
@@ -44,26 +44,48 @@ $(document).ready(function() {
         }
     });
 
+    url = getURL();
+
 })
 
+/**
+ * @brief Get current URL
+ */
+function getURL() {
+    return window.location.href;
+}
 
-
+/**
+ * @brief Convert Celsius degrees to Fahrenheit degrees
+ */
 function CelsiusToFahrenheit(val){
     return 1.8 * val + 32;
 }
 
+/**
+ * @brief Convert Celsius degrees to Kelvins
+ */
 function CelsiusToKelvin(val){
     return val + 273.15;
 }
 
+/**
+ * @brief Convert hPa degrees to mmHg
+ */
 function hPaTommHg(val){
     return val * 0.7500616827;
 }
 
+/**
+ * @brief Convert hPa degrees to Bars
+ */
 function hPaToBar(val){
     return val / 1000;
 }
 
+/**
+ * @brief Convert percents degrees to decimal fraction
+ */
 function PercentToDecimal(val){
     return val / 100;
 }

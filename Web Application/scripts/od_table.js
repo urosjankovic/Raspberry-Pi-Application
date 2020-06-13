@@ -1,7 +1,7 @@
 var unit = "deg";
 var sampleTime = 1000;
 var maxStoredSamples = 1000;
-
+var url;
 
 $(document).ready(function() {
 
@@ -28,4 +28,13 @@ $(document).ready(function() {
         }
     });
 
+    url = getURL();
+
 })
+
+/**
+ * @brief Get current URL
+ */
+function getURL() {
+    return window.location.href;
+}

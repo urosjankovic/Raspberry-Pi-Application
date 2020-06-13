@@ -5,6 +5,7 @@ var R;                  // Value of red slider
 var G;                  // Value of green slider
 var B;                  // Value of blue slider
 var selectedLEDs = [];  // Selected LEDs
+var url;
 
 $(document).ready(function() {
 
@@ -28,7 +29,16 @@ $(document).ready(function() {
         // Push id of LED into array
         selectedLEDs.push($(this).attr('id'));
     });
+
+    url = getURL();
 })
+
+/**
+ * @brief Get current URL
+ */
+function getURL() {
+    return window.location.href;
+}
 
 /**
  * @brief Get value of red slide bar, update preview color and displayed value

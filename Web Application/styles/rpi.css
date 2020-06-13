@@ -116,3 +116,13 @@ button#send, button#clear{
     display: flex;
     justify-content: center;
 }
+
+.chartcontainer{
+    width: 100%;
+    height: 350px;
+    display: flex;
+}
+
+#menu{
+    background-color:#222222;
+}

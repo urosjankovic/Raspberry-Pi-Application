@@ -1,12 +1,13 @@
 var unit = "deg";
 var sampleTime = 1000;
+var sampleTimeSec = 1;
 var maxStoredSamples = 1000;
 
 var timeVec;
 const Accelerometer = 0;
 const Magnetic = 1;
 const Gyroscope = 2;
-var chartIds = ["#Achart", "#Mchart", "Gchart"];
+var chartIds = ["Achart", "Mchart", "Gchart"];
 var AxVec = [], AyVec = [], AzVec = [];
 var MxVec = [], MyVec = [], MzVec = [];
 var GxVec = [], GyVec = [], GzVec = [];
@@ -18,13 +19,13 @@ var charts = [];
 
 var timer;
 
-const url = '';
+var url;
 
 function addData(data){
     if(AxVec.length > maxStoredSamples)
     {
         removeOldData();
-        lastTimeStamp += sampleTime / 1000;
+        lastTimeStamp += sampleTimeSec;
         timeVec.push(lastTimeStamp.toFixed(4));
     }
     
@@ -33,7 +34,6 @@ function addData(data){
         for(var j = 0; j < coordinates.length; j++){
             dataVec[j].push(data[i][j]);
         }
-        charts[i].update();
     }   
 }
 
@@ -84,6 +84,8 @@ function ajaxJSON() {
 
 $(document).ready(function() {
 
+    timer = null;
+
     // Writing initial values to input fields
     $("#sampleTime").val(sampleTime);
     $("#storedSamples").val(maxStoredSamples);
@@ -98,6 +100,7 @@ $(document).ready(function() {
         if (inputValue != NaN){
             sampleTime = inputValue;
         }
+        sampleTimeSec = sampleTime / 1000;
     });
 
     $("#storedSamples").change(function(){
@@ -107,22 +110,26 @@ $(document).ready(function() {
         }
     });
 
-    getURL();
+    $("#graphs").css("margin-top", $("#menu").height() + 10);
 
+    url = getURL();
+
+    chartInit(0);
     chartInit(1);
     chartInit(2);
-    chartInit(3);
-
 })
 
+/**
+ * @brief Get current URL
+ */
 function getURL() {
-    url = window.location.href;
+    return window.location.href;
 }
 
 function chartInit(id)
 {
 	// array with consecutive integers: <0, maxSamplesNumber-1>
-	timeVec = [...Array(maxSamplesNumber).keys()]; 
+	timeVec = [...Array(maxStoredSamples).keys()]; 
 	// scaling all values ​​times the sample time 
 	timeVec.forEach(function(p, i) {this[i] = (this[i]*sampleTimeSec).toFixed(4);}, timeVec);
 
@@ -130,11 +137,13 @@ function chartInit(id)
 	lastTimeStamp = +timeVec[timeVec.length-1]; 
 
 	// get chart contexts from 'canvas' elements
-    chartContexts.push($(chartIds[id])[0].getContext('2d'));
+    chartContexts[id] = document.getElementById(chartIds[id]).getContext('2d');
     
 	Chart.defaults.global.elements.point.radius = 1;
-	
-	charts.push(new Chart(chartContexts[id], {
+    Chart.defaults.global.defaultFontColor = '#FFF';
+    Chart.defaults.global.defaultGridColor = '#FFF';
+    
+	charts[id] = new Chart(chartContexts[id], {
 		// The type of chart: linear plot
 		type: 'line',
 
@@ -175,6 +184,11 @@ function chartInit(id)
 			maintainAspectRatio: false,
 			animation: false,
 			scales: {
+                xAxes: [{
+                    gridLines: {
+                        color: '#fff'
+                    }
+                }],
 				yAxes: [{
 					scaleLabel: {
 						display: true,
@@ -183,7 +197,10 @@ function chartInit(id)
 					ticks: {
 						suggestedMin: 0,
 						suggestedMax: 360 
-					}
+                    },
+                    gridLines: {
+                        color: '#fff'
+                    }
 				}],es: [{
 					scaleLabel: {
 						display: true,
@@ -192,12 +209,12 @@ function chartInit(id)
 				}]
 			}
 		}
-	}));
+	});
     
     for(var i = 0; i < 3; i++){
-        dataVec[id][i] = chart.data.datasets[i].data;
+        dataVec[id][i] = charts[id].data.datasets[i].data;
     }
-	timeVec = chart.data.labels;
+	timeVec = charts[id].data.labels;
 	
 	//$.ajaxSetup({ cache: false });
 }
