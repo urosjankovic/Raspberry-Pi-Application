@@ -1,4 +1,5 @@
-var unit = "deg";
+var AccelerometerUnit = "deg";
+var GyroscopeUnit = "deg"
 var sampleTime = 1000;
 var maxStoredSamples = 1000;
 var url;
@@ -11,7 +12,13 @@ $(document).ready(function() {
 
     // Listener for radio input
     $("input:radio").change(function(e){
-        unit = e.currentTarget.value;
+        var name = e.currentTarget.name; 
+        if(name == "Gunit"){
+            GyroscopeUnit = e.currentTarget.value;
+        }
+        else if(name == "Aunit"){
+            AccelerometerUnit = e.currentTarget.value;
+        }
     });
 
     $("#sampleTime").change(function(){

@@ -24,20 +24,11 @@
         <div class="border border-dark p-1 rounded fixed-top" id="menu">
             <button type="button" class="btn btn-dark" onclick="startTimer()">Start</button>
             <button type="button" class="btn btn-dark" onclick="stopTimer()">Stop</button>
-            <button type="button" class="btn btn-dark" onclick="resetButton()">Reset</button>
             <span class="menuitem">Sample time: 
                 <span><input id="sampleTime" type="text" class="inputfield" maxlength="4" size="3"></span> ms
             </span>
             <span class="menuitem">Max no. of samples: 
                 <span><input id="storedSamples" type="text" class="inputfield" maxlength="4" size="3"></span>
-            </span>
-            <span  class="menuitem">Unit: 
-                <span class="form-check-inline">
-                    <input type="radio" class="form-check-input" name ="unit" value="deg" checked>Degrees
-                </span>
-                <span class="form-check-inline">
-                    <input type="radio" class="form-check-input" name ="unit" value="rad">Radians
-                </span>
             </span>
         </div>
 
@@ -48,6 +39,33 @@
                         <td>Accelerometer</td>
                         <td>Magnetometer</td>
                         <td>Gyroscope</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="radiointable">Unit: 
+                                <span class="form-check-inline">
+                                    <input type="radio" class="form-check-input" name ="Aunit" value="deg" checked>Degrees
+                                </span>
+                                <span class="form-check-inline">
+                                    <input type="radio" class="form-check-input" name ="Aunit" value="rad">Radians
+                                </span>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="radiointable">
+                                Unit: &microT
+                            </span>
+                        </td>
+                        <td>
+                            <span class="radiointable">Unit: 
+                                <span class="form-check-inline">
+                                    <input type="radio" class="form-check-input" name ="Gunit" value="deg" checked>Degrees
+                                </span>
+                                <span class="form-check-inline">
+                                    <input type="radio" class="form-check-input" name ="Gunit" value="rad">Radians
+                                </span>
+                            </span>
+                        </td>
                     </tr>
                     <tr>
                         <td><div class="chartcontainer"><canvas id="Achart"></canvas></div></td>

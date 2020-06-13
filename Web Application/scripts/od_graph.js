@@ -29,12 +29,14 @@ function addData(data){
         timeVec.push(lastTimeStamp.toFixed(4));
     }
     
-    for(var i = 0; i < dataVec.length; i++){
+    dataVec[Accelerometer][0].push(data[0].data[0]);
+
+    /*for(var i = 0; i < dataVec.length; i++){
         var coordinates = dataVec[i]; 
         for(var j = 0; j < coordinates.length; j++){
             dataVec[j].push(data[i][j]);
         }
-    }   
+    }   */
 }
 
 /**
@@ -55,7 +57,7 @@ function removeOldData(){
 */
 function startTimer(){
 	if(timer == null)
-		timer = setInterval(ajaxJSON, sampleTimeMsec);
+		timer = setInterval(ajaxJSON, sampleTime);
 }
 
 /**
@@ -73,11 +75,10 @@ function stopTimer(){
 */
 function ajaxJSON() {
 	$.ajax(url, {
-		type: 'GET', dataType: 'json',
-		success: function(responseJSON, status, xhr) {
-            addData([+responseJSON[0].value, +responseJSON[1].value, +responseJSON[2].value],
-                    [+responseJSON[3].value, +responseJSON[4].value, +responseJSON[5].value]
-                    [+responseJSON[6].value, +responseJSON[7].value, +responseJSON[8].value]);
+        type: 'GET',
+        dataType: 'json',
+		success: function(responseJSON) {
+            addData(responseJSON);
 		}
 	});
 }
@@ -92,7 +93,13 @@ $(document).ready(function() {
 
     // Listener for radio input
     $("input:radio").change(function(e){
-        unit = e.currentTarget.value;
+        var name = e.currentTarget.name; 
+        if(name == "Gunit"){
+            GyroscopeUnit = e.currentTarget.value;
+        }
+        else if(name == "Aunit"){
+            AccelerometerUnit = e.currentTarget.value;
+        }
     });
 
     $("#sampleTime").change(function(){
@@ -110,9 +117,10 @@ $(document).ready(function() {
         }
     });
 
-    $("#graphs").css("margin-top", $("#menu").height() + 10);
+    $("#graphs").css("margin-top", $("#menu").height() + 8);
 
-    url = getURL();
+    //url = getURL();
+    url = "localhost/scripts/socket.php"
 
     chartInit(0);
     chartInit(1);
@@ -141,7 +149,6 @@ function chartInit(id)
     
 	Chart.defaults.global.elements.point.radius = 1;
     Chart.defaults.global.defaultFontColor = '#FFF';
-    Chart.defaults.global.defaultGridColor = '#FFF';
     
 	charts[id] = new Chart(chartContexts[id], {
 		// The type of chart: linear plot
@@ -186,7 +193,7 @@ function chartInit(id)
 			scales: {
                 xAxes: [{
                     gridLines: {
-                        color: '#fff'
+                        color: 'rgba(255, 255, 255, 0.5)'
                     }
                 }],
 				yAxes: [{
@@ -199,7 +206,7 @@ function chartInit(id)
 						suggestedMax: 360 
                     },
                     gridLines: {
-                        color: '#fff'
+                        color: 'rgba(255, 255, 255, 0.5)'
                     }
 				}],es: [{
 					scaleLabel: {
