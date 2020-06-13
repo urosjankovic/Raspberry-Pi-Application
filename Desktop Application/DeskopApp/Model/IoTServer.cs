@@ -43,6 +43,10 @@ namespace RpiApp.Model
             return "http://" + ip + "/web_app/angles/angleValues.json";
         }
 
+        private string GetFileUrlLED()
+        {
+            return "http://" + ip + "/web_app/ledControl/led_display.php";
+        }
         /**
          * @brief obtaining the address of the PHP script from IoT server IP.
          */
@@ -123,6 +127,26 @@ namespace RpiApp.Model
                 using (HttpClient client = new HttpClient())
                 {
                     responseText = await client.GetStringAsync(GetFileUrlAngles());
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("NETWORK ERROR");
+                Debug.WriteLine(e);
+            }
+
+            return responseText;
+        }
+
+        public async Task<string> GETwithClientLED()
+        {
+            string responseText = null;
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    responseText = await client.GetStringAsync(GetFileUrlLED());
                 }
             }
             catch (Exception e)
@@ -250,6 +274,34 @@ namespace RpiApp.Model
             return responseText;
         }
 
+        public async Task<string> POSTwithClientLED()
+        {
+            string responseText = null;
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    // POST request data
+                    var requestDataCollection = new List<KeyValuePair<string, string>>();
+                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "led_display"));
+                    var requestData = new FormUrlEncodedContent(requestDataCollection);
+                    // Sent POST request
+                    var result = await client.PostAsync(GetScriptUrl(), requestData);
+                    // Read response content
+                    responseText = await result.Content.ReadAsStringAsync();
+
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("NETWORK ERROR");
+                Debug.WriteLine(e);
+            }
+
+            return responseText;
+        }
+
 
         /**
           * @brief HTTP GET request using HttpWebRequest
@@ -344,6 +396,34 @@ namespace RpiApp.Model
             {
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlAngles());
+
+                request.Method = "GET";
+
+                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
+                using (Stream stream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    responseText = await reader.ReadToEndAsync();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("NETWORK ERROR");
+                Debug.WriteLine(e);
+            }
+
+            return responseText;
+        }
+
+        public async Task<string> GETwithRequestLED()
+        {
+            string responseText = null;
+
+            try
+            {
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlLED());
 
                 request.Method = "GET";
 
@@ -493,6 +573,43 @@ namespace RpiApp.Model
                 // POST Request data 
 
                 var requestData = "filename=angleValues";
+                byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
+                // POST Request configuration
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = byteArray.Length;
+                // Wrire data to request stream
+                Stream dataStream = request.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+
+                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
+                using (Stream stream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    responseText = await reader.ReadToEndAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("NETWORK ERROR");
+                Debug.WriteLine(e);
+            }
+
+            return responseText;
+        }
+
+        public async Task<string> POSTwithRequestLED()
+        {
+            string responseText = null;
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetScriptUrl());
+
+                // POST Request data 
+
+                var requestData = "filename=led_display.php";
                 byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
                 // POST Request configuration
                 request.Method = "POST";
