@@ -154,24 +154,24 @@ function chartInit(id)
 			{
 				fill: false,
 				label: 'X',
-				backgroundColor: 'rgb(255, 0, 0)',
-				borderColor: 'rgb(255, 0, 0)',
+				backgroundColor: 'rgba(255, 0, 0, 0.5)',
+				borderColor: 'rgba(255, 0, 0, 0.5)',
 				data: dataVec[id][0],
 				lineTension: 0
 			},
 			{
 				fill: false,
 				label: 'Y',
-				backgroundColor: 'rgb(0, 255, 0)',
-				borderColor: 'rgb(0, 255, 0)',
+				backgroundColor: 'rgba(0, 255, 0, 0.5)',
+				borderColor: 'rgba(0, 255, 0, 0.5)',
 				data: dataVec[id][1],
 				lineTension: 0
 			},
 						{
 				fill: false,
 				label: 'Z',
-				backgroundColor: 'rgb(0, 0, 255)',
-				borderColor: 'rgb(0, 0, 255)',
+				backgroundColor: 'rgba(0, 0, 255, 0.5)',
+				borderColor: 'rgba(0, 0, 255, 0.5)',
 				data: dataVec[id][2],
 				lineTension: 0
 			}
