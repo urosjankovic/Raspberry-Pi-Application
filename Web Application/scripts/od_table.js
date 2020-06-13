@@ -11,7 +11,7 @@ $(document).ready(function() {
 
     // Listener for radio input
     $("input:radio").change(function(e){
-        tempFromHumUnit = e.currentTarget.value;
+        unit = e.currentTarget.value;
     });
 
     $("#sampleTime").change(function(){
