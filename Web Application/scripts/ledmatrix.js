@@ -69,14 +69,14 @@ function setResultColor(element){
     $(element).css("background-color", resultColor);
 }
 
-function sendData(){
+function sendButton(){
     // TODO
 }
 
 /**
  * @brief Set color of LEDs to default and clear selected LEDs array
  */
-function clearMatrix(){
+function clearButton(){
     $(".led").css("background-color", "rgb(128, 128, 128)");
     selectedLEDs = [];
 }
