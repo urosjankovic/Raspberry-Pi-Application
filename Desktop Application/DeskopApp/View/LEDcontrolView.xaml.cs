@@ -1,6 +1,8 @@
-﻿using System;
+﻿using RpiApp.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,5 +26,52 @@ namespace RpiApp.Views
         {
             InitializeComponent();
         }
+
+        public void changeColor(Button button)
+        {
+            byte rr = (byte)SeekR.Value;
+            byte gg = (byte)SeekG.Value;
+            byte bb = (byte)SeekB.Value;
+            Color cc = Color.FromRgb(rr, gg, bb); //Create object of Color class.
+            SolidColorBrush colorBrush = new SolidColorBrush(cc); //Creating object of SolidColorBruch class.
+            button.Background = colorBrush; //Setting background of a button.
+            ledIndBack.Background = colorBrush;
+        }
+
+        public void offColor(Button button)
+        {
+            Color ccc = (Color)ColorConverter.ConvertFromString("#FFAAAAAA");
+            SolidColorBrush colorBrush = new SolidColorBrush(ccc);
+            button.Background = colorBrush;
+        }
+        private void changeLedIndicatiorColor(object sender, RoutedEventArgs e)
+        {
+            changeColor(sender as Button);
+        }
+
+        private void seekR_changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            changeColor(ledIndBack);
+        }
+        private void seekG_changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            changeColor(ledIndBack);
+        }
+        private void seekB_changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            changeColor(ledIndBack);
+        }
+
+        public void clearAllLed(object sender, RoutedEventArgs e)
+        {
+            // Clear LED display GUI
+            foreach(Button button in ledMatrix.Children.OfType<Button>())
+            {
+                button.Background = (Brush)new BrushConverter().ConvertFrom("#FFAAAAAA");
+            } 
+            
+        }
+
+
     }
 }

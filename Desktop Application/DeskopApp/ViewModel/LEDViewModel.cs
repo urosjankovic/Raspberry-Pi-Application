@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Media;
 using System.Net.Http;
 using OxyPlot;
 using OxyPlot.Axes;
@@ -27,8 +28,9 @@ namespace RpiApp.ViewModels
     using System.Windows.Controls;
     using System.Windows.Media;
     using RpiApp.Views;
+    using RpiApp.ViewModel;
 
-    public class LEDViewModel 
+    public class LEDViewModel : INotifyPropertyChanged
     {
         #region Properties
         private string ipAddress;
@@ -49,7 +51,6 @@ namespace RpiApp.ViewModels
             }
         }
 
-
         private ConfigParams config = new ConfigParams();
         private Timer RequestTimer;
         private IoTServer Server;
@@ -64,15 +65,21 @@ namespace RpiApp.ViewModels
         int ledActiveColorG = 0x00; // Active color Green components
         int ledActiveColorB = 0x00; // Active color Blue components
 
-        Slider redsliker, blueslider, greenslider;
-        Button colorview;
-
 
         Color ledOffColor = (Color)ColorConverter.ConvertFromString("#FFAAAAAA"); // LED-is-off color in Int ARGB format
         Color ledActiveColor => ledOffColor; // Active color in Int ARGB format
 
 
-        List<Color> ledOffColorLst = ledOffColor; // LED-is-off color in Int ARGB format //FIX
+        //List<Color> ledOffColorLst = ledOffColor; // LED-is-off color in Int ARGB format //FIX
+
+
+        public ButtonCommand SendButton { get; set; }
+
+        public ButtonCommand ClearButton { get; set; }
+
+        /* BEGIN Request */
+        Dictionary<String, String> paramsClear = new Dictionary<String, String>(); // HTTP POST data: clear display command
+
 
 
         public LEDViewModel()
@@ -80,28 +87,25 @@ namespace RpiApp.ViewModels
             ipAddress = config.IpAddress;
             Server = new IoTServer(IpAddress);
 
-            
 
-            
             /* END Colors */
 
             /* BEGIN Request */
             Dictionary<String, String> paramsClear = new Dictionary<String, String>(); // HTTP POST data: clear display command
 
-            for(int i= 0; i<8; i++)
+            for (int i = 0; i < 8; i++)
             {
-                for(int j=0; i<8; i++)
+                for (int j = 0; i < 8; i++)
                 {
                     String data = "[" + Convert.ToString(i) + "," + Convert.ToString(j) + ",0,0,0]";
                     paramsClear.Add(ledIndexToTag(i, j), data);
                 }
             }
 
+
         }
 
         int?[,,] ledDisplayModel = new int?[8, 8, 3]; // LED display data model
-
-
 
 
         String ledIndexToTag(int x, int y)
@@ -126,75 +130,21 @@ namespace RpiApp.ViewModels
             return rgb;
         }
 
-        List<object> ledTagToIndex(String tag)
-        {
-            List<object> lst = new List<object>(2);
-            lst.Insert(0, Char.GetNumericValue(tag[3]));
-            lst.Insert(1, Char.GetNumericValue(tag[4]));
-            return lst;
-        }
-
         String ledIndexToJsonData(int x, int y)
         {
             String _x = Convert.ToString(x);
             String _y = Convert.ToString(y);
-            String _r = Convert.ToString(ledDisplayModel[x,y,0]);
-            String _g = Convert.ToString(ledDisplayModel[x,y,1]);
-            String _b = Convert.ToString(ledDisplayModel[x,y,2]);
+            String _r = Convert.ToString(ledDisplayModel[x, y, 0]);
+            String _g = Convert.ToString(ledDisplayModel[x, y, 1]);
+            String _b = Convert.ToString(ledDisplayModel[x, y, 2]);
             return "[" + _x + "," + _y + "," + _r + "," + _g + "," + _b + "]";
         }
 
         bool ledColorNotNull(int x, int y)
         {
-            return !((ledDisplayModel[x,y,0] == null) || (ledDisplayModel[x,y,1] == null) || (ledDisplayModel[x,y,2] == null));
+            return !((ledDisplayModel[x, y, 0] == null) || (ledDisplayModel[x, y, 1] == null) || (ledDisplayModel[x, y, 2] == null));
         }
 
-        public void clearDisplayModel()
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    ledDisplayModel[i,j,0] = null;
-                    ledDisplayModel[i,j,1] = null;
-                    ledDisplayModel[i,j,2] = null;
-                }
-            }
-        }
-
-        public void changeLedIndicatorColor(Button b)
-        {
-            // Set active color as background
-            b.Background = ledActiveColor; // FIX 
-            // Find element x-y position
-            String tag = (String)b.Tag();
-            List<object> index = ledTagToIndex(tag);
-            int x = (int)index[0];
-            int y = (int)index[1];
-            //Update LED display data model
-            ledDisplayModel[x,y,0] = ledActiveColorR;
-            ledDisplayModel[x,y,1] = ledActiveColorG;
-            ledDisplayModel[x,y,2] = ledActiveColorB;
-        }
-
-        public void clearAllLed(Button b)
-        {
-            // Clear LED display GUI
-            Grid tb = (Grid)(Tag.ledMatrix); // FIX
-            Button ledInd;
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    ledInd = tb.ledIndexToTag(i, j); // FIX
-                    ledInd.Background = ledOffColor; // FIX
-                }
-            }
-            // Clear LED display data model
-            clearDisplayModel();
-
-            sendClearRequest();
-        }
 
         public Dictionary<String, String> getDisplayControlParams()
         {

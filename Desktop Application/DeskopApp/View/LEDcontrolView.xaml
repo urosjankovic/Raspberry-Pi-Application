@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions>
         <!-- Configuration: IoT server ip address and request sample time -->
         <Grid Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4" HorizontalAlignment="Left" Height="790" Margin="0,10,0,0" Grid.Row="0" VerticalAlignment="Top" Width="800">
-            <Grid Margin="230,114,230,346" AutomationProperties.Name="ledMatrix" Tag="ledMatrix" >
+            <Grid Margin="230,114,230,346" AutomationProperties.Name="ledMatrix" Tag="ledMatrix"  x:Name="ledMatrix">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -44,96 +44,82 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Button Grid.Column="0" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED01"/>
-                <Button Grid.Column="1" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED02"/>
-                <Button Grid.Column="2" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED03"/>
-                <Button Grid.Column="3" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED04"/>
-                <Button Grid.Column="4" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED05"/>
-                <Button Grid.Column="5" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED06"/>
-                <Button Grid.Column="6" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED07"/>
-                <Button Grid.Column="7" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED08"/>
+                <Button Grid.Column="0" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED00" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="1" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED01" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="2" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED02" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="3" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED03" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="4" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED04" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="5" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED05" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="6" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED06" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="7" Grid.Row="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED07" Click="changeLedIndicatiorColor"/>
 
-                <Button Grid.Column="0" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED10"/>
-                <Button Grid.Column="1" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED11"/>
-                <Button Grid.Column="2" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED12"/>
-                <Button Grid.Column="3" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED13"/>
-                <Button Grid.Column="4" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED14"/>
-                <Button Grid.Column="5" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED15"/>
-                <Button Grid.Column="6" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED16"/>
-                <Button Grid.Column="7" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED17"/>
+                <Button Grid.Column="0" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED10" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="1" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED11" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="2" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED12" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="3" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED13" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="4" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED14" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="5" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED15" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="6" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED16" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Column="7" Grid.Row="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED17" Click="changeLedIndicatiorColor"/>
 
-                <Button Grid.Row="2" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED20"/>
-                <Button Grid.Row="2" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED21"/>
-                <Button Grid.Row="2" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED22"/>
-                <Button Grid.Row="2" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED23"/>
-                <Button Grid.Row="2" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED24"/>
-                <Button Grid.Row="2" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED25"/>
-                <Button Grid.Row="2" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED26"/>
-                <Button Grid.Row="2" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED27"/>
+                <Button Grid.Row="2" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED20" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="2" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED21" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="2" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED22" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="2" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED23" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="2" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED24" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="2" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED25" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="2" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED26" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="2" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED27" Click="changeLedIndicatiorColor"/>
 
-                <Button Grid.Row="3" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED30"/>
-                <Button Grid.Row="3" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED31"/>
-                <Button Grid.Row="3" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED32"/>
-                <Button Grid.Row="3" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED33"/>
-                <Button Grid.Row="3" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED34"/>
-                <Button Grid.Row="3" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED35"/>
-                <Button Grid.Row="3" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED36"/>
-                <Button Grid.Row="3" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED37"/>
+                <Button Grid.Row="3" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED30" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="3" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED31" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="3" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED32" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="3" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED33" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="3" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED34" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="3" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED35" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="3" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED36" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="3" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED37" Click="changeLedIndicatiorColor"/>
 
-                <Button Grid.Row="4" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED40"/>
-                <Button Grid.Row="4" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED41"/>
-                <Button Grid.Row="4" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED42"/>
-                <Button Grid.Row="4" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED43"/>
-                <Button Grid.Row="4" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED44"/>
-                <Button Grid.Row="4" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED45"/>
-                <Button Grid.Row="4" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED46"/>
-                <Button Grid.Row="4" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED47"/>
+                <Button Grid.Row="4" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED40" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="4" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED41" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="4" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED42" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="4" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED43" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="4" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED44" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="4" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED45" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="4" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED46" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="4" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED47" Click="changeLedIndicatiorColor"/>
 
-                <Button Grid.Row="5" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED50"/>
-                <Button Grid.Row="5" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED51"/>
-                <Button Grid.Row="5" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED52"/>
-                <Button Grid.Row="5" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED53"/>
-                <Button Grid.Row="5" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED54"/>
-                <Button Grid.Row="5" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED55"/>
-                <Button Grid.Row="5" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED56"/>
-                <Button Grid.Row="5" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED57"/>
+                <Button Grid.Row="5" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED50" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="5" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED51" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="5" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED52" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="5" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED53" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="5" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED54" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="5" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED55" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="5" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED56" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="5" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED57" Click="changeLedIndicatiorColor"/>
 
-                <Button Grid.Row="6" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED60"/>
-                <Button Grid.Row="6" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED61"/>
-                <Button Grid.Row="6" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED62"/>
-                <Button Grid.Row="6" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED63"/>
-                <Button Grid.Row="6" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED64"/>
-                <Button Grid.Row="6" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED65"/>
-                <Button Grid.Row="6" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED66"/>
-                <Button Grid.Row="6" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED67"/>
+                <Button Grid.Row="6" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED60" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="6" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED61" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="6" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED62" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="6" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED63" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="6" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED64" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="6" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED65" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="6" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED66" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="6" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED67" Click="changeLedIndicatiorColor"/>
 
-                <Button Grid.Row="7" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED70"/>
-                <Button Grid.Row="7" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED71"/>
-                <Button Grid.Row="7" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED72"/>
-                <Button Grid.Row="7" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED73"/>
-                <Button Grid.Row="7" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED74"/>
-                <Button Grid.Row="7" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED75"/>
-                <Button Grid.Row="7" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED76"/>
-                <Button Grid.Row="7" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED77"/>
+                <Button Grid.Row="7" Grid.Column="0" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED70" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="7" Grid.Column="1" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED71" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="7" Grid.Column="2" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED72" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="7" Grid.Column="3" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED73" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="7" Grid.Column="4" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED74" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="7" Grid.Column="5" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED75" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="7" Grid.Column="6" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED76" Click="changeLedIndicatiorColor"/>
+                <Button Grid.Row="7" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Tag="LED77" Click="changeLedIndicatiorColor"/>
             </Grid>
             <Grid Margin="230,480,230,170">
-                <Slider x:Name="SeekR" Margin="0,0,0,120" Tag="seekR" Maximum="255" Background="Red" >
-                    <Slider.Resources>
-                        <SolidColorBrush x:Key="SliderSelectionBackground" Color="Red"/>
-                        <SolidColorBrush x:Key="SliderSelectionBorder" Color="Red" />
-                        <SolidColorBrush x:Key="SliderThumbBackground" Color="Red" />
-                        <SolidColorBrush x:Key="SliderThumbBackgroundDisabled" Color="Red" />
-                        <SolidColorBrush x:Key="SliderThumbBackgroundDragging" Color="Red" />
-                        <SolidColorBrush x:Key="SliderThumbBackgroundHover" Color="Red" />
-                        <SolidColorBrush x:Key="SliderThumbBorder" Color="Red" />
-                        <SolidColorBrush x:Key="SliderThumbBorderDisabled" Color="Red" />
-                        <SolidColorBrush x:Key="SliderThumbBorderDragging" Color="Red" />
-                        <SolidColorBrush x:Key="SliderThumbBorderHover" Color="Red" />
-                    </Slider.Resources>
-                </Slider>
-                <Slider x:Name="SeekG" Margin="0,50,0,70" Tag="seekG" Maximum="255" Background="Green"></Slider>
-                <Slider x:Name="SeekB" Margin="0,100,0,20" Tag="seekB" Maximum="255" Background="Blue"></Slider>
-
+                <Slider x:Name="SeekR" Margin="0,0,0,120" Tag="seekR" Maximum="255" Background="Red" ValueChanged="seekR_changed"></Slider>
+                <Slider x:Name="SeekG" Margin="0,50,0,70" Tag="seekG" Maximum="255" Background="Green" ValueChanged="seekG_changed"></Slider>
+                <Slider x:Name="SeekB" Margin="0,100,0,20" Tag="seekB" Maximum="255" Background="Blue" ValueChanged="seekB_changed"></Slider>
             </Grid>
             <Grid Margin="178,480,575,148">
                 <TextBlock FontSize="20" HorizontalAlignment="Right" Margin="0,0,0,115">R</TextBlock>
@@ -151,7 +137,7 @@
                         Grid.Column="0" 
                         Width="140"
                         Margin="0,0,67,0" 
-                        Command="{Binding SendButton}" HorizontalAlignment="Right" Click="sendControlRequest">
+                        Command="{Binding SendButton}" HorizontalAlignment="Right">
                     SEND
                 </Button>
                 <Button 
@@ -164,7 +150,7 @@
                 <Button 
                         Width="76"
                         Margin="0,0,177,0" 
-                        Command="{Binding ledIndBackground}" HorizontalAlignment="Right" Grid.ColumnSpan="4" Background="#FFAAAAAA" IsHitTestVisible="False">
+                        Background="#FFAAAAAA" HorizontalAlignment="Right" Grid.ColumnSpan="4"  IsHitTestVisible="False" x:Name="ledIndBack">
                 </Button>
             </Grid>
         </Grid>
