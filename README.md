@@ -7,8 +7,10 @@ applications prepared during the course
 
 **Done by:** 
 
--Uros Jankovic
+-Uros Jankovic (Desktop App)
 
--Stephanie Oduah
+-Stephanie Oduah (Android App)
 
--Wojciech Szyszka
+-Wojciech Szyszka (Web App)
+
+-Krzysztof Wozniak (Server App)

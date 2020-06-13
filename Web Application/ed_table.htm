@@ -21,13 +21,13 @@
 
 
         <div class="border border-dark p-1 rounded">
-            <button type="button" class="btn btn-dark">Start</button>
-            <button type="button" class="btn btn-dark">Stop</button>
+            <button type="button" class="btn btn-dark" onclick="startButton()">Start</button>
+            <button type="button" class="btn btn-dark" onclick="stopButton()">Stop</button>
             <span class="menuitem">Sample time: 
-                <span id="sampleTime"><input type="text" class="inputfield" maxlength="4" size="3"></span> ms
+                <span><input type="text" class="inputfield" maxlength="4" size="3" id="sampleTime"></span> ms
             </span>
             <span class="menuitem">Max no. of stored samples: 
-                <span id="sampleTime"><input type="text" class="inputfield" maxlength="4" size="3"></span>
+                <span><input type="text" class="inputfield" maxlength="4" size="3" id="storedSamples"></span>
             </span>
         </div>
 
@@ -42,61 +42,62 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>Temperature from humidity sensor</td>
-                  <td id="tempFromHumValue">0</td>
-                  <td id="tempFromHumUnit">
-                    <div  class="menuitem">Unit: 
+                    <td>Temperature from humidity sensor</td>
+                    <td id="tempFromHumValue">0</td>
+                    <td>
+                        <div  class="menuitem">Unit: 
                         <div class="form-check-inline">
-                            <input type="radio" class="form-check-input" name="tempFromHumUnitRadio" value="C" checked>&degC
+                            <input type="radio" class="form-check-input" name="tempFromHumUnit" value="C" id="tempFromHumUnit" checked>&degC
                         </div>
                         <div class="form-check-inline">
-                            <input type="radio" class="form-check-input" name="tempFromHumUnitRadio" value="K">K
+                            <input type="radio" class="form-check-input" name="tempFromHumUnit" value="K">K
                         </div>
                         <div class="form-check-inline">
-                            <input type="radio" class="form-check-input" name="tempFromHumUnitRadio" value="F">&degF
+                            <input type="radio" class="form-check-input" name="tempFromHumUnit" value="F">&degF
                         </div>
                     </div></td>
                 </tr>
                 <tr>
                     <td>Temperature from pressure sensor</td>
                     <td id="tempFromPresValue">0</td>
-                    <td id="tempFromPresUnit"><div  class="menuitem" style="background-color:#454d55">Unit: 
+                    <td>
+                        <div  class="menuitem" style="background-color:#454d55">Unit: 
                         <div class="form-check-inline">
-                            <input type="radio" class="form-check-input" name="tempFromPressUnitRadio" value="C" checked>&degC
+                            <input type="radio" class="form-check-input" name="tempFromPressUnit" value="C" checked>&degC
                         </div>
                         <div class="form-check-inline">
-                            <input type="radio" class="form-check-input" name="tempFromPressUnitRadio" value="K">K
+                            <input type="radio" class="form-check-input" name="tempFromPressUnit" value="K">K
                         </div>
                         <div class="form-check-inline">
-                            <input type="radio" class="form-check-input" name="tempFromPressUnitRadio" value="F">&degF
+                            <input type="radio" class="form-check-input" name="tempFromPressUnit" value="F">&degF
                         </div>
                     </div></td>
                 </tr>
                 <tr>
                   <td>Pressure</td>
-                  <td id="pres_value">0</td>
-                  <td id="pres_unit"><div  class="menuitem">Unit: 
+                  <td id="presValue">0</td>
+                  <td><div  class="menuitem">Unit: 
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" name="presRadio" value="hPa" checked>hPa
+                        <input type="radio" class="form-check-input" name="presUnit" value="hPa" checked>hPa
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" name="presRadio" value="mmHg">mmHg
+                        <input type="radio" class="form-check-input" name="presUnit" value="mmHg">mmHg
                     </div>
                     <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" name="presRadio" value="Bar">Bar
+                        <input type="radio" class="form-check-input" name="presUnit" value="Bar">Bar
                     </div>
                 </div></td>
                 </tr>
                 <tr>
                   <td>Humidity</td>
-                  <td id="hum_value">0</td>
-                  <td id="hum_unit"><div  class="menuitem" style="background-color:#454d55">Unit: 
-                    <span class="form-check-inline">
-                        <input type="radio" class="form-check-input checked" name="humRadio" value="P" checked>%
-                    </span>
-                    <span class="form-check-inline">
-                        <input type="radio" class="form-check-input" name="humRadio" value="F">Fraction
-                    </span>
+                  <td id="humValue">0</td>
+                  <td><div  class="menuitem" style="background-color:#454d55">Unit: 
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input checked" name="humUnit" value="P" checked>%
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="radio" class="form-check-input" name="humUnit" value="F">Fraction
+                    </div>
                 </div></td>
                 </tr>
               </tbody>

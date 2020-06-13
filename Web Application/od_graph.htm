@@ -12,25 +12,38 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         
+        <!-- Chart.js library -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        
         <script type="text/javascript" src="scripts/ed_table.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/rpi.css">
     </head>
 
 	<!-- HTML file body: web page content -->
 	<body>
-        <div class="border border-dark p-1 rounded">
-            <button type="button" class="btn btn-dark">Start</button>
-            <button type="button" class="btn btn-dark">Stop</button>
-            <button type="button" class="btn btn-dark">Reset</button>
+        <div class="border border-dark p-1 rounded fixed-top">
+            <button type="button" class="btn btn-dark" onclick="startTimer()">Start</button>
+            <button type="button" class="btn btn-dark" onclick="stopTimer()">Stop</button>
+            <button type="button" class="btn btn-dark" onclick="resetButton()">Reset</button>
             <span class="menuitem">Sample time: 
-                <span id="sampleTime"><input type="text" class="inputfield" maxlength="4" size="3"></span> ms
+                <span><input id="sampleTime" type="text" class="inputfield" maxlength="4" size="3"></span> ms
             </span>
-            <span class="menuitem">Max no. of stored samples: 
-                <span id="sampleTime"><input type="text" class="inputfield" maxlength="4" size="3"></span>
+            <span class="menuitem">Max no. of samples: 
+                <span><input id="storedSamples" type="text" class="inputfield" maxlength="4" size="3"></span>
+            </span>
+            <span  class="menuitem">Unit: 
+                <span class="form-check-inline">
+                    <input type="radio" class="form-check-input" name ="unit" value="deg" checked>Degrees
+                </span>
+                <span class="form-check-inline">
+                    <input type="radio" class="form-check-input" name ="unit" value="rad">Radians
+                </span>
             </span>
         </div>
 
         <div class="border border-dark p-1 rounded">
-            <canvas id="chart"></canvas>
+            <canvas id="Achart"></canvas>
+            <canvas id="Mchart"></canvas>
+            <canvas id="Gchart"></canvas>
         </div>
     </body>

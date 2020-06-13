@@ -2,7 +2,7 @@
 <html lang="en">
 <!-- HTML file head: web page metadata -->
     <head>
-        <title>Environmental data table</title>
+        <title>Orientation data table</title>
         <!-- jQuery -->
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
         
@@ -12,7 +12,7 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         
-        <script type="text/javascript" src="scripts/ed_table.js"></script>
+        <script type="text/javascript" src="scripts/od_table.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/rpi.css">
     </head>
 
@@ -23,17 +23,17 @@
             <button type="button" class="btn btn-dark">Start</button>
             <button type="button" class="btn btn-dark">Stop</button>
             <span class="menuitem">Sample time: 
-                <span id="sampleTime"><input type="text" class="inputfield" maxlength="4" size="3"></span> ms
+                <span><input id="sampleTime" type="text" class="inputfield" maxlength="4" size="3"></span> ms
             </span>
             <span class="menuitem">Max no. of samples: 
-                <span id="sampleTime"><input type="text" class="inputfield" maxlength="4" size="3"></span>
+                <span><input id="storedSamples" type="text" class="inputfield" maxlength="4" size="3"></span>
             </span>
             <span  class="menuitem">Unit: 
                 <span class="form-check-inline">
-                    <input type="radio" class="form-check-input" name ="oUnit" value="rad" checked>Radians
+                    <input type="radio" class="form-check-input" name ="unit" value="deg" checked>Degrees
                 </span>
                 <span class="form-check-inline">
-                    <input type="radio" class="form-check-input" name ="oUnit" value="deg">Degrees
+                    <input type="radio" class="form-check-input" name ="unit" value="rad">Radians
                 </span>
             </span>
         </div>
