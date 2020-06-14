@@ -25,7 +25,7 @@ header('Content-Type: application/json');
 
 if(isset($_GET['id'])) {
     // resources IDs
-    $ids = array('env', 'rpy');
+    $ids = array('env', 'ori');
     // check selected ID
     $idno = array_search($_GET['id'], $ids);
     if($idno === false) {
