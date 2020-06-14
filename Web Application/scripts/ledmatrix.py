@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 from sense_emu import SenseHat
 import json
 import socket
@@ -19,31 +19,22 @@ sock.listen(1)
 while True:
     connection, client_address = sock.accept()
     try:
-        while True:
-            msg = connection.recv(4096)
-            data = msg.decode()
-            if data:
-                file = open("ledmatrix.json", "r")
-                data = json.loads(file.read())
-                file.close()
-
-                try:
-                    if data:
-                        sense.clear()
-                        for key, value in data.items():
-                            x = int(key[2])
-                            y = int(key[3])
-                            r = int(value[0])
-                            g = int(value[1])
-                            b = int(value[2])
-                            sense.set_pixel( x, y, r, g, b )
-                    else:
-                        sense.clear()
-                    msg = "Success"
-                    msg = msg.encode('utf-8')
-                    connection.sendall(msg)
-                except:
-                    sense.clear()
-            
+        msg = connection.recv(4096)
+        JSONstring = msg.decode()
+        data = json.loads(JSONstring)
+        if data:
+            sense.clear()
+            for key, value in data.items():
+                x = int(key[2])
+                y = int(key[3])
+                r = int(value[0])
+                g = int(value[1])
+                b = int(value[2])
+                sense.set_pixel( x, y, r, g, b )
+        else:
+            sense.clear()
+        msg = "Success"
+        msg = msg.encode('utf-8')
+        connection.sendall(msg)
     finally:
         connection.close()
