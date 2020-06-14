@@ -73,7 +73,17 @@ function setResultColor(element){
 }
 
 function sendButton(){
-    $.post()
+
+    $.ajax({
+        url : 'ledmatrix.php',
+        method : 'post',
+        contentType : "application/json",
+        data : JSON.stringify(LEDobj),
+        dataType : 'json'
+    })
+    .done(function(response){
+        console.log(response);
+    });
 }
 
 /**
