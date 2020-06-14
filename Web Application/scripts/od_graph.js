@@ -77,9 +77,7 @@ function ajaxJSON() {
 	$.ajax(url, {
         type: 'GET',
         dataType: 'json',
-		success: function(responseJSON) {
-            addData(responseJSON);
-		}
+		success: addData(responseJSON)
 	});
 }
 
@@ -120,7 +118,7 @@ $(document).ready(function() {
     $("#graphs").css("margin-top", $("#menu").height() + 8);
 
     //url = getURL();
-    url = "localhost/scripts/socket.php"
+    url = "192.168.8.117/Raspberry-Pi-Application/Web Application/scripts/socket.php"
 
     chartInit(0);
     chartInit(1);
