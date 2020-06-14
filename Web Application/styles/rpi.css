@@ -1,6 +1,7 @@
-body{
+html, body{
     background-color: #222222;
     color: rgba(255,255,255,.5);
+    height: 90%;
 }
 
 .dropdown {
