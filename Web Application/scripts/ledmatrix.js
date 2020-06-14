@@ -6,6 +6,7 @@ var G;                  // Value of green slider
 var B;                  // Value of blue slider
 var selectedLEDs = [];  // Selected LEDs
 var url;
+var LEDobj = {};
 
 $(document).ready(function() {
 
@@ -26,19 +27,11 @@ $(document).ready(function() {
         // Change color of LED
         setResultColor(this); 
         
-        // Push id of LED into array
-        selectedLEDs.push($(this).attr('id'));
+        // Assign RGB value to LED object
+        LEDobj[$(this).attr('id')] = [R, G, B];
     });
-
-    url = getURL();
 })
 
-/**
- * @brief Get current URL
- */
-function getURL() {
-    return window.location.href;
-}
 
 /**
  * @brief Get value of red slide bar, update preview color and displayed value
@@ -80,7 +73,7 @@ function setResultColor(element){
 }
 
 function sendButton(){
-    // TODO
+    $.post()
 }
 
 /**
@@ -88,5 +81,5 @@ function sendButton(){
  */
 function clearButton(){
     $(".led").css("background-color", "rgb(128, 128, 128)");
-    selectedLEDs = [];
+    LEDobj = {};
 }

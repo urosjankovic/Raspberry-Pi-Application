@@ -1,7 +1,7 @@
 var unit = "deg";
 var sampleTime = 1000;
 var sampleTimeSec = 1;
-var maxStoredSamples = 1000;
+var maxStoredSamples = 100;
 
 var timeVec;
 const Accelerometer = 0;
@@ -19,24 +19,29 @@ var charts = [];
 
 var timer;
 
-var url;
+const url = "sensors_via_deamon.php?id=ori"
 
 function addData(data){
-    if(AxVec.length > maxStoredSamples)
+    if(dataVec[Accelerometer][0].length > maxStoredSamples)
     {
         removeOldData();
         lastTimeStamp += sampleTimeSec;
         timeVec.push(lastTimeStamp.toFixed(4));
     }
     
-    dataVec[Accelerometer][0].push(data[0].data[0]);
+	dataVec[Accelerometer][0].push(data[0].data.roll);
+	dataVec[Accelerometer][1].push(data[0].data.pitch);
+	dataVec[Accelerometer][2].push(data[0].data.yaw);
+	dataVec[Magnetic][0].push(data[1].data.x);
+	dataVec[Magnetic][1].push(data[1].data.y);
+	dataVec[Magnetic][2].push(data[1].data.z);
+	dataVec[Gyroscope][0].push(data[2].data.roll);
+	dataVec[Gyroscope][1].push(data[2].data.pitch);
+	dataVec[Gyroscope][2].push(data[2].data.yaw);
 
-    /*for(var i = 0; i < dataVec.length; i++){
-        var coordinates = dataVec[i]; 
-        for(var j = 0; j < coordinates.length; j++){
-            dataVec[j].push(data[i][j]);
-        }
-    }   */
+	charts[0].update();
+	charts[1].update();
+	charts[2].update();
 }
 
 /**
@@ -57,8 +62,10 @@ function removeOldData(){
 */
 function startTimer(){
 	if(timer == null)
-		timer = setInterval(ajaxJSON, sampleTime);
+		timer = setInterval(ajaxGetJSON, sampleTime);
 }
+
+
 
 /**
 * @brief Stop request timer
@@ -73,12 +80,10 @@ function stopTimer(){
 /**
 * @brief Send HTTP GET request to IoT server
 */
-function ajaxJSON() {
-	$.ajax(url, {
-        type: 'GET',
-        dataType: 'json',
-		success: addData(responseJSON)
-	});
+function ajaxGetJSON(){
+	$.getJSON("sensors_via_deamon.php?id=ori", function(data){	
+		addData(data);
+	})
 }
 
 $(document).ready(function() {
@@ -105,7 +110,9 @@ $(document).ready(function() {
         if (inputValue != NaN){
             sampleTime = inputValue;
         }
-        sampleTimeSec = sampleTime / 1000;
+		sampleTimeSec = sampleTime / 1000;
+		stopTimer();
+		startTimer();
     });
 
     $("#storedSamples").change(function(){
@@ -116,9 +123,6 @@ $(document).ready(function() {
     });
 
     $("#graphs").css("margin-top", $("#menu").height() + 8);
-
-    //url = getURL();
-    url = "192.168.8.117/Raspberry-Pi-Application/Web Application/scripts/socket.php"
 
     chartInit(0);
     chartInit(1);
@@ -201,7 +205,7 @@ function chartInit(id)
 					},
 					ticks: {
 						suggestedMin: 0,
-						suggestedMax: 360 
+						suggestedMax: 180 
                     },
                     gridLines: {
                         color: 'rgba(255, 255, 255, 0.5)'
