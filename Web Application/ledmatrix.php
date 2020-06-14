@@ -3,7 +3,6 @@ error_reporting(E_ALL);
 
 if (isset($_POST)){
     $data = file_get_contents('php://input');
-    echo $data;
     // create TCP/IP socket
     $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP) or die("Could not create socket \n");
     if ($socket === false){
