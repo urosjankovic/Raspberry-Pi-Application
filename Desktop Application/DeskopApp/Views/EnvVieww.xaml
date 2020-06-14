@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="RpiApp.Views.EnvVieww"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:oxy="http://oxyplot.org/wpf"
+             xmlns:viewmodels="clr-namespace:RpiApp.ViewModels"
+             xmlns:local="clr-namespace:RpiApp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4" HorizontalAlignment="Left" Height="790" Margin="0,10,0,0" Grid.Row="0" VerticalAlignment="Top" Width="800">
+            <TabItem Header="Graphs">
+                <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4">
+
+                    <oxy:PlotView x:Name="Temperature"
+                        Margin="0,0,10,0" 
+                        Model="{Binding Temp}" Height="210" VerticalAlignment="Top"  RenderTransformOrigin="0.5,0.5">
+                        <oxy:PlotView.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </oxy:PlotView.RenderTransform>
+                    </oxy:PlotView>
+                    <Grid Margin="100,-5,500,710">
+                        <Button 
+                            Grid.Column="0"
+                            Height="30" 
+                            Width="54"
+                            Margin="0,11,130,11" 
+                            Command="{Binding StartButtonTemp}" HorizontalAlignment="Right" RenderTransformOrigin="-1.82,0.867">
+                            START
+                        </Button>
+                        <Button 
+                            Grid.Column="1" 
+                            Height="30" 
+                            Width="50" 
+                            Margin="0,10,15,10" 
+                            Command="{Binding StopButtonTemp}">
+                            STOP
+                        </Button>
+                    </Grid>
+
+
+                    <oxy:PlotView x:Name="Pressure"
+                        Margin="0,200,10,0" 
+                        Model="{Binding Press}" Height="210" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+                        <oxy:PlotView.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </oxy:PlotView.RenderTransform>
+                    </oxy:PlotView>
+
+                    <Grid Margin="100,-5,500,310">
+                        <Button 
+                            Grid.Column="0"
+                            Height="30" 
+                            Width="54"
+                            Margin="0,11,130,11" 
+                            Command="{Binding StartButtonPress}" HorizontalAlignment="Right" RenderTransformOrigin="-1.82,0.867">
+                            START
+                        </Button>
+                        <Button 
+                            Grid.Column="1" 
+                            Height="30" 
+                            Width="50" 
+                            Margin="0,10,15,10" 
+                            Command="{Binding StopButtonPress}">
+                            STOP
+                        </Button>
+                    </Grid>
+
+                    <oxy:PlotView x:Name="Humidity"
+                        Margin="0,400,10,0" 
+                        Model="{Binding Humid}" Height="210" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+                        <oxy:PlotView.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </oxy:PlotView.RenderTransform>
+                    </oxy:PlotView>
+                    <Grid Margin="100,-5,500,-90">
+                        <Button 
+                            Grid.Column="0"
+                            Height="30" 
+                            Width="54"
+                            Margin="0,11,130,11" 
+                            Command="{Binding StartButtonHumid}" HorizontalAlignment="Right" RenderTransformOrigin="-1.82,0.867">
+                            START
+                        </Button>
+                        <Button 
+                            Grid.Column="1" 
+                            Height="30" 
+                            Width="50" 
+                            Margin="0,10,15,10" 
+                            Command="{Binding StopButtonHumid}">
+                            STOP
+                        </Button>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Table">
+                <DataGrid x:Name="DataGridEnv" Loaded="DataGridEnv_Loaded"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

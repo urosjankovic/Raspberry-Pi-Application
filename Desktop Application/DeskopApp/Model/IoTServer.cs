@@ -42,6 +42,16 @@ namespace RpiApp.Model
         {
             return "http://" + ip + "/web_app/angles/angleValues.json";
         }
+        private string GetFileUrlAngles1()
+        {
+            return "http://" + ip + "/web_app/angles/angleValues1.json";
+        }
+
+        private string GetFileUrlAngles2()
+        {
+            return "http://" + ip + "/web_app/angles/angleValues2.json";
+        }
+
 
         private string GetFileUrlLED()
         {
@@ -138,7 +148,7 @@ namespace RpiApp.Model
             return responseText;
         }
 
-        public async Task<string> GETwithClientLED()
+        public async Task<string> GETwithClientRPY1()
         {
             string responseText = null;
 
@@ -146,7 +156,7 @@ namespace RpiApp.Model
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    responseText = await client.GetStringAsync(GetFileUrlLED());
+                    responseText = await client.GetStringAsync(GetFileUrlAngles1());
                 }
             }
             catch (Exception e)
@@ -158,6 +168,25 @@ namespace RpiApp.Model
             return responseText;
         }
 
+        public async Task<string> GETwithClientRPY2()
+        {
+            string responseText = null;
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    responseText = await client.GetStringAsync(GetFileUrlAngles2());
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("NETWORK ERROR");
+                Debug.WriteLine(e);
+            }
+
+            return responseText;
+        }
 
         /**
           * @brief HTTP POST request using HttpClient
@@ -274,7 +303,7 @@ namespace RpiApp.Model
             return responseText;
         }
 
-        public async Task<string> POSTwithClientLED()
+        public async Task<string> POSTwithClientRPY1()
         {
             string responseText = null;
 
@@ -284,7 +313,7 @@ namespace RpiApp.Model
                 {
                     // POST request data
                     var requestDataCollection = new List<KeyValuePair<string, string>>();
-                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "led_display"));
+                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "angleValues1"));
                     var requestData = new FormUrlEncodedContent(requestDataCollection);
                     // Sent POST request
                     var result = await client.PostAsync(GetScriptUrl(), requestData);
@@ -302,6 +331,33 @@ namespace RpiApp.Model
             return responseText;
         }
 
+        public async Task<string> POSTwithClientRPY2()
+        {
+            string responseText = null;
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    // POST request data
+                    var requestDataCollection = new List<KeyValuePair<string, string>>();
+                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "angleValues2"));
+                    var requestData = new FormUrlEncodedContent(requestDataCollection);
+                    // Sent POST request
+                    var result = await client.PostAsync(GetScriptUrl(), requestData);
+                    // Read response content
+                    responseText = await result.Content.ReadAsStringAsync();
+
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("NETWORK ERROR");
+                Debug.WriteLine(e);
+            }
+
+            return responseText;
+        }
 
         /**
           * @brief HTTP GET request using HttpWebRequest
@@ -416,14 +472,14 @@ namespace RpiApp.Model
             return responseText;
         }
 
-        public async Task<string> GETwithRequestLED()
+        public async Task<string> GETwithRequestRPY1()
         {
             string responseText = null;
 
             try
             {
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlLED());
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlAngles1());
 
                 request.Method = "GET";
 
@@ -444,6 +500,33 @@ namespace RpiApp.Model
             return responseText;
         }
 
+        public async Task<string> GETwithRequestRPY2()
+        {
+            string responseText = null;
+
+            try
+            {
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlAngles2());
+
+                request.Method = "GET";
+
+                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
+                using (Stream stream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    responseText = await reader.ReadToEndAsync();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("NETWORK ERROR");
+                Debug.WriteLine(e);
+            }
+
+            return responseText;
+        }
 
 
         /**
@@ -599,13 +682,87 @@ namespace RpiApp.Model
             return responseText;
         }
 
-        public async Task<string> POSTwithRequestLED()
+        public async Task<string> POSTwithRequestRPY1()
         {
             string responseText = null;
 
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetScriptUrl());
+
+                // POST Request data 
+
+                var requestData = "filename=angleValues1";
+                byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
+                // POST Request configuration
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = byteArray.Length;
+                // Wrire data to request stream
+                Stream dataStream = request.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+
+                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
+                using (Stream stream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    responseText = await reader.ReadToEndAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("NETWORK ERROR");
+                Debug.WriteLine(e);
+            }
+
+            return responseText;
+        }
+
+        public async Task<string> POSTwithRequestRPY2()
+        {
+            string responseText = null;
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetScriptUrl());
+
+                // POST Request data 
+
+                var requestData = "filename=angleValues2";
+                byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
+                // POST Request configuration
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = byteArray.Length;
+                // Wrire data to request stream
+                Stream dataStream = request.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+
+                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
+                using (Stream stream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    responseText = await reader.ReadToEndAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("NETWORK ERROR");
+                Debug.WriteLine(e);
+            }
+
+            return responseText;
+        }
+
+        public async Task<string> POSTwithRequestLED()
+        {
+            string responseText = null;
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlLED());
 
                 // POST Request data 
 
