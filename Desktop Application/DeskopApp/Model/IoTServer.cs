@@ -55,7 +55,7 @@ namespace RpiApp.Model
 
         private string GetFileUrlLED()
         {
-            return "http://" + ip + "/web_app/ledControl/new_led_display.php";
+            return "http://" + ip + "/web_app/ledControl/ledmatrix.php";
         }
         /**
          * @brief obtaining the address of the PHP script from IoT server IP.
@@ -756,42 +756,42 @@ namespace RpiApp.Model
             return responseText;
         }
 
-        public async Task<string> POSTwithRequestLED()
-        {
-            string responseText = null;
+        //public async Task<string> POSTwithRequestLED()
+        //{
+        //    string responseText = null;
 
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlLED());
+        //    try
+        //    {
+        //        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlLED());
 
-                // POST Request data 
+        //        // POST Request data 
 
-                var requestData = "filename=led_display.php";
-                byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
-                // POST Request configuration
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = byteArray.Length;
-                // Wrire data to request stream
-                Stream dataStream = request.GetRequestStream();
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Close();
+        //        var requestData = "filename=ledmatrix.php";
+        //        byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
+        //        // POST Request configuration
+        //        request.Method = "POST";
+        //        request.ContentType = "application/x-www-form-urlencoded";
+        //        request.ContentLength = byteArray.Length;
+        //        // Wrire data to request stream
+        //        Stream dataStream = request.GetRequestStream();
+        //        dataStream.Write(byteArray, 0, byteArray.Length);
+        //        dataStream.Close();
 
-                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
-                using (Stream stream = response.GetResponseStream())
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    responseText = await reader.ReadToEndAsync();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
+        //        using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
+        //        using (Stream stream = response.GetResponseStream())
+        //        using (StreamReader reader = new StreamReader(stream))
+        //        {
+        //            responseText = await reader.ReadToEndAsync();
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Debug.WriteLine("NETWORK ERROR");
+        //        Debug.WriteLine(e);
+        //    }
 
-            return responseText;
-        }
+        //    return responseText;
+        //}
 
 
     }

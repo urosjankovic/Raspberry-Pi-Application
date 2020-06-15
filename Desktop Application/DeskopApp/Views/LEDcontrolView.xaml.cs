@@ -32,51 +32,24 @@ namespace RpiApp.Views
         {
             InitializeComponent();
         }
-
+        
         public void changeColor(Button button)
         {
-            byte rr = (byte)SeekR.Value;
-            byte gg = (byte)SeekG.Value;
-            byte bb = (byte)SeekB.Value;
-            Color cc = Color.FromRgb(rr, gg, bb); //Create object of Color class.
-            SolidColorBrush colorBrush = new SolidColorBrush(cc); //Creating object of SolidColorBruch class.
-            button.Background = colorBrush; //Setting background of a button.
-            ledIndBack.Background = colorBrush;
-
-           // (DataContext as LEDViewModel).
+            (DataContext as LEDViewModel).colorChanges(SeekR, SeekG, SeekB, button);
         }
-
-        public void offColor(Button button)
-        {
-            Color ccc = (Color)ColorConverter.ConvertFromString("#FFAAAAAA");
-            SolidColorBrush colorBrush = new SolidColorBrush(ccc);
-            button.Background = colorBrush;
-        }
+    
         private void changeLedIndicatiorColor(object sender, RoutedEventArgs e)
         {
             changeColor(sender as Button);
         }
-
-        private void seekR_changed(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            changeColor(ledIndBack);
-        }
-        private void seekG_changed(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            changeColor(ledIndBack);
-        }
-        private void seekB_changed(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            changeColor(ledIndBack);
-        }
-
         public void clearAllLed(object sender, RoutedEventArgs e)
         {
             // Clear LED display GUI
-            foreach(Button button in ledMatrix.Children.OfType<Button>())
+            foreach (Button button in ledMatrix.Children.OfType<Button>())
             {
                 button.Background = (Brush)new BrushConverter().ConvertFrom("#FFAAAAAA");
-            }           
+            }
+            (DataContext as LEDViewModel).offColor();
         }
 
     }

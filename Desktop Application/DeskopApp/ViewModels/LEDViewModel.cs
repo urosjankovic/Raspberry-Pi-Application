@@ -20,6 +20,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RpiApp.Model;
 using System.Windows.Controls;
+using System.Web;
+
+
+
 
 namespace RpiApp.ViewModels
 {
@@ -56,22 +60,12 @@ namespace RpiApp.ViewModels
         private IoTServer Server;
         #endregion
 
+        
         /* BEGIN Colors */
-
-        // Maybe I can use Color here immediatelly 
-
-
-        Color ledOffColor = (Color)ColorConverter.ConvertFromString("#FFAAAAAA"); // LED-is-off color in Int ARGB format
-        Color ledActiveColor => ledOffColor; // Active color in Int ARGB format
-
-
-        //List<Color> ledOffColorLst = ledOffColor; // LED-is-off color in Int ARGB format //FIX
-
 
         public ButtonCommand SendData { get; set; }
 
-
-
+        public ButtonCommand ClearButton { get; set; }
 
         public LEDViewModel()
         {
@@ -80,117 +74,85 @@ namespace RpiApp.ViewModels
 
             SendData = new ButtonCommand(sendControlRequest);
 
-            /* END Colors */
-
-            /* BEGIN Request */
-            Dictionary<String, String> paramsClear = new Dictionary<String, String>(); // HTTP POST data: clear display command
-
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; i < 8; i++)
-                {
-                    String data = "[" + Convert.ToString(i) + "," + Convert.ToString(j) + ",0,0,0]";
-                    paramsClear.Add(ledIndexToTag(i, j), data);
-                }
-            }
-
-
         }
 
-        int?[,,] ledDisplayModel = new int?[8, 8, 3]; // LED display data model
+        
+        Dictionary<String, List<int>> paramsss = new Dictionary<String, List<int>>();
+        byte rr, gg, bb;
+        Color cc;
+        SolidColorBrush colorBrush;
 
 
-        String ledIndexToTag(int x, int y)
+        public void colorChanges(Slider seekR, Slider seekG, Slider seekB, Button button)
         {
-            return "LED" + Convert.ToString(x) + Convert.ToString(y);
-        }
+            List<int> ledColors = new List<int>();
+            rr = (byte)seekR.Value;
+            gg = (byte)seekG.Value;
+            bb = (byte)seekB.Value;
 
-        public int argbToInt(int _a, int _r, int _g, int _b)
+            cc = Color.FromRgb(rr, gg, bb); //Create object of Color class.
+            colorBrush = new SolidColorBrush(cc); //Creating object of SolidColorBruch class.
+            button.Background = colorBrush; //Setting background of a button.
+
+            ledColors.Add(rr);
+            ledColors.Add(gg);
+            ledColors.Add(bb);
+
+            paramsss.Add(button.Name, ledColors);
+
+            
+        }
+        
+        public void offColor()
         {
-            return (_a & 0xff) << 24 | (_r & 0xff) << 16 | (_g & 0xff) << 8 | (_b & 0xff);
-        }
-
-        public List<object> intToRGB(int argb)
-        {
-            int _r = (argb >> 16) & 0xff;
-            int _g = (argb >> 8) & 0xff;
-            int _b = argb & 0xff;
-            List<object> rgb = new List<object>(3);
-            rgb.Insert(0, _r);
-            rgb.Insert(1, _g);
-            rgb.Insert(2, _b);
-            return rgb;
-        }
-
-        String ledIndexToJsonData(int x, int y)
-        {
-            String _x = Convert.ToString(x);
-            String _y = Convert.ToString(y);
-            String _r = Convert.ToString(ledDisplayModel[x, y, 0]);
-            String _g = Convert.ToString(ledDisplayModel[x, y, 1]);
-            String _b = Convert.ToString(ledDisplayModel[x, y, 2]);
-            return "[" + _x + "," + _y + "," + _r + "," + _g + "," + _b + "]";
-        }
-
-        bool ledColorNotNull(int x, int y)
-        {
-            return !((ledDisplayModel[x, y, 0] == null) || (ledDisplayModel[x, y, 1] == null) || (ledDisplayModel[x, y, 2] == null));
+            paramsss.Clear();
         }
 
 
-        public Dictionary<String, String> getDisplayControlParams()
-        {
-            String led;
-            String color;
-            Dictionary<String, String> paramss = new Dictionary<String, String>();
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    if (ledColorNotNull(i, j))
-                    {
-                        led = ledIndexToTag(i, j);
-                        color = ledIndexToJsonData(i, j);
-                        paramss.Add(led, color);
-                    }
-                }
-            }
-            return paramss;
-        }
+//        private async void UpdateDataLED()
+//        {
 
-        private async void UpdateDataLED()
-        {
+//            string responseText = await Server.POSTwithRequestLED();
 
-            string responseText = await Server.POSTwithRequestLED();
+//            try
+//            {
+//#if DYNAMIC
+//                dynamic responseJson = JObject.Parse(responseText);
 
-            try
-            {
-#if DYNAMIC
-                dynamic responseJson = JObject.Parse(responseText);
+//#else
 
-#else
+//                ServerData responseJson = JsonConvert.SerializeObject<ServerData>(responseText);
 
-                ServerData responseJson = JsonConvert.DeserializeObject<ServerData>(responseText);
-               
-#endif
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("JSON DATA ERROR");
-                Debug.WriteLine(responseText);
-                Debug.WriteLine(e);
-            }
-        }
+//#endif
+//            }
+//            catch (Exception e)
+//            {
+//                Debug.WriteLine("JSON DATA ERROR");
+//                Debug.WriteLine(responseText);
+//                Debug.WriteLine(e);
+//            }
+//        }
 
-        public Dictionary<String,String> getParams()
-        {
-            return getDisplayControlParams();
-        }
+
 
         public void sendControlRequest()
         {
-            getParams();
-            UpdateDataLED();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://192.168.1.26/web_app/ledControl/ledmatrix.php");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                string json = JsonConvert.SerializeObject(paramsss);
+
+                streamWriter.Write(json);
+
+                Console.WriteLine(json);
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+            }
         }
 
         #region PropertyChanged

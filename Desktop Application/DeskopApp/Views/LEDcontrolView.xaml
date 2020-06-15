@@ -117,9 +117,9 @@
                 <Button Grid.Row="7" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Name="LED77" Click="changeLedIndicatiorColor"/>
             </Grid>
             <Grid Margin="230,480,230,170">
-                <Slider x:Name="SeekR" Margin="0,0,0,120" Tag="seekR" Maximum="255" Background="Red" ValueChanged="seekR_changed"></Slider>
-                <Slider x:Name="SeekG" Margin="0,50,0,70" Tag="seekG" Maximum="255" Background="Green" ValueChanged="seekG_changed"></Slider>
-                <Slider x:Name="SeekB" Margin="0,100,0,20" Tag="seekB" Maximum="255" Background="Blue" ValueChanged="seekB_changed"></Slider>
+                <Slider x:Name="SeekR" Margin="0,0,0,120" Tag="seekR" Maximum="255" Background="Red"  ></Slider>
+                <Slider x:Name="SeekG" Margin="0,50,0,70" Tag="seekG" Maximum="255" Background="Green"></Slider>
+                <Slider x:Name="SeekB" Margin="0,100,0,20" Tag="seekB" Maximum="255" Background="Blue"></Slider>
             </Grid>
             <Grid Margin="178,480,575,148">
                 <TextBlock FontSize="20" HorizontalAlignment="Right" Margin="0,0,0,115">R</TextBlock>
@@ -146,11 +146,6 @@
                         Margin="0,0,10,0" 
                         Command="{Binding ClearButton}" HorizontalAlignment="Right" Grid.ColumnSpan="3" Click="clearAllLed">
                     CLEAR
-                </Button>
-                <Button 
-                        Width="76"
-                        Margin="0,0,177,0" 
-                        Background="#FFAAAAAA" HorizontalAlignment="Right" Grid.ColumnSpan="4"  IsHitTestVisible="False" x:Name="ledIndBack">
                 </Button>
             </Grid>
         </Grid>
