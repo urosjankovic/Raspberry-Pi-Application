@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using RpiApp.ViewModels;
 
 namespace RpiApp.Views
 {
@@ -41,6 +42,8 @@ namespace RpiApp.Views
             SolidColorBrush colorBrush = new SolidColorBrush(cc); //Creating object of SolidColorBruch class.
             button.Background = colorBrush; //Setting background of a button.
             ledIndBack.Background = colorBrush;
+
+           // (DataContext as LEDViewModel).
         }
 
         public void offColor(Button button)
@@ -73,8 +76,7 @@ namespace RpiApp.Views
             foreach(Button button in ledMatrix.Children.OfType<Button>())
             {
                 button.Background = (Brush)new BrushConverter().ConvertFrom("#FFAAAAAA");
-            } 
-            
+            }           
         }
 
     }

@@ -47,6 +47,7 @@ namespace RpiApp.Views
             DataColumn humidd = new DataColumn("Humidity", typeof(string));
 
             string url = "http://192.168.1.26/web_app/measurements/tempValues.json";
+
          
             dt.Columns.Add(tempp);
             dt.Columns.Add(presss);

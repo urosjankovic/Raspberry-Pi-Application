@@ -161,7 +161,7 @@ namespace RpiApp.ViewModels
         private async void UpdateDataLED()
         {
 
-            string responseText = await Server.POSTwithRequestHumid();
+            string responseText = await Server.POSTwithRequestLED();
 
             try
             {

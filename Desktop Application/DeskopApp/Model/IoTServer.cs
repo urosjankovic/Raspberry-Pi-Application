@@ -55,7 +55,7 @@ namespace RpiApp.Model
 
         private string GetFileUrlLED()
         {
-            return "http://" + ip + "/web_app/ledControl/led_display.php";
+            return "http://" + ip + "/web_app/ledControl/new_led_display.php";
         }
         /**
          * @brief obtaining the address of the PHP script from IoT server IP.
