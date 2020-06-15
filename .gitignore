@@ -1,3 +1,5 @@
 node_modules
 package-lock.json
 *.swp
+Web Application/.mypy_cashe
+WebApplication/scripts/.mypy_cache
