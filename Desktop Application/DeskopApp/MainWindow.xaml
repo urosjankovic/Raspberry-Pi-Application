@@ -37,7 +37,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Background="Gray">
+        <DockPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Background="Gray" x:Name="Menu">
             <StackPanel>
                 <Button Content="Enviromental Data" Height="50" FontSize="20" Click="EnvData_click"/>
                 <Button Content="Angles" Height="50" FontSize="20" Click="Angles_click"/>

@@ -21,6 +21,7 @@ namespace RpiApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool isMenuVisible = true;
         public MainWindow()
         {
             InitializeComponent();
@@ -45,5 +46,6 @@ namespace RpiApp
         {
             DataContext = new LEDViewModel();
         }
+
     }
 }
