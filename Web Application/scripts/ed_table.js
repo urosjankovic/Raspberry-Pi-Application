@@ -3,14 +3,15 @@ var tempFromPresUnit = "C";
 var presUnit = "hPa";
 var humUnit = "P";
 var sampleTime = 1000;
-var maxStoredSamples = 1000;
-var url;
+var timer;
+const url = "sensors_via_deamon.php?id=env";
+
+
 
 $(document).ready(function() {
 
-    // Writing initial values to input fields
+    // Writing initial value to input field
     $("#sampleTime").val(sampleTime);
-    $("#storedSamples").val(maxStoredSamples);
 
     // Listener for radio inputs
     $("input:radio").change(function(e){
@@ -18,7 +19,7 @@ $(document).ready(function() {
         if(name == "tempFromHumUnit"){
             tempFromHumUnit = e.currentTarget.value;
         }
-        else if(name == "tempFromPressUnitRadio"){
+        else if(name == "tempFromPressUnit"){
             tempFromPresUnit = e.currentTarget.value;
         }
         else if(name == "presUnit"){
@@ -35,24 +36,62 @@ $(document).ready(function() {
         if (inputValue != NaN){
             sampleTime = inputValue;
         }
+        stopTimer();
+        startTimer();
     });
-
-    $("#storedSamples").change(function(){
-        var inputValue = Number($(this).val());
-        if (inputValue != NaN){
-            maxStoredSamples = inputValue;
-        }
-    });
-
-    url = getURL();
 
 })
 
 /**
- * @brief Get current URL
+* @brief Start request timer
+*/
+function startTimer(){
+	if(timer == null)
+		timer = setInterval(ajaxGetJSON, sampleTime);
+}
+
+/**
+* @brief Stop request timer
+*/
+function stopTimer(){
+	if(timer != null) {
+		clearInterval(timer);
+		timer = null;
+	}
+}
+
+/**
+* @brief Send HTTP GET request to IoT server
+*/
+function ajaxGetJSON(){
+	$.getJSON(url , function(data){	
+        console.log(data)
+        updateTable(data);
+	})
+}
+
+/**
+ * @brief Update values in table
+ * @param envObj JS object with data received from server
  */
-function getURL() {
-    return window.location.href;
+function updateTable(envObj){
+
+    if(tempFromHumUnit == "K"){ envObj[0].data = CelsiusToKelvin(envObj[0].data); }
+    else if (tempFromHumUnit == "F"){ envObj[0].data = CelsiusToFahrenheit(envObj[0].data); }
+        
+    if(tempFromPresUnit == "K"){ envObj[1].data = CelsiusToKelvin(envObj[1].data); }
+    else if (tempFromPresUnit == "F"){ envObj[1].data = CelsiusToFahrenheit(envObj[1].data); }
+    
+    if(presUnit == "mmHg"){ envObj[2].data = hPaTommHg(envObj[2].data); }
+    else if (presUnit == "Bar"){ envObj[2].data = hPaToBar(envObj[2].data); }
+    
+    if(humUnit == "F"){ envObj[3].data = PercentToDecimal(envObj[3].data); }
+   
+
+    $("#tempFromHumValue").html(envObj[0].data);
+    $("#tempFromPresValue").html(envObj[1].data);
+    $("#presValue").html(envObj[2].data);
+    $("#humValue").html(envObj[3].data);
 }
 
 /**

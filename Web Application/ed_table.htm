@@ -21,13 +21,10 @@
 
 
         <div class="border border-dark p-1 rounded">
-            <button type="button" class="btn btn-dark" onclick="startButton()">Start</button>
-            <button type="button" class="btn btn-dark" onclick="stopButton()">Stop</button>
+            <button type="button" class="btn btn-dark" onclick="startTimer()">Start</button>
+            <button type="button" class="btn btn-dark" onclick="stopTimer()">Stop</button>
             <span class="menuitem">Sample time: 
                 <span><input type="text" class="inputfield" maxlength="4" size="3" id="sampleTime"></span> ms
-            </span>
-            <span class="menuitem">Max no. of stored samples: 
-                <span><input type="text" class="inputfield" maxlength="4" size="3" id="storedSamples"></span>
             </span>
         </div>
 
@@ -43,7 +40,7 @@
               <tbody>
                 <tr>
                     <td>Temperature from humidity sensor</td>
-                    <td id="tempFromHumValue">0</td>
+                    <td id="tempFromHumValue" style="text-align: left; position:absolute; left:48%">0</td>
                     <td>
                         <div  class="menuitem">Unit: 
                         <div class="form-check-inline">
@@ -59,7 +56,7 @@
                 </tr>
                 <tr>
                     <td>Temperature from pressure sensor</td>
-                    <td id="tempFromPresValue">0</td>
+                    <td id="tempFromPresValue" style="text-align: left; position:absolute; left:48%">0</td>
                     <td>
                         <div  class="menuitem" style="background-color:#454d55">Unit: 
                         <div class="form-check-inline">
@@ -75,7 +72,7 @@
                 </tr>
                 <tr>
                   <td>Pressure</td>
-                  <td id="presValue">0</td>
+                  <td id="presValue" style="text-align: left; position:absolute; left:48%">0</td>
                   <td><div  class="menuitem">Unit: 
                     <div class="form-check-inline">
                         <input type="radio" class="form-check-input" name="presUnit" value="hPa" checked>hPa
@@ -90,7 +87,7 @@
                 </tr>
                 <tr>
                   <td>Humidity</td>
-                  <td id="humValue">0</td>
+                  <td id="humValue" style="text-align: left; position:absolute; left:48%">0</td>
                   <td><div  class="menuitem" style="background-color:#454d55">Unit: 
                     <div class="form-check-inline">
                         <input type="radio" class="form-check-input checked" name="humUnit" value="P" checked>%
