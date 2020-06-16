@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- HTML file head: web page metadata -->
+    <head>
+        <title>Environmental data table</title>
+        <!-- jQuery -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        
+        <script type="text/javascript" src="scripts/ed_graph.js"></script>
+        <link rel="stylesheet" type="text/css" href="styles/rpi.css">
+    </head>
+
+	<!-- HTML file body: web page content -->
+	<body>
+        <div class="border border-dark p-1 rounded">
+            <button type="button" class="btn btn-dark" onclick="startTimer()">Start</button>
+            <button type="button" class="btn btn-dark" onclick="stopTimer()">Stop</button>
+            <span class="menuitem">Sample time: 
+                <span id="sampleTime"><input type="text" class="inputfield" maxlength="4" size="3"></span> ms
+            </span>
+            <span class="menuitem">Max no. of stored samples: 
+                <span id="storedSamples"><input type="text" class="inputfield" maxlength="4" size="3"></span>
+            </span>
+        </div>
+
+        <div class="border border-dark p-1 rounded centerchild" id="graphs">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Temperature</td>
+                        <td>Pressure</td>
+                        <td>Humidity</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="radiointable">
+                                Unit: &degC
+                            </span>
+                        </td>
+                        <td>
+                            <span class="radiointable">
+                                Unit: hPa
+                            </span>
+                        </td>
+                        <td>
+                            <span class="radiointable">
+                                Unit: %
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><div class="chartcontainer"><canvas id="tempChart"></canvas></div></td>
+                        <td><div class="chartcontainer"><canvas id="presChart"></canvas></div></td>
+                        <td><div class="chartcontainer"><canvas id="humChart"></canvas></div></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </body>

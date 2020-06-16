@@ -27,7 +27,7 @@ $(document).ready(function() {
         // Change color of LED
         setResultColor(this); 
         
-        // Assign RGB value to LED object
+        // Assign RGB value to object with tag of the LED as key
         LEDobj[$(this).attr('id')] = [R, G, B];
     });
 })
@@ -72,10 +72,13 @@ function setResultColor(element){
     $(element).css("background-color", resultColor);
 }
 
+/**
+ * @brief Send JSON using POST method
+ */
 function sendButton(){
 
     $.ajax({
-        url : 'ledmatrix.php',
+        url : '../server/ledmatrix.php',
         method : 'post',
         contentType : "application/json",
         data : JSON.stringify(LEDobj),
