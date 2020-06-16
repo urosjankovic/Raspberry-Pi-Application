@@ -25,8 +25,8 @@ while True:
         if data:
             sense.clear()
             for key, value in data.items():
-                x = int(key[2])
-                y = int(key[3])
+                x = int(key[3])
+                y = int(key[4])
                 r = int(value[0])
                 g = int(value[1])
                 b = int(value[2])
