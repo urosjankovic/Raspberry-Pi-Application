@@ -1,26 +1,29 @@
-var sampleTime = 100;
-var sampleTimeSec = sampleTime / 1000;
-var maxStoredSamples = 100;
+var sampleTime = 100;					// Sample time [ms]
+var sampleTimeSec = sampleTime / 1000;	// Sample time [s]
+var maxStoredSamples = 100;				// Maximum number of stored samples
 
-var timeVec = [];
-var AXVec = [], AYVec = [], AZVec = [];
-var MXVec = [], MYVec = [], MZVec = [];
-var GXVec = [], GYVec = [], GZVec = [];
-var lastTimeStamp;
+var timeVec;				// Time vector common for all graphs
+var AXVec, AYVec, AZVec;	// Vectors of roll, pitch, yaw values from accelerometer
+var MXVec, MYVec, MZVec;	// Vectors of x, y, z values from magnetometer
+var GXVec, GYVec, GZVec;	// Vectors of roll, pitch and yaw from gyroscope
+var lastTimeStamp;			// Last time stamp [s]
 
-var AchartContext;
-var MchartContext;
-var GchartContext;
-var Achart;
-var Mchart;
-var Gchart;
+var AchartContext;	// Context of accelerometer chart
+var MchartContext;	// Context of magnetometer chart
+var GchartContext;	// Context of gyroscope chart
+var Achart;			// Chart.js object for accelerometer chart
+var Mchart;			// Chart.js object for magnetometer chart
+var Gchart;			// Chart.js object for gyroscope chart
 
-var timer;
-
-var notInit = true;
+var timer;				// Requst timer
+var notInit = true;		// Graphs initialized flag
 
 const url = "sensors_via_deamon.php?id=ori"
 
+/**
+ * @brief Add new value to next data point
+ * @param data object with received data
+ */
 function addData(data){
     if(AXVec.length > maxStoredSamples)
     {
@@ -120,6 +123,9 @@ $(document).ready(function() {
 
 })
 
+/**
+ * @brief Call initialization of graphs if not initailized
+ */
 function graphsInit(){
 	if(notInit){
 		AChartInit();
@@ -129,6 +135,9 @@ function graphsInit(){
 	}
 }
 
+/**
+ * @brief Initialize accelerometer graph
+ */
 function AChartInit(){
     // array with consecutive integers: <0, maxSamplesNumber-1>
 	timeVec = [...Array(maxStoredSamples).keys()]; 
@@ -224,6 +233,9 @@ function AChartInit(){
 	timeVec = Achart.data.labels;
 }
 
+/**
+ * Initialize magnetometer graph
+ */
 function MChartInit(){
 	// empty array
 	MXVec = []; 
@@ -310,6 +322,9 @@ function MChartInit(){
 	MZVec = Mchart.data.datasets[2].data;
 }
 
+/**
+ * @brief Initialize gyroscope graph
+ */
 function GChartInit(){
 	// empty array
 	GXVec = []; 

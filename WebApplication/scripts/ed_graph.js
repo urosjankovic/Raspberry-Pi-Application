@@ -1,26 +1,25 @@
-var sampleTime = 100;
-var sampleTimeSec = sampleTime / 1000;
-var maxStoredSamples = 100;
+var sampleTime = 100;					// Sample time [ms]
+var sampleTimeSec = sampleTime / 1000;	// Sample time [s]
+var maxStoredSamples = 100;				// Maximum number of stored samples
 
-var timeVec;
-var tempFromPresVec;
-var tempFromHumVec;
-var humVec;
-var presVec;
-var lastTimeStamp;
+var timeVec;			// Time vector common for all graphs
+var tempFromPresVec;	// Vector of temperature values from pressure sensor
+var tempFromHumVec;		// Vector of temperature values from humidity sensor
+var humVec;				// Vector of humidity values
+var presVec;			// Vector of pressure values
+var lastTimeStamp;		// Last time stamp [s]
 
-var tempChartContext;
-var presChartContext;
-var humChartContext;
-var tempChart;
-var presChart;
-var humChart;
+var tempChartContext;	// Context of temperature chart
+var presChartContext;	// Context of pressure chart
+var humChartContext;	// Context of humidity chart
+var tempChart;			// Charts.js object for temperature
+var presChart;			// Charts.js object for pressure
+var humChart;			// Charts.js object for humidity
 
-var timer;
+var timer;				// Request timer
+var notInit = true;		// Graphs initialized flag
 
-var notInit = true;
-
-const url = "sensors_via_deamon.php?id=env";
+const url = "sensors_via_deamon.php?id=env";	
 
 $(document).ready(function() {
 
@@ -43,7 +42,7 @@ $(document).ready(function() {
 		}
     });
 
-    // Max stored samples change listener
+    // Maximum number of stored samples change listener
     $("#storedSamples").change(function(){
 		if(notInit){
 			var inputValue = Number($(this).val());
@@ -82,6 +81,9 @@ function addData(data){
 	tempChart.update();
 }
 
+/**
+ * @brief Call initialization of graphs if not initailized
+ */
 function graphsInit(){
 	if(notInit){
 		tempChartInit();
@@ -92,7 +94,7 @@ function graphsInit(){
 }
 
 /**
- * Remove oldest data point
+ * @brief Remove oldest data point
  */
 function removeOldData(){
     timeVec.splice(0,1);
@@ -109,8 +111,6 @@ function startTimer(){
 	if(timer == null)
 		timer = setInterval(ajaxGetJSON, sampleTime);
 }
-
-
 
 /**
 * @brief Stop request timer
@@ -131,6 +131,9 @@ function ajaxGetJSON(){
 	})
 }
 
+/**
+ * @brief Initialize temperature graph
+ */
 function tempChartInit(){
     // array with consecutive integers: <0, maxSamplesNumber-1>
 	timeVec = [...Array(maxStoredSamples).keys()]; 
@@ -214,6 +217,9 @@ function tempChartInit(){
 	timeVec = tempChart.data.labels;
 }
 
+/**
+ * @brief Initialize pressure graph
+ */
 function presChartInit(){
 	// empty array
 	presVec = []; 
@@ -278,6 +284,9 @@ function presChartInit(){
 	presVec = presChart.data.datasets[0].data;
 }
 
+/**
+ * @brief Initialize humidity graph
+ */
 function humChartInit(){
 	// empty array
 	humVec = []; 

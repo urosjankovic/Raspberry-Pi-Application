@@ -1,8 +1,8 @@
-var AccelerometerUnit = "deg";
-var GyroscopeUnit = "deg"
-var sampleTime = 1000;
-var maxStoredSamples = 1000;
-var timer;
+var AccelerometerUnit = "deg";      // Unit of roll, pitch, yaw from accelerometer
+var GyroscopeUnit = "deg"           // Unit of roll, pitch, yaw from gyroscope
+var sampleTime = 1000;              // Sample time [ms]
+var maxStoredSamples = 1000;        // Maximum number of stored samples
+var timer;                          // Request timer
 
 const url = "sensors_via_deamon.php?id=ori";
 
@@ -23,6 +23,7 @@ $(document).ready(function() {
         }
     });
 
+    // Sample time change listener
     $("#sampleTime").change(function(){
         var inputValue = Number($(this).val());
         if (inputValue != NaN){
@@ -30,6 +31,7 @@ $(document).ready(function() {
         }
     });
 
+    // Maximum number of stored samples change listener
     $("#storedSamples").change(function(){
         var inputValue = Number($(this).val());
         if (inputValue != NaN){
@@ -96,6 +98,11 @@ function updateTable(oriObj){
     $("#GZValue").html(oriObj[2].data.yaw);
 }
 
+/**
+ * @brief Convert value from degrees to radians
+ * @param value in degrees
+ * @retval value in radians
+ */
 function DegreesToRadians(value){
     return value * Math.PI / 180;
 }

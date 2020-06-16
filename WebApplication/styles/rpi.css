@@ -63,7 +63,6 @@ tr{
     border-color: #343a40;
     float: inline-end;
     margin-left: .25em;
-    
 }
 
 .inputfield{
@@ -103,7 +102,7 @@ tr{
 }
 
 th, td {
-    padding: 0.35em;
+
     text-align: center;
 }
 
@@ -144,3 +143,17 @@ button#send, button#clear{
 td{
     width: 33%;
 } 
+
+.counter{
+    color: #fff;
+    vertical-align: middle;
+    background-color: #343a40;
+    text-align: center;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border: 1px solid;
+    line-height: 1.5;
+    border-radius: .25rem;
+    border-color: #343a40;
+    
+}

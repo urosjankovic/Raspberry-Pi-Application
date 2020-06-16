@@ -5,8 +5,9 @@ var R;                  // Value of red slider
 var G;                  // Value of green slider
 var B;                  // Value of blue slider
 var selectedLEDs = [];  // Selected LEDs
+var LEDobj;             // Object with data to send       
+
 const url = '../server/ledmatrix.php';
-var LEDobj = {};
 
 $(document).ready(function() {
 

@@ -1,12 +1,11 @@
-var tempFromHumUnit = "C";
-var tempFromPresUnit = "C";
-var presUnit = "hPa";
-var humUnit = "P";
-var sampleTime = 1000;
-var timer;
+var tempFromHumUnit = "C";      // Unit of temperature from humidity sensor
+var tempFromPresUnit = "C";     // Unit of pressure from humidity sensor
+var presUnit = "hPa";           // Unit of pressure
+var humUnit = "P";              // Unit of humidity
+var sampleTime = 1000;          // Sample time [ms]
+var timer;                      // Request timer
+
 const url = "sensors_via_deamon.php?id=env";
-
-
 
 $(document).ready(function() {
 
@@ -31,6 +30,7 @@ $(document).ready(function() {
 
     });
 
+    // Listener for change of sample time
     $("#sampleTime").change(function(){
         var inputValue = Number($(this).val());
         if (inputValue != NaN){
@@ -96,6 +96,8 @@ function updateTable(envObj){
 
 /**
  * @brief Convert Celsius degrees to Fahrenheit degrees
+ * @param val Value in Celsius degrees
+ * @retval Value in Fahrenheit degrees
  */
 function CelsiusToFahrenheit(val){
     return 1.8 * val + 32;
@@ -103,20 +105,26 @@ function CelsiusToFahrenheit(val){
 
 /**
  * @brief Convert Celsius degrees to Kelvins
+ * @param val Value in Celsius degrees
+ * @retval Value in Kelvins 
  */
 function CelsiusToKelvin(val){
     return val + 273.15;
 }
 
 /**
- * @brief Convert hPa degrees to mmHg
+ * @brief Convert hPa to mmHg
+ * @param val Value in hPa 
+ * @retval Value in mmHg 
  */
 function hPaTommHg(val){
     return val * 0.7500616827;
 }
 
 /**
- * @brief Convert hPa degrees to Bars
+ * @brief Convert hPa to bars
+ * @param val Value in hPa degrees
+ * @retval Value in bars 
  */
 function hPaToBar(val){
     return val / 1000;
@@ -124,6 +132,8 @@ function hPaToBar(val){
 
 /**
  * @brief Convert percents degrees to decimal fraction
+ * @param val Value percents
+ * @retval Value in decimal fraction 
  */
 function PercentToDecimal(val){
     return val / 100;

@@ -12,26 +12,37 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         
-        <script type="text/javascript" src="scripts/ed_table.js"></script>
+        <!-- Chart.js library -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+        <script type="text/javascript" src="scripts/joystick.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/rpi.css">
     </head>
 
 	<!-- HTML file body: web page content -->
 	<body>
-        <div class="border border-dark p-1 rounded">
-            <button type="button" class="btn btn-dark">Start</button>
-            <button type="button" class="btn btn-dark">Stop</button>
-            <button type="button" class="btn btn-dark">Reset</button>
-            <span class="menuitem">Sample time: 
-                <span id="sampleTime"><input type="text" class="inputfield" maxlength="4" size="3"></span> ms
-            </span>
-            <span class="menuitem">Max no. of stored samples: 
-                <span id="sampleTime"><input type="text" class="inputfield" maxlength="4" size="3"></span>
-            </span>
-        </div>
-
-        <div class="border border-dark p-1 rounded">
-            <canvas style="display:inline-block" id="chart"></canvas>
-            <p class="menuitem">Counter: <span id="counter"></span></p>
-        </div>
+        <table class="mx-auto joysticktable">
+            <tbody>
+                <tr class="border border-dark rounded">
+                    <td>
+                        <div> 
+                            <span style="float:left">
+                                <button type="button" class="btn btn-dark" onclick="startTimer()">Start</button>
+                                <button type="button" class="btn btn-dark" onclick="stopTimer()">Stop</button>
+                                <button type="button" class="btn btn-dark" onclick="resetCounter()">Reset counter</button>
+                                <button type="button" class="btn btn-dark" onclick="resetGraph()">Reset graph</button>
+                            </span>
+                            <div class="menuitem">Counter: <span id="counterValue"></span></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="border border-dark rounded">
+                            <div class="chartcontainer"><canvas id="chart"></canvas></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </body>
