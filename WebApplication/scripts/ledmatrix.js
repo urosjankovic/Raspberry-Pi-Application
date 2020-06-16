@@ -5,7 +5,7 @@ var R;                  // Value of red slider
 var G;                  // Value of green slider
 var B;                  // Value of blue slider
 var selectedLEDs = [];  // Selected LEDs
-var url;
+const url = '../server/ledmatrix.php';
 var LEDobj = {};
 
 $(document).ready(function() {
@@ -78,7 +78,7 @@ function setResultColor(element){
 function sendButton(){
 
     $.ajax({
-        url : '../server/ledmatrix.php',
+        url : url,
         method : 'post',
         contentType : "application/json",
         data : JSON.stringify(LEDobj),

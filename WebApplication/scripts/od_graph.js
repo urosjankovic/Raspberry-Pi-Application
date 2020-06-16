@@ -1,59 +1,63 @@
-var sampleTime = 1000;
+var sampleTime = 100;
 var sampleTimeSec = sampleTime / 1000;
 var maxStoredSamples = 100;
 
-var timeVec;
-const Accelerometer = 0;
-const Magnetic = 1;
-const Gyroscope = 2;
-var chartIds = ["Achart", "Mchart", "Gchart"];
-var AxVec = [], AyVec = [], AzVec = [];
-var MxVec = [], MyVec = [], MzVec = [];
-var GxVec = [], GyVec = [], GzVec = [];
-var dataVec = [[AxVec, AyVec, AzVec], [MxVec, MyVec, MzVec], [GxVec, GyVec, GzVec]];
+var timeVec = [];
+var AXVec = [], AYVec = [], AZVec = [];
+var MXVec = [], MYVec = [], MZVec = [];
+var GXVec = [], GYVec = [], GZVec = [];
 var lastTimeStamp;
 
-var chartContexts = [];
-var charts = [];
+var AchartContext;
+var MchartContext;
+var GchartContext;
+var Achart;
+var Mchart;
+var Gchart;
 
 var timer;
+
+var notInit = true;
 
 const url = "sensors_via_deamon.php?id=ori"
 
 function addData(data){
-    if(dataVec[Accelerometer][0].length > maxStoredSamples)
+    if(AXVec.length > maxStoredSamples)
     {
         removeOldData();
         lastTimeStamp += sampleTimeSec;
-        timeVec.push(lastTimeStamp.toFixed(4));
+		timeVec.push(lastTimeStamp.toFixed(4));
     }
     
-	dataVec[Accelerometer][0].push(data[0].data.roll);
-	dataVec[Accelerometer][1].push(data[0].data.pitch);
-	dataVec[Accelerometer][2].push(data[0].data.yaw);
-	dataVec[Magnetic][0].push(data[1].data.x);
-	dataVec[Magnetic][1].push(data[1].data.y);
-	dataVec[Magnetic][2].push(data[1].data.z);
-	dataVec[Gyroscope][0].push(data[2].data.roll);
-	dataVec[Gyroscope][1].push(data[2].data.pitch);
-	dataVec[Gyroscope][2].push(data[2].data.yaw);
+	AXVec.push(data[0].data.roll);
+	AYVec.push(data[0].data.pitch);
+	AZVec.push(data[0].data.yaw);
+	MXVec.push(data[1].data.x);
+	MYVec.push(data[1].data.y);
+	MZVec.push(data[1].data.z);
+	GXVec.push(data[2].data.roll);
+	GYVec.push(data[2].data.pitch);
+	GZVec.push(data[2].data.yaw);
 
-	charts[0].update();
-	charts[1].update();
-	charts[2].update();
+	Achart.update();
+	Mchart.update();
+	Gchart.update();
 }
 
 /**
 * @brief Remove oldest data point.
 */
 function removeOldData(){
-    timeVec.splice(0,1);
-    for(var i = 0; i < dataVec.length; i++){
-        var coordinates = dataVec[i]; 
-        for(var j = 0; j < coordinates.length; j++){
-            dataVec[j].splice(0,1);
-        }
-    }
+	timeVec.splice(0,1);
+    AXVec.splice(0,1);
+	AYVec.splice(0,1);
+	AZVec.splice(0,1);
+	MXVec.splice(0,1);
+	MYVec.splice(0,1);
+	MZVec.splice(0,1);
+	GXVec.splice(0,1);
+	GYVec.splice(0,1);
+	GZVec.splice(0,1);
 }
 
 /**
@@ -63,8 +67,6 @@ function startTimer(){
 	if(timer == null)
 		timer = setInterval(ajaxGetJSON, sampleTime);
 }
-
-
 
 /**
 * @brief Stop request timer
@@ -93,176 +95,92 @@ $(document).ready(function() {
     $("#sampleTime").val(sampleTime);
     $("#storedSamples").val(maxStoredSamples);
 
+    // Sample time change listener
     $("#sampleTime").change(function(){
-        var inputValue = Number($(this).val());
-        if (inputValue != NaN){
-            sampleTime = inputValue;
-        }
-		sampleTimeSec = sampleTime / 1000;
-		stopTimer();
-		startTimer();
+		if(notInit){
+			var inputValue = Number($(this).val());
+			if (inputValue != NaN){
+				sampleTime = inputValue;
+			}
+			sampleTimeSec = sampleTime / 1000;
+		}
     });
 
+    // Max stored samples change listener
     $("#storedSamples").change(function(){
-        var inputValue = Number($(this).val());
-        if (inputValue != NaN){
-            maxStoredSamples = inputValue;
+		if(notInit){
+			var inputValue = Number($(this).val());
+			if (inputValue != NaN){
+				maxStoredSamples = inputValue;
+			}
 		}
-		timeVec = [...Array(maxStoredSamples).keys()];
-		timeVec = charts[id].data.labels;
-		charts[0].update();
-		charts[1].update();
-		charts[2].update();
     });
 
     $("#graphs").css("margin-top", $("#menu").height() + 8);
 
-    chartInit(0);
-    chartInit(1);
-    chartInit(2);
 })
 
-function chartInit(id)
-{
-	// array with consecutive integers: <0, maxSamplesNumber-1>
-	timeVec = [...Array(maxStoredSamples).keys()]; 
-	// scaling all values ​​times the sample time 
-	timeVec.forEach(function(p, i) {this[i] = (this[i]*sampleTimeSec).toFixed(4);}, timeVec);
-
-	// last value of 'timeVec'
-	lastTimeStamp = +timeVec[timeVec.length-1]; 
-
-	// get chart contexts from 'canvas' elements
-    chartContexts[id] = document.getElementById(chartIds[id]).getContext('2d');
-    
-	Chart.defaults.global.elements.point.radius = 1;
-    Chart.defaults.global.defaultFontColor = '#FFF';
-    
-	charts[id] = new Chart(chartContexts[id], {
-		// The type of chart: linear plot
-		type: 'line',
-
-		// Dataset: 'timeVec' as labels, 'rollVec' as dataset.data
-		data: {
-			labels: timeVec,
-			datasets: [
-			{
-				fill: false,
-				label: 'X',
-				backgroundColor: 'rgba(255, 0, 0, 0.5)',
-				borderColor: 'rgba(255, 0, 0, 0.5)',
-				data: dataVec[id][0],
-				lineTension: 0
-			},
-			{
-				fill: false,
-				label: 'Y',
-				backgroundColor: 'rgba(0, 255, 0, 0.5)',
-				borderColor: 'rgba(0, 255, 0, 0.5)',
-				data: dataVec[id][1],
-				lineTension: 0
-			},
-						{
-				fill: false,
-				label: 'Z',
-				backgroundColor: 'rgba(0, 0, 255, 0.5)',
-				borderColor: 'rgba(0, 0, 255, 0.5)',
-				data: dataVec[id][2],
-				lineTension: 0
-			}
-			]
-		},
-
-		// Configuration options
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			animation: false,
-			scales: {
-                xAxes: [{
-                    gridLines: {
-                        color: 'rgba(255, 255, 255, 0.5)'
-                    }
-                }],
-				yAxes: [{
-					scaleLabel: {
-						display: true,
-						labelString: 'Angular position [-]'
-					},
-					ticks: {
-						suggestedMin: 0,
-						suggestedMax: 180 
-                    },
-                    gridLines: {
-                        color: 'rgba(255, 255, 255, 0.5)'
-                    }
-				}],es: [{
-					scaleLabel: {
-						display: true,
-						labelString: 'Time [s]'
-					}
-				}]
-			}
-		}
-	});
-    
-    for(var i = 0; i < 3; i++){
-        dataVec[id][i] = charts[id].data.datasets[i].data;
-    }
-	timeVec = charts[id].data.labels;
-	
-	//$.ajaxSetup({ cache: false });
+function graphsInit(){
+	if(notInit){
+		AChartInit();
+		MChartInit();
+		GChartInit();
+		notInit = false;
+	}
 }
 
-
-function accelerationChartInit(){
-	// array with consecutive integers: <0, maxSamplesNumber-1>
+function AChartInit(){
+    // array with consecutive integers: <0, maxSamplesNumber-1>
 	timeVec = [...Array(maxStoredSamples).keys()]; 
 	// scaling all values ​​times the sample time 
 	timeVec.forEach(function(p, i) {this[i] = (this[i]*sampleTimeSec).toFixed(4);}, timeVec);
 
 	// last value of 'timeVec'
-	lastTimeStamp = +timeVec[timeVec.length-1]; 
+	lastTimeStamp =+timeVec[timeVec.length-1]; 
 
-	// get chart contexts from 'canvas' elements
-    chartContexts[id] = document.getElementById(chartIds[id]).getContext('2d');
-    
+	// empty array
+	AXVec = []; 
+	AYVec = [];
+	AZVec = [];
+
+	// get chart context from 'canvas' element
+	AchartContext = $("#Achart")[0].getContext('2d');
+
 	Chart.defaults.global.elements.point.radius = 1;
-    Chart.defaults.global.defaultFontColor = '#FFF';
-    
-	charts[id] = new Chart(chartContexts[id], {
+	
+	Achart = new Chart(AchartContext, {
 		// The type of chart: linear plot
 		type: 'line',
 
-		// Dataset: 'timeVec' as labels, 'rollVec' as dataset.data
+		// Dataset: 'timeVec' as label, 'tempFromHumVec' and 'tempFromPresVec' as dataset.data
 		data: {
 			labels: timeVec,
 			datasets: [
 			{
 				fill: false,
-				label: 'X',
-				backgroundColor: 'rgba(255, 0, 0, 0.5)',
-				borderColor: 'rgba(255, 0, 0, 0.5)',
-				data: dataVec[id][0],
+				label: 'Roll',
+				backgroundColor: 'rgba(255, 0, 0, 0.75)',
+				borderColor: 'rgba(255, 0, 0, 0.75)',
+				data: AXVec,
 				lineTension: 0
 			},
 			{
 				fill: false,
-				label: 'Y',
-				backgroundColor: 'rgba(0, 255, 0, 0.5)',
-				borderColor: 'rgba(0, 255, 0, 0.5)',
-				data: dataVec[id][1],
+				label: 'Pitch',
+				backgroundColor: 'rgba(0, 255, 0, 0.75)',
+				borderColor: 'rgba(0, 255, 0, 0.75)',
+				data: AYVec,
 				lineTension: 0
 			},
-						{
+			{
 				fill: false,
-				label: 'Z',
-				backgroundColor: 'rgba(0, 0, 255, 0.5)',
-				borderColor: 'rgba(0, 0, 255, 0.5)',
-				data: dataVec[id][2],
+				label: 'Yaw',
+				backgroundColor: 'rgba(0, 0, 255, 0.75)',
+				borderColor: 'rgba(0, 0, 255, 0.75)',
+				data: AZVec,
 				lineTension: 0
-			}
-			]
+            }
+            ]
 		},
 
 		// Configuration options
@@ -273,20 +191,22 @@ function accelerationChartInit(){
 			scales: {
                 xAxes: [{
                     gridLines: {
-                        color: 'rgba(255, 255, 255, 0.5)'
+						color: 'rgba(255, 255, 255, 0.5)',
+						zeroLineColor: 'rgba(255, 255, 255, 0.5)'
                     }
                 }],
 				yAxes: [{
 					scaleLabel: {
 						display: true,
-						labelString: 'Angular position [-]'
+						labelString: 'Angular position'
 					},
 					ticks: {
 						suggestedMin: 0,
-						suggestedMax: 180 
+						suggestedMax: 350
                     },
                     gridLines: {
-                        color: 'rgba(255, 255, 255, 0.5)'
+						color: 'rgba(255, 255, 255, 0.5)',
+						zeroLineColor: 'rgba(255, 255, 255, 0.5)'
                     }
 				}],es: [{
 					scaleLabel: {
@@ -297,11 +217,181 @@ function accelerationChartInit(){
 			}
 		}
 	});
-    
-    for(var i = 0; i < 3; i++){
-        dataVec[id][i] = charts[id].data.datasets[i].data;
-    }
-	timeVec = charts[id].data.labels;
 	
-	//$.ajaxSetup({ cache: false });
+	AXVec = Achart.data.datasets[0].data;
+	AYVec = Achart.data.datasets[1].data;
+	AZVec = Achart.data.datasets[2].data;
+	timeVec = Achart.data.labels;
+}
+
+function MChartInit(){
+	// empty array
+	MXVec = []; 
+	MYVec = [];
+	MZVec = [];
+
+	// get chart context from 'canvas' element
+	MchartContext = $("#Mchart")[0].getContext('2d');
+
+	Chart.defaults.global.elements.point.radius = 1;
+	
+	Mchart = new Chart(MchartContext, {
+		// The type of chart: linear plot
+		type: 'line',
+
+		// Dataset: 'timeVec' as label, 'tempFromHumVec' and 'tempFromPresVec' as dataset.data
+		data: {
+			labels: timeVec,
+			datasets: [
+			{
+				fill: false,
+				label: 'X',
+				backgroundColor: 'rgba(255, 0, 0, 0.75)',
+				borderColor: 'rgba(255, 0, 0, 0.75)',
+				data: MXVec,
+				lineTension: 0
+			},
+			{
+				fill: false,
+				label: 'Y',
+				backgroundColor: 'rgba(0, 255, 0, 0.75)',
+				borderColor: 'rgba(0, 255, 0, 0.75)',
+				data: MYVec,
+				lineTension: 0
+			},
+			{
+				fill: false,
+				label: 'Z',
+				backgroundColor: 'rgba(0, 0, 255, 0.75)',
+				borderColor: 'rgba(0, 0, 255, 0.75)',
+				data: MZVec,
+				lineTension: 0
+            }
+            ]
+		},
+
+		// Configuration options
+		options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			animation: false,
+			scales: {
+                xAxes: [{
+                    gridLines: {
+						color: 'rgba(255, 255, 255, 0.5)',
+						zeroLineColor: 'rgba(255, 255, 255, 0.5)'
+                    }
+                }],
+				yAxes: [{
+					scaleLabel: {
+						display: true,
+						labelString: 'Magnetic induction'
+					},
+					ticks: {
+						suggestedMin: -70,
+						suggestedMax: 70
+                    },
+                    gridLines: {
+						color: 'rgba(255, 255, 255, 0.5)',
+						zeroLineColor: 'rgba(255, 255, 255, 0.5)'
+                    }
+				}],es: [{
+					scaleLabel: {
+						display: true,
+						labelString: 'Time [s]'
+					}
+				}]
+			}
+		}
+	});
+	
+	MXVec = Mchart.data.datasets[0].data;
+	MYVec = Mchart.data.datasets[1].data;
+	MZVec = Mchart.data.datasets[2].data;
+}
+
+function GChartInit(){
+	// empty array
+	GXVec = []; 
+	GYVec = [];
+	GZVec = [];
+
+	// get chart context from 'canvas' element
+	GchartContext = $("#Gchart")[0].getContext('2d');
+
+	Chart.defaults.global.elements.point.radius = 1;
+	
+	Gchart = new Chart(GchartContext, {
+		// The type of chart: linear plot
+		type: 'line',
+
+		// Dataset: 'timeVec' as label, 'tempFromHumVec' and 'tempFromPresVec' as dataset.data
+		data: {
+			labels: timeVec,
+			datasets: [
+			{
+				fill: false,
+				label: 'Roll',
+				backgroundColor: 'rgba(255, 0, 0, 0.75)',
+				borderColor: 'rgba(255, 0, 0, 0.75)',
+				data: GXVec,
+				lineTension: 0
+			},
+			{
+				fill: false,
+				label: 'Pitch',
+				backgroundColor: 'rgba(0, 255, 0, 0.75)',
+				borderColor: 'rgba(0, 255, 0, 0.75)',
+				data: GYVec,
+				lineTension: 0
+			},
+			{
+				fill: false,
+				label: 'Yaw',
+				backgroundColor: 'rgba(0, 0, 255, 0.75)',
+				borderColor: 'rgba(0, 0, 255, 0.75)',
+				data: GZVec,
+				lineTension: 0
+            }
+            ]
+		},
+
+		// Configuration options
+		options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			animation: false,
+			scales: {
+                xAxes: [{
+                    gridLines: {
+						color: 'rgba(255, 255, 255, 0.5)',
+						zeroLineColor: 'rgba(255, 255, 255, 0.5)'
+                    }
+                }],
+				yAxes: [{
+					scaleLabel: {
+						display: true,
+						labelString: 'Angular position'
+					},
+					ticks: {
+						suggestedMin: 0,
+						suggestedMax: 360
+                    },
+                    gridLines: {
+						color: 'rgba(255, 255, 255, 0.5)',
+						zeroLineColor: 'rgba(255, 255, 255, 0.5)'
+                    }
+				}],es: [{
+					scaleLabel: {
+						display: true,
+						labelString: 'Time [s]'
+					}
+				}]
+			}
+		}
+	});
+	
+	GXVec = Gchart.data.datasets[0].data;
+	GYVec = Gchart.data.datasets[1].data;
+	GZVec = Gchart.data.datasets[2].data;
 }
