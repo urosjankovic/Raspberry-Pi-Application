@@ -1,7 +1,11 @@
 var counter;
 var chart;
 var chartContext;
-var currentPoint;
+
+var timer;
+
+const getDataURL = '../server/joystick.php?id=get'
+const resetCounterURL = '../server/joystick.php?id=rst'
 
 $(document).ready(function(){
     currentPoint = [{x: 0, y: 0}];
@@ -9,39 +13,52 @@ $(document).ready(function(){
     $(".joysticktable").width($(window).width() / 2);
 
     chartInit();
+    resetAll();
 })
 
 /**
- * @brief Sets coordinates to (0,0)
+ * @brief Sets coordinates to (0,0) and resets counter
  */
-function resetGraph(){
-    currentPoint = [{x: 0, y: 0}];
-}
-
-/**
- * @brief Resets value of counter
- */
-function resetCounter(){
-    counter = 0;
+function resetAll(){
+    ajaxGetJSON(resetCounterURL);
 }
 
 /**
 * @brief Start request timer
 */
-/*function startTimer(){
-	if(timer == null)
-		timer = setInterval(ajaxGetJSON, sampleTime);
+function startTimer(){
+    if(timer == null)
+    	timer = setInterval(ajaxGetJSON, 100, getDataURL);
 }
 
 /**
 * @brief Stop request timer
 */
-/*function stopTimer(){
+function stopTimer(){
 	if(timer != null) {
 		clearInterval(timer);
 		timer = null;
 	}
-}*/
+}
+
+/**
+* @brief Send HTTP GET request to IoT server
+*/
+function ajaxGetJSON(url){
+	$.getJSON(url, function(data){	
+		handleData(data);
+	})
+}
+
+function handleData(dataX){    
+    if(dataX){
+        counter = dataX.Counter;
+        chart.data.datasets[0].data[0].x = dataX.X;
+        chart.data.datasets[0].data[0].y = dataX.Y;
+        $("#counterValue").html(counter);
+        chart.update();
+    }
+}
 
 function chartInit(){
     chartContext = $("#chart")[0].getContext('2d');
@@ -58,7 +75,7 @@ function chartInit(){
 				label: 'Joystick coordinates',
 				backgroundColor: 'rgba(255, 255, 255, 1)',
 				borderColor: 'rgba(255, 255, 255, 0.75)',
-				data: currentPoint
+				data: [{x: 0, y: 0}]
 			}
 			]
 		},
@@ -96,6 +113,4 @@ function chartInit(){
         }
         
     });
-    
-    currentPoint = chart.data.datasets[0].data;
 }
