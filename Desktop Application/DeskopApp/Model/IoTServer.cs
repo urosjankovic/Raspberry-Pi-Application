@@ -25,105 +25,39 @@ namespace RpiApp.Model
          */
         private string GetFileUrl()
         {
-            return "http://" + ip + "/web_app/measurements/tempValues.json";
-        }
-
-        private string GetFileUrlPress()
-        {
-            return "http://" + ip + "/web_app/measurements/pressValues.json";
-        }
-
-        private string GetFileUrlHumid()
-        {
-            return "http://" + ip + "/web_app/measurements/humidValues.json";
+            return "http://" + ip + "/web_app/server/sensors_via_deamon.php?id=env";
         }
 
         private string GetFileUrlAngles()
         {
-            return "http://" + ip + "/web_app/angles/angleValues.json";
-        }
-        private string GetFileUrlAngles1()
-        {
-            return "http://" + ip + "/web_app/angles/angleValues1.json";
+            return "http://" + ip + "/web_app/server/sensors_via_deamon.php?id=ori";
         }
 
-        private string GetFileUrlAngles2()
+        private string GetFileUrlJoy()
         {
-            return "http://" + ip + "/web_app/angles/angleValues2.json";
+            return "http://" + ip + "/web_app/server/joystick_via_deamon.php?id=get";
         }
 
 
-        private string GetFileUrlLED()
-        {
-            return "http://" + ip + "/web_app/ledControl/ledmatrix.php";
-        }
-        /**
-         * @brief obtaining the address of the PHP script from IoT server IP.
-         */
-        private string GetScriptUrl()
-        {
-            return "http://" + ip + "/web_app/server/serverscript.php";
-        }
-
-        /**
-          * @brief HTTP GET request using HttpClient
-          */
+            /**
+              * @brief HTTP GET request using HttpClient
+              */
         public async Task<string> GETwithClient()
         {
             string responseText = null;
 
-            try
-            {
-                using (HttpClient client = new HttpClient())
+                try
                 {
-                    responseText = await client.GetStringAsync(GetFileUrl());
+                    using (HttpClient client = new HttpClient())
+                    {
+                        responseText = await client.GetStringAsync(GetFileUrl());
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
-
-            return responseText;
-        }
-
-        public async Task<string> GETwithClientPress()
-        {
-            string responseText = null;
-
-            try
-            {
-                using (HttpClient client = new HttpClient())
+                catch (Exception e)
                 {
-                    responseText = await client.GetStringAsync(GetFileUrlPress());
+                    Debug.WriteLine("NETWORK ERROR");
+                    Debug.WriteLine(e);
                 }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
-
-            return responseText;
-        }
-
-        public async Task<string> GETwithClientHumid()
-        {
-            string responseText = null;
-
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    responseText = await client.GetStringAsync(GetFileUrlHumid());
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
 
             return responseText;
         }
@@ -148,43 +82,43 @@ namespace RpiApp.Model
             return responseText;
         }
 
-        public async Task<string> GETwithClientRPY1()
+        //public async Task<string> GETwithClientJoy()
+        //{
+        //    string responseText = null;
+
+        //    try
+        //    {
+        //        using (HttpClient client = new HttpClient())
+        //        {
+        //            responseText = await client.GetStringAsync("http://192.168.1.26/web_app/server/joystick_via_deamon.php?id=get");
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Debug.WriteLine("NETWORK ERROR");
+        //        Debug.WriteLine(e);
+        //    }
+
+        //    return responseText;
+        //}
+
+        public async Task<string> GETwithClientJoy()
         {
-            string responseText = null;
+            HttpClient httpClient = new HttpClient();
 
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    responseText = await client.GetStringAsync(GetFileUrlAngles1());
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
+            string responseText = await httpClient.GetStringAsync("http://192.168.1.26/web_app/server/joystick_via_deamon.php?id=get");
 
+            httpClient.Dispose();
             return responseText;
         }
 
-        public async Task<string> GETwithClientRPY2()
+        public async Task<string> GETwithClientJoyClear()
         {
-            string responseText = null;
+            HttpClient httpClient = new HttpClient();
 
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    responseText = await client.GetStringAsync(GetFileUrlAngles2());
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
+            string responseText = await httpClient.GetStringAsync("http://192.168.1.26/web_app/server/joystick_via_deamon.php?id=rst");
 
+            httpClient.Dispose();
             return responseText;
         }
 
@@ -201,66 +135,10 @@ namespace RpiApp.Model
                 {
                     // POST request data
                     var requestDataCollection = new List<KeyValuePair<string, string>>();
-                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "tempValues"));
+                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "sensors_via_deamon.php"));
                     var requestData = new FormUrlEncodedContent(requestDataCollection);
                     // Sent POST request
-                    var result = await client.PostAsync(GetScriptUrl(), requestData);
-                    // Read response content
-                    responseText = await result.Content.ReadAsStringAsync();
-
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
-
-            return responseText;
-        }
-
-        public async Task<string> POSTwithClientPress()
-        {
-            string responseText = null;
-
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    // POST request data
-                    var requestDataCollection = new List<KeyValuePair<string, string>>();
-                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "pressValues"));
-                    var requestData = new FormUrlEncodedContent(requestDataCollection);
-                    // Sent POST request
-                    var result = await client.PostAsync(GetScriptUrl(), requestData);
-                    // Read response content
-                    responseText = await result.Content.ReadAsStringAsync();
-
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
-
-            return responseText;
-        }
-
-        public async Task<string> POSTwithClientHumid()
-        {
-            string responseText = null;
-
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    // POST request data
-                    var requestDataCollection = new List<KeyValuePair<string, string>>();
-                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "humidValues"));
-                    var requestData = new FormUrlEncodedContent(requestDataCollection);
-                    // Sent POST request
-                    var result = await client.PostAsync(GetScriptUrl(), requestData);
+                    var result = await client.PostAsync(GetFileUrl(), requestData);
                     // Read response content
                     responseText = await result.Content.ReadAsStringAsync();
 
@@ -285,10 +163,10 @@ namespace RpiApp.Model
                 {
                     // POST request data
                     var requestDataCollection = new List<KeyValuePair<string, string>>();
-                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "angleValues"));
+                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "sensors_via_deamon.php"));
                     var requestData = new FormUrlEncodedContent(requestDataCollection);
                     // Sent POST request
-                    var result = await client.PostAsync(GetScriptUrl(), requestData);
+                    var result = await client.PostAsync(GetFileUrlAngles(), requestData);
                     // Read response content
                     responseText = await result.Content.ReadAsStringAsync();
 
@@ -303,7 +181,7 @@ namespace RpiApp.Model
             return responseText;
         }
 
-        public async Task<string> POSTwithClientRPY1()
+        public async Task<string> POSTwithClientJoy()
         {
             string responseText = null;
 
@@ -313,38 +191,10 @@ namespace RpiApp.Model
                 {
                     // POST request data
                     var requestDataCollection = new List<KeyValuePair<string, string>>();
-                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "angleValues1"));
+                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "joystick_via_deamon.php"));
                     var requestData = new FormUrlEncodedContent(requestDataCollection);
                     // Sent POST request
-                    var result = await client.PostAsync(GetScriptUrl(), requestData);
-                    // Read response content
-                    responseText = await result.Content.ReadAsStringAsync();
-
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
-
-            return responseText;
-        }
-
-        public async Task<string> POSTwithClientRPY2()
-        {
-            string responseText = null;
-
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    // POST request data
-                    var requestDataCollection = new List<KeyValuePair<string, string>>();
-                    requestDataCollection.Add(new KeyValuePair<string, string>("filename", "angleValues2"));
-                    var requestData = new FormUrlEncodedContent(requestDataCollection);
-                    // Sent POST request
-                    var result = await client.PostAsync(GetScriptUrl(), requestData);
+                    var result = await client.PostAsync("http://192.168.1.26/web_app/server/joystick_via_deamon.php?id=get", requestData);
                     // Read response content
                     responseText = await result.Content.ReadAsStringAsync();
 
@@ -369,61 +219,6 @@ namespace RpiApp.Model
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrl());
-
-                request.Method = "GET";
-
-                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
-                using (Stream stream = response.GetResponseStream())
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    responseText = await reader.ReadToEndAsync();
-                }
-
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
-
-            return responseText;
-        }
-
-        public async Task<string> GETwithRequestPress()
-        {
-            string responseText = null;
-
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlPress());
-
-                request.Method = "GET";
-
-                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
-                using (Stream stream = response.GetResponseStream())
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    responseText = await reader.ReadToEndAsync();
-                }
-
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
-
-            return responseText;
-        }
-
-        public async Task<string> GETwithRequestHumid()
-        {
-            string responseText = null;
-
-            try
-            {
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlHumid());
 
                 request.Method = "GET";
 
@@ -472,42 +267,14 @@ namespace RpiApp.Model
             return responseText;
         }
 
-        public async Task<string> GETwithRequestRPY1()
+        public async Task<string> GETwithRequestJoy()
         {
             string responseText = null;
 
             try
             {
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlAngles1());
-
-                request.Method = "GET";
-
-                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
-                using (Stream stream = response.GetResponseStream())
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    responseText = await reader.ReadToEndAsync();
-                }
-
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
-
-            return responseText;
-        }
-
-        public async Task<string> GETwithRequestRPY2()
-        {
-            string responseText = null;
-
-            try
-            {
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlAngles2());
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://192.168.1.26/web_app/server/joystick_via_deamon.php?id=get");
 
                 request.Method = "GET";
 
@@ -538,10 +305,10 @@ namespace RpiApp.Model
 
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetScriptUrl());
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrl());
 
                 // POST Request data 
-                var requestData = "filename=tempValues";
+                var requestData = "filename=sensors_via_deamon.php";
                 byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
                 // POST Request configuration
                 request.Method = "POST";
@@ -568,82 +335,6 @@ namespace RpiApp.Model
             return responseText;
         }
 
-        public async Task<string> POSTwithRequestPress()
-        {
-            string responseText = null;
-
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetScriptUrl());
-
-                // POST Request data 
-
-                var requestData = "filename=pressValues";
-
-                byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
-
-                // POST Request configuration
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = byteArray.Length;
-
-                // Wrire data to request stream
-                Stream dataStream = request.GetRequestStream();
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Close();
-
-                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
-                using (Stream stream = response.GetResponseStream())
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    responseText = await reader.ReadToEndAsync();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
-
-            return responseText;
-        }
-
-        public async Task<string> POSTwithRequestHumid()
-        {
-            string responseText = null;
-
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetScriptUrl());
-
-                // POST Request data 
-
-                var requestData = "filename=humidValues";
-                byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
-                // POST Request configuration
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = byteArray.Length;
-                // Wrire data to request stream
-                Stream dataStream = request.GetRequestStream();
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Close();
-
-                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
-                using (Stream stream = response.GetResponseStream())
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    responseText = await reader.ReadToEndAsync();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
-
-            return responseText;
-        }
 
         public async Task<string> POSTwithRequestRPY()
         {
@@ -651,11 +342,11 @@ namespace RpiApp.Model
 
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetScriptUrl());
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlAngles());
 
                 // POST Request data 
 
-                var requestData = "filename=angleValues";
+                var requestData = "filename=sensors_via_deamon.php";
                 byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
                 // POST Request configuration
                 request.Method = "POST";
@@ -682,17 +373,17 @@ namespace RpiApp.Model
             return responseText;
         }
 
-        public async Task<string> POSTwithRequestRPY1()
+        public async Task<string> POSTwithRequestJoy()
         {
             string responseText = null;
 
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetScriptUrl());
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://192.168.1.26/web_app/server/joystick_via_deamon.php?id=get");
 
                 // POST Request data 
 
-                var requestData = "filename=angleValues1";
+                var requestData = "filename=joystick_via_deamon.php";
                 byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
                 // POST Request configuration
                 request.Method = "POST";
@@ -718,80 +409,6 @@ namespace RpiApp.Model
 
             return responseText;
         }
-
-        public async Task<string> POSTwithRequestRPY2()
-        {
-            string responseText = null;
-
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetScriptUrl());
-
-                // POST Request data 
-
-                var requestData = "filename=angleValues2";
-                byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
-                // POST Request configuration
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = byteArray.Length;
-                // Wrire data to request stream
-                Stream dataStream = request.GetRequestStream();
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Close();
-
-                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
-                using (Stream stream = response.GetResponseStream())
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    responseText = await reader.ReadToEndAsync();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("NETWORK ERROR");
-                Debug.WriteLine(e);
-            }
-
-            return responseText;
-        }
-
-        //public async Task<string> POSTwithRequestLED()
-        //{
-        //    string responseText = null;
-
-        //    try
-        //    {
-        //        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlLED());
-
-        //        // POST Request data 
-
-        //        var requestData = "filename=ledmatrix.php";
-        //        byte[] byteArray = Encoding.UTF8.GetBytes(requestData);
-        //        // POST Request configuration
-        //        request.Method = "POST";
-        //        request.ContentType = "application/x-www-form-urlencoded";
-        //        request.ContentLength = byteArray.Length;
-        //        // Wrire data to request stream
-        //        Stream dataStream = request.GetRequestStream();
-        //        dataStream.Write(byteArray, 0, byteArray.Length);
-        //        dataStream.Close();
-
-        //        using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
-        //        using (Stream stream = response.GetResponseStream())
-        //        using (StreamReader reader = new StreamReader(stream))
-        //        {
-        //            responseText = await reader.ReadToEndAsync();
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Debug.WriteLine("NETWORK ERROR");
-        //        Debug.WriteLine(e);
-        //    }
-
-        //    return responseText;
-        //}
 
 
     }

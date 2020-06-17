@@ -114,10 +114,9 @@ namespace RpiApp.ViewModels
         #region ButtonCommands
         private void UpdateConfig()
         {
-
+            
             config = new ConfigParams(ipAddress, sampleTime, maxSampleNumber);
             Server = new IoTServer(IpAddress);
-
         }
 
 

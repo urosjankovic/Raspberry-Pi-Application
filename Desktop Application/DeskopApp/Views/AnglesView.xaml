@@ -104,9 +104,22 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Table">
-                <DataGrid x:Name="DataGridRPY">
-                </DataGrid>
-            </TabItem>
+                <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4">
+                    <ListView Grid.Row="0" ItemsSource="{Binding OriMeasurements}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Roll" Width="100" DisplayMemberBinding="{Binding Roll}"/>
+                                <GridViewColumn Header="Pitch" Width="100" DisplayMemberBinding="{Binding Pitch}"/>
+                                <GridViewColumn Header="Yaw" Width="100" DisplayMemberBinding="{Binding Yaw}"/>
+                                <GridViewColumn Header="Data" Width="100" DisplayMemberBinding="{Binding DataOri}"/>
+                                <GridViewColumn Header="Unit" Width="100" DisplayMemberBinding="{Binding Unit}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Command="{Binding RefreshOri}" Margin="300,600,300,100">REFRESH</Button>
+    </Grid>
+    </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

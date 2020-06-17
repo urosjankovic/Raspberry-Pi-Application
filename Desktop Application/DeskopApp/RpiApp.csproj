@@ -230,12 +230,16 @@
     </ApplicationDefinition>
     <Compile Include="Model\ConfigParams.cs" />
     <Compile Include="Model\IoTServer.cs" />
+    <Compile Include="Model\MeasurementModel.cs" />
     <Compile Include="Model\ServerData.cs" />
+    <Compile Include="Model\tableServer.cs" />
     <Compile Include="ViewModels\AnglesViewModel.cs" />
     <Compile Include="ViewModels\ButtonCommand.cs" />
     <Compile Include="ViewModels\ConfigViewModel.cs" />
     <Compile Include="ViewModels\EnvViewModel.cs" />
+    <Compile Include="ViewModels\JoyViewModel.cs" />
     <Compile Include="ViewModels\LEDViewModel.cs" />
+    <Compile Include="ViewModels\TableViewModel.cs" />
     <Compile Include="Views\AnglesView.xaml.cs">
       <DependentUpon>AnglesView.xaml</DependentUpon>
     </Compile>
@@ -244,6 +248,9 @@
     </Compile>
     <Compile Include="Views\EnvVieww.xaml.cs">
       <DependentUpon>EnvVieww.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\JoyView.xaml.cs">
+      <DependentUpon>JoyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LEDcontrolView.xaml.cs">
       <DependentUpon>LEDcontrolView.xaml</DependentUpon>
@@ -309,6 +316,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EnvVieww.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\JoyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

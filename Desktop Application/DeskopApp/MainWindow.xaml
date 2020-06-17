@@ -21,6 +21,9 @@
         <DataTemplate x:Name="LEDViewTemplate" DataType="{x:Type viewmodels:LEDViewModel}">
             <views:LEDcontrolView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="JoyViewTemplate" DataType="{x:Type viewmodels:JoyViewModel}">
+            <views:JoyView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -41,7 +44,7 @@
             <StackPanel>
                 <Button Content="Enviromental Data" Height="50" FontSize="20" Click="EnvData_click"/>
                 <Button Content="Angles" Height="50" FontSize="20" Click="Angles_click"/>
-                <Button Content="Joystick" Height="50" FontSize="20" />
+                <Button Content="Joystick" Height="50" FontSize="20" Click="JoyBtn_click"/>
                 <Button Content="LED Control" Height="50" FontSize="20" Click="LEDBtn_click"/>
                 <Button Content="Config" Height="50" FontSize="20" Click="Config_click"/>
             </StackPanel>

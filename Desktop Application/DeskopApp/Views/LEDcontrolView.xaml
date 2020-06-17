@@ -117,7 +117,7 @@
                 <Button Grid.Row="7" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Name="LED77" Click="changeLedIndicatiorColor"/>
             </Grid>
             <Grid Margin="230,480,230,170">
-                <Slider x:Name="SeekR" Margin="0,0,0,120" Tag="seekR" Maximum="255" Background="Red"  ></Slider>
+                <Slider Name="SeekR" Margin="0,0,0,120" Tag="seekR" Maximum="255" Background="Red"  ></Slider>
                 <Slider x:Name="SeekG" Margin="0,50,0,70" Tag="seekG" Maximum="255" Background="Green"></Slider>
                 <Slider x:Name="SeekB" Margin="0,100,0,20" Tag="seekB" Maximum="255" Background="Blue"></Slider>
             </Grid>

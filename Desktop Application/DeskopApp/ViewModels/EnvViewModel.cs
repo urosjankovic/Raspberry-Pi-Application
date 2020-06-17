@@ -27,6 +27,7 @@ namespace RpiApp.ViewModels
     using System.Net.Http.Headers;
     using System.Data;
     using OxyPlot.Reporting;
+    using System.Collections.ObjectModel;
 
     public class EnvViewModel
     {
@@ -37,6 +38,12 @@ namespace RpiApp.ViewModels
 
         private int maxSampleNumber;
 
+
+        public ObservableCollection<TableViewModel> EnvMeasurements { get; set; }
+
+        public ButtonCommand Refresh { get; set; }
+
+        private tableServer iotTable = new tableServer();
 
         public PlotModel Temp { get; set; }
         public PlotModel Press { get; set; }
@@ -50,6 +57,7 @@ namespace RpiApp.ViewModels
 
         public ButtonCommand StartButtonHumid { get; set; }
         public ButtonCommand StopButtonHumid { get; set; }
+
 
         #endregion
 
@@ -144,14 +152,42 @@ namespace RpiApp.ViewModels
             StartButtonHumid = new ButtonCommand(StartTimerHumid);
             StopButtonHumid = new ButtonCommand(StopTimerHumid);
 
+            EnvMeasurements = new ObservableCollection<TableViewModel>();
+
+            Refresh = new ButtonCommand(RefreshHandler);
+
             ipAddress = config.IpAddress;
             sampleTime = config.SampleTime;
             maxSampleNumber = config.MaxSampleNumber;
 
-            Server = new IoTServer(ipAddress);
+            
         }
 
-        /**
+        void RefreshHandler()
+        {
+            // Read data from server in JSON array format
+            // TODO: replace mock with network comunnication
+            dynamic measurementsJsonArray = iotTable.getMeasurementsEnv();
+
+            // Convert generic JSON array container to list of specific type
+            dynamic measurementsList = measurementsJsonArray.ToObject<List<MeasurementModel>>();
+
+            // Add new elements to collection
+            if (EnvMeasurements.Count < measurementsList.Count)
+            {
+                foreach (var m in measurementsList)
+                    EnvMeasurements.Add(new TableViewModel(m));
+            }
+            // Update existing elements in collection
+            else
+            {
+                for (int i = 0; i < EnvMeasurements.Count; i++)
+                    EnvMeasurements[i].UpdateWithModel(measurementsList[i]);
+            }
+        }
+
+        
+         /**
           * @brief Time series plot update procedure.
           * @param t X axis data: Time stamp [ms].
           * @param d Y axis data: Real-time measurement [-].
@@ -238,14 +274,13 @@ namespace RpiApp.ViewModels
             try
             {
 #if DYNAMIC
-                dynamic responseJson = JObject.Parse(responseText);
-                UpdatePlotTemp(timeStamp / 1000.0, (double)responseJson.data);
+                dynamic responseJson = JArray.Parse(responseText);
+                UpdatePlotTemp(timeStamp / 1000.0, (double)responseJson[0].data);
 
 
 #else
                 ServerData responseJson = JsonConvert.DeserializeObject<ServerData>(responseText);
-                Temp.DataGridTemp = responseJson.data;
-                UpdatePlotTemp(timeStamp / 1000.0, responseJson.data);
+                UpdatePlotTemp(timeStamp / 1000.0, responseJson[0].data);
 
 #endif
             }
@@ -265,21 +300,21 @@ namespace RpiApp.ViewModels
         {
 #if CLIENT
 #if GET
-            string responseText = await Server.GETwithClientPress();
+            string responseText = await Server.GETwithClient();
 
 
 #else
-            string responseText = await Server.POSTwithClientPress();
+            string responseText = await Server.POSTwithClient();
 
 #endif
 #else
 #if GET
 
-            string responseText = await Server.GETwithRequestPress();
+            string responseText = await Server.GETwithRequest();
 
 #else
 
-            string responseText = await Server.POSTwithRequestPress();
+            string responseText = await Server.POSTwithRequest();
 
 #endif
 #endif
@@ -287,13 +322,12 @@ namespace RpiApp.ViewModels
             {
 #if DYNAMIC
 
-                dynamic responseJson = JObject.Parse(responseText);
-                UpdatePlotPress(timeStamp / 1000.0, (double)responseJson.data1);
+                dynamic responseJson = JArray.Parse(responseText);
+                UpdatePlotPress(timeStamp / 1000.0, (double)responseJson[2].data);
 #else
 
                 ServerData responseJson = JsonConvert.DeserializeObject<ServerData>(responseText);
-
-                UpdatePlotPress(timeStamp / 1000.0, responseJson.data1);
+                UpdatePlotPress(timeStamp / 1000.0, responseJson[2].data);
 
 #endif
             }
@@ -308,36 +342,37 @@ namespace RpiApp.ViewModels
             timeStamp += config.SampleTime;
         }
 
+
         private async void UpdatePlotWithServerResponseHumid()
         {
 #if CLIENT
 #if GET
 
-            string responseText = await Server.GETwithClientHumid();
+            string responseText = await Server.GETwithClient();
 
 #else
-            string responseText = await Server.POSTwithClientHumid();
+            string responseText = await Server.POSTwithClient();
 #endif
 #else
 #if GET
 
-            string responseText = await Server.GETwithREquestHumid();
+            string responseText = await Server.GETwithREquest();
 #else
 
-            string responseText = await Server.POSTwithRequestHumid();
+            string responseText = await Server.POSTwithRequest();
 #endif
 #endif
             try
             {
 #if DYNAMIC
 
-                dynamic responseJson = JObject.Parse(responseText);
-                UpdatePlotHumid(timeStamp / 1000.0, (double)responseJson.data2);
+                dynamic responseJson = JArray.Parse(responseText);
+                UpdatePlotHumid(timeStamp / 1000.0, (double)responseJson[3].data);
 
 #else
 
                 ServerData responseJson = JsonConvert.DeserializeObject<ServerData>(responseText);
-                UpdatePlotHumid(timeStamp / 1000.0, responseJson.data2);
+                UpdatePlotHumid(timeStamp / 1000.0, responseJson[3].data);
 #endif
             }
             catch (Exception e)
@@ -358,7 +393,7 @@ namespace RpiApp.ViewModels
           */
         private void RequestTimerElapsedTemp(object sender, ElapsedEventArgs e)
         {
-            UpdatePlotWithServerResponseTemp();   
+            UpdatePlotWithServerResponseTemp();
         }
         private void RequestTimerElapsedPress(object sender, ElapsedEventArgs e)
         {
@@ -443,6 +478,7 @@ namespace RpiApp.ViewModels
             }
         }
 
+        
         #endregion
 
         #region PropertyChanged

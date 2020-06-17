@@ -109,32 +109,6 @@ namespace RpiApp.ViewModels
         }
 
 
-//        private async void UpdateDataLED()
-//        {
-
-//            string responseText = await Server.POSTwithRequestLED();
-
-//            try
-//            {
-//#if DYNAMIC
-//                dynamic responseJson = JObject.Parse(responseText);
-
-//#else
-
-//                ServerData responseJson = JsonConvert.SerializeObject<ServerData>(responseText);
-
-//#endif
-//            }
-//            catch (Exception e)
-//            {
-//                Debug.WriteLine("JSON DATA ERROR");
-//                Debug.WriteLine(responseText);
-//                Debug.WriteLine(e);
-//            }
-//        }
-
-
-
         public void sendControlRequest()
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://192.168.1.26/web_app/ledControl/ledmatrix.php");

@@ -1,5 +1,4 @@
-﻿using RpiApp.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,31 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Data;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Diagnostics;
-
 
 namespace RpiApp.Views
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using RpiApp.Model;
-    using RpiApp.ViewModel;
-    using RpiApp.ViewModels;
-    using System.Security.Cryptography.X509Certificates;
-
     /// <summary>
-    /// Interaction logic for EnvVieww.xaml
+    /// Interaction logic for JoyView.xaml
     /// </summary>
-    public partial class EnvVieww : UserControl
+    public partial class JoyView : UserControl
     {
-        public EnvVieww()
+        public JoyView()
         {
             InitializeComponent();
         }
-
     }
 }

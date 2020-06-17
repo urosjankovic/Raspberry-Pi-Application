@@ -50,6 +50,7 @@ namespace RpiApp.Views
                 button.Background = (Brush)new BrushConverter().ConvertFrom("#FFAAAAAA");
             }
             (DataContext as LEDViewModel).offColor();
+            (DataContext as LEDViewModel).sendControlRequest();
         }
 
     }

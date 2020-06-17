@@ -17,6 +17,8 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.ObjectModel;
+
 
 namespace RpiApp.ViewModels
 {
@@ -38,7 +40,12 @@ namespace RpiApp.ViewModels
         private int sampleTime; 
 
         private int maxSampleNumber;
-        
+
+        public ObservableCollection<TableViewModel> OriMeasurements { get; set; }
+
+        public ButtonCommand RefreshOri { get; set; }
+
+        private tableServer iotTableOri = new tableServer();
 
         public PlotModel RPY { get; set; }
 
@@ -155,12 +162,42 @@ namespace RpiApp.ViewModels
             StartButtonRPY2 = new ButtonCommand(StartTimerRPY2);
             StopButtonRPY2 = new ButtonCommand(StopTimerRPY2);
 
+            OriMeasurements = new ObservableCollection<TableViewModel>();
+
+            RefreshOri = new ButtonCommand(RefreshHandlerOri);
 
             ipAddress = config.IpAddress;
             sampleTime = config.SampleTime;
             maxSampleNumber = config.MaxSampleNumber;
 
             Server = new IoTServer(ipAddress);
+        }
+
+        void RefreshHandlerOri()
+        {
+            // Read data from server in JSON array format
+            dynamic measurementsJsonArray = iotTableOri.getMeasurementsOri();
+
+            // Convert generic JSON array container to list of specific type
+            dynamic measurementsListA = measurementsJsonArray.ToObject<List<MeasurementModel>>();
+
+
+            // Add new elements to collection
+            if (OriMeasurements.Count < measurementsListA[0].Count)
+            {
+                foreach (var m in measurementsListA[0])
+                    OriMeasurements.Add(new TableViewModel(m));
+                
+            }
+            // Update existing elements in collection
+            else
+            {
+                for (int i = 0; i < OriMeasurements.Count; i++)
+                {
+                    OriMeasurements[i].UpdateWithModel(measurementsListA[0]);
+                }
+            }
+
         }
 
         /**
@@ -363,17 +400,17 @@ namespace RpiApp.ViewModels
             {
 #if DYNAMIC
 
-                dynamic responseJson = JObject.Parse(responseText);
-                UpdatePlotR(timeStamp / 1000.0, (double)responseJson.roll);
-                UpdatePlotP(timeStamp / 1000.0, (double)responseJson.pitch);
-                UpdatePlotY(timeStamp / 1000.0, (double)responseJson.yaw);
+                dynamic responseJson = JArray.Parse(responseText);
+                UpdatePlotR(timeStamp / 1000.0, (double)responseJson[0].data.roll);
+                UpdatePlotP(timeStamp / 1000.0, (double)responseJson[0].data.pitch);
+                UpdatePlotY(timeStamp / 1000.0, (double)responseJson[0].data.yaw);
 
 #else
 
                 ServerData responseJson = JsonConvert.DeserializeObject<ServerData>(responseText);
-                UpdatePlotR(timeStamp / 1000.0, responseJson.roll);
-                UpdatePlotP(timeStamp / 1000.0, responseJson.pitch);
-                UpdatePlotY(timeStamp / 1000.0, responseJson.yaw);
+                UpdatePlotR(timeStamp / 1000.0, responseJson[0].data.roll);
+                UpdatePlotP(timeStamp / 1000.0, responseJson[0].data.pitch);
+                UpdatePlotY(timeStamp / 1000.0, responseJson[0].data.yaw);
 #endif
             }
             catch (Exception e)
@@ -391,35 +428,35 @@ namespace RpiApp.ViewModels
 #if CLIENT
 #if GET
 
-            string responseText = await Server.GETwithClientRPY1();
+            string responseText = await Server.GETwithClientRPY();
 
 #else
-            string responseText = await Server.POSTwithClientRPY1();
+            string responseText = await Server.POSTwithClientRPY();
 #endif
 #else
 #if GET
 
-            string responseText = await Server.GETwithREquestRPY1();
+            string responseText = await Server.GETwithREquestRPY();
 #else
 
-            string responseText = await Server.POSTwithRequestRPY1();
+            string responseText = await Server.POSTwithRequestRPY();
 #endif
 #endif
             try
             {
 #if DYNAMIC
 
-                dynamic responseJson = JObject.Parse(responseText);
-                UpdatePlotR1(timeStamp / 1000.0, (double)responseJson.x);
-                UpdatePlotP1(timeStamp / 1000.0, (double)responseJson.y);
-                UpdatePlotY1(timeStamp / 1000.0, (double)responseJson.z);
+                dynamic responseJson = JArray.Parse(responseText);
+                UpdatePlotR1(timeStamp / 1000.0, (double)responseJson[1].data.x);
+                UpdatePlotP1(timeStamp / 1000.0, (double)responseJson[1].data.y);
+                UpdatePlotY1(timeStamp / 1000.0, (double)responseJson[1].data.z);
 
 #else
 
                 ServerData responseJson = JsonConvert.DeserializeObject<ServerData>(responseText);
-                UpdatePlotR1(timeStamp / 1000.0, responseJson.x);
-                UpdatePlotP1(timeStamp / 1000.0, responseJson.y);
-                UpdatePlotY1(timeStamp / 1000.0, responseJson.z);
+                UpdatePlotR1(timeStamp / 1000.0, responseJson[1].data.x);
+                UpdatePlotP1(timeStamp / 1000.0, responseJson[1].data.y);
+                UpdatePlotY1(timeStamp / 1000.0, responseJson[1].data.z);
 #endif
             }
             catch (Exception e)
@@ -437,35 +474,35 @@ namespace RpiApp.ViewModels
 #if CLIENT
 #if GET
 
-            string responseText = await Server.GETwithClientRPY2();
+            string responseText = await Server.GETwithClientRPY();
 
 #else
-            string responseText = await Server.POSTwithClientRPY2();
+            string responseText = await Server.POSTwithClientRPY();
 #endif
 #else
 #if GET
 
-            string responseText = await Server.GETwithREquestRPY2();
+            string responseText = await Server.GETwithREquestRPY();
 #else
 
-            string responseText = await Server.POSTwithRequestRPY2();
+            string responseText = await Server.POSTwithRequestRPY();
 #endif
 #endif
             try
             {
 #if DYNAMIC
 
-                dynamic responseJson = JObject.Parse(responseText);
-                UpdatePlotR2(timeStamp / 1000.0, (double)responseJson.roll);
-                UpdatePlotP2(timeStamp / 1000.0, (double)responseJson.pitch);
-                UpdatePlotY2(timeStamp / 1000.0, (double)responseJson.yaw);
+                dynamic responseJson = JArray.Parse(responseText);
+                UpdatePlotR2(timeStamp / 1000.0, (double)responseJson[2].data.roll);
+                UpdatePlotP2(timeStamp / 1000.0, (double)responseJson[2].data.pitch);
+                UpdatePlotY2(timeStamp / 1000.0, (double)responseJson[2].data.yaw);
 
 #else
 
                 ServerData responseJson = JsonConvert.DeserializeObject<ServerData>(responseText);
-                UpdatePlotR2(timeStamp / 1000.0, responseJson.roll);
-                UpdatePlotP2(timeStamp / 1000.0, responseJson.pitch);
-                UpdatePlotY2(timeStamp / 1000.0, responseJson.yaw);
+                UpdatePlotR2(timeStamp / 1000.0, responseJson[2].data.roll);
+                UpdatePlotP2(timeStamp / 1000.0, responseJson[2].data.pitch);
+                UpdatePlotY2(timeStamp / 1000.0, responseJson[2].data.yaw);
 #endif
             }
             catch (Exception e)

@@ -47,5 +47,10 @@ namespace RpiApp
             DataContext = new LEDViewModel();
         }
 
+        private void JoyBtn_click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new JoyViewModel();
+        }
+
     }
 }
