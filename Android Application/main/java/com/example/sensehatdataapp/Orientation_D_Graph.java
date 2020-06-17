@@ -602,7 +602,7 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
                 dataSeriesC.setColor(Color.BLUE);
 
-
+ 
                 dataSeriesC.appendData(new DataPoint(timeStamp, rawData), scrollGraph, dataGraphMaxDataPointsNumber);
 
 
