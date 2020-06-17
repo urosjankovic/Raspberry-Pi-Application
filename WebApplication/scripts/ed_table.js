@@ -5,7 +5,7 @@ var humUnit = "P";              // Unit of humidity
 var sampleTime = 1000;          // Sample time [ms]
 var timer;                      // Request timer
 
-const url = "sensors_via_deamon.php?id=env";
+const url = "../server/sensors_via_deamon.php?id=env";
 
 $(document).ready(function() {
 

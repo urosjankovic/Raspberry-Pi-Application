@@ -19,7 +19,7 @@ var humChart;			// Charts.js object for humidity
 var timer;				// Request timer
 var notInit = true;		// Graphs initialized flag
 
-const url = "sensors_via_deamon.php?id=env";	
+const url = "../server/sensors_via_deamon.php?id=env";	
 
 $(document).ready(function() {
 

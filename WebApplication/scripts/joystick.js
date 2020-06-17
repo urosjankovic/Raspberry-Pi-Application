@@ -1,18 +1,20 @@
-var counter;
-var chart;
-var chartContext;
+var counter;        // Counts middle putton press
+var chart;          // Chart.js object
+var chartContext;   // Context of chart
 
-var timer;
+var timer;          // Request timer
 
-const getDataURL = '../server/joystick.php?id=get'
-const resetCounterURL = '../server/joystick.php?id=rst'
+const getDataURL = '../server/joystick_via_deamon.php?id=get'
+const resetCounterURL = '../server/joystick_via_deamon.php?id=rst'
 
 $(document).ready(function(){
     currentPoint = [{x: 0, y: 0}];
 
     $(".joysticktable").width($(window).width() / 2);
 
+    // Initialize chart
     chartInit();
+    // Reset coordinates and counter
     resetAll();
 })
 
@@ -50,12 +52,19 @@ function ajaxGetJSON(url){
 	})
 }
 
-function handleData(dataX){    
-    if(dataX){
-        counter = dataX.Counter;
-        chart.data.datasets[0].data[0].x = dataX.X;
-        chart.data.datasets[0].data[0].y = dataX.Y;
+/**
+ * @brief Handle received data
+ * @param receivedData object with received data
+ */
+function handleData(receivedData){    
+    if(receivedData){
+        // Update counter value
+        counter = receivedData.Counter;
         $("#counterValue").html(counter);
+
+        // Change position of datapoint
+        chart.data.datasets[0].data[0].x = receivedData.X;
+        chart.data.datasets[0].data[0].y = receivedData.Y;
         chart.update();
     }
 }

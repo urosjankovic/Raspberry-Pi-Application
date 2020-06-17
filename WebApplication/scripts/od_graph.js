@@ -18,7 +18,7 @@ var Gchart;			// Chart.js object for gyroscope chart
 var timer;				// Requst timer
 var notInit = true;		// Graphs initialized flag
 
-const url = "sensors_via_deamon.php?id=ori"
+const url = "../server/sensors_via_deamon.php?id=ori"
 
 /**
  * @brief Add new value to next data point

@@ -4,7 +4,7 @@ var sampleTime = 1000;              // Sample time [ms]
 var maxStoredSamples = 1000;        // Maximum number of stored samples
 var timer;                          // Request timer
 
-const url = "sensors_via_deamon.php?id=ori";
+const url = "../server/sensors_via_deamon.php?id=ori";
 
 $(document).ready(function() {
 
