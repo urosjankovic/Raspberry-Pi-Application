@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SenseHat Data App</string>
+    <string name="text">Select Graphs to view</string>
+</resources>
