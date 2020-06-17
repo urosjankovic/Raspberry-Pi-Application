@@ -14,8 +14,6 @@ $(document).ready(function(){
 
     // Initialize chart
     chartInit();
-    // Reset coordinates and counter
-    resetAll();
 })
 
 /**
