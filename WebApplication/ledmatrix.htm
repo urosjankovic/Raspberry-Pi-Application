@@ -18,33 +18,33 @@
 
 	<!-- HTML file body: web page content -->
 	<body>
-        <div class="centerchild">
+        <div class="centerchilEd">
             <div class="border border-dark p-1 rounded ledtable">
                 <table class="w3-table w3-border" style="width:100%">
                     <tbody>
                         <tr>
-                            <th>Red</th>
-                            <th>Green</th>
-                            <th>Blue</th>
+                            <th class="setcolorrow">Red</th>
+                            <th class="setcolorrow">Green</th>
+                            <th class="setcolorrow">Blue</th>
                         </tr>
                         <tr>
-                            <td id="valRed">0</td>
-                            <td id="valGreen">0</td>
-                            <td id="valBlue">0</td>
+                            <td id="valRed" class="setcolorrow">0</td>
+                            <td id="valGreen" class="setcolorrow">0</td>
+                            <td id="valBlue" class="setcolorrow">0</td>
                         </tr>
                         <tr>
-                            <td><div style="background-color:#fff"><div id="red" style="height:3em;background-color:rgba(255,0,0,0.5)"></div></div></td>
-                            <td><div style="background-color:#fff"><div id="green" style="height:3em;background-color:rgba(0,255,0,0.5)"></div></div></td>
-                            <td><div style="background-color:#fff"><div id="blue" style="height:3em;background-color:rgba(0,0,255,0.5)"></div></div></td>
+                            <td class="setcolorrow"><div style="background-color:#fff"><div id="red" style="height:3em;background-color:rgba(255,0,0,0.5)"></div></div></td>
+                            <td class="setcolorrow"><div style="background-color:#fff"><div id="green" style="height:3em;background-color:rgba(0,255,0,0.5)"></div></div></td>
+                            <td class="setcolorrow"><div style="background-color:#fff"><div id="blue" style="height:3em;background-color:rgba(0,0,255,0.5)"></div></div></td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="setcolorrow">
                             <input oninput="changeRed(this.value)" onchange="changeRed(this.value)" type="range" id="slideRed" name="slideRed" min="0" max="255" value="0">
                             </td>
-                            <td>
+                            <td class="setcolorrow">  
                             <input oninput="changeGreen(this.value)" onchange="changeGreen(this.value)" type="range" id="slideGreen" name="slideGreen" min="0" max="255" value="0">
                             </td>
-                            <td>
+                            <td class="setcolorrow">
                             <input oninput="changeBlue(this.value)" onchange="changeBlue(this.value)" type="range" id="slideBlue" name="slideBlue" min="0" max="255" value="0">
                             </td>
                         </tr>
@@ -58,84 +58,84 @@
             </div>
             <div class="border border-dark p-1 rounded ledtable">
                 <div class="ledrow">
-                    <div class="ledbackground"><div class="led" id="LD00"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD10"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD20"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD30"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD40"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD50"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD60"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD70"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED00"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED10"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED20"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED30"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED40"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED50"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED60"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED70"></div></div>
                 </div>
                 <div class="ledrow">
-                    <div class="ledbackground"><div class="led" id="LD01"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD11"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD21"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD31"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD41"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD51"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD61"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD71"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED01"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED11"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED21"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED31"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED41"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED51"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED61"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED71"></div></div>
                 </div>
                 <div class="ledrow">
-                    <div class="ledbackground"><div class="led" id="LD02"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD12"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD22"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD32"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD42"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD52"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD62"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD72"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED02"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED12"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED22"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED32"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED42"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED52"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED62"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED72"></div></div>
                 </div>
                 <div class="ledrow">
-                    <div class="ledbackground"><div class="led" id="LD03"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD13"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD23"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD33"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD43"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD53"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD63"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD73"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED03"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED13"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED23"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED33"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED43"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED53"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED63"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED73"></div></div>
                 </div>
                 <div class="ledrow">
-                    <div class="ledbackground"><div class="led" id="LD04"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD14"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD24"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD34"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD44"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD54"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD64"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD74"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED04"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED14"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED24"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED34"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED44"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED54"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED64"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED74"></div></div>
                 </div>
                 <div class="ledrow">
-                    <div class="ledbackground"><div class="led" id="LD05"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD15"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD25"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD35"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD45"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD55"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD65"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD75"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED05"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED15"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED25"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED35"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED45"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED55"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED65"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED75"></div></div>
                 </div>
                 <div class="ledrow">
-                    <div class="ledbackground"><div class="led" id="LD06"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD16"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD26"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD36"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD46"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD56"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD66"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD76"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED06"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED16"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED26"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED36"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED46"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED56"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED66"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED76"></div></div>
                 </div>
                 <div class="ledrow">
-                    <div class="ledbackground"><div class="led" id="LD07"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD17"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD27"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD37"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD47"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD57"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD67"></div></div>
-                    <div class="ledbackground"><div class="led" id="LD77"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED07"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED17"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED27"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED37"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED47"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED57"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED67"></div></div>
+                    <div class="ledbackground"><div class="led" id="LED77"></div></div>
                 </div>
             </div>
         </div>

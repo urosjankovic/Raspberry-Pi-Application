@@ -187,7 +187,8 @@ function tempChartInit(){
 			scales: {
                 xAxes: [{
                     gridLines: {
-                        color: 'rgba(255, 255, 255, 0.5)'
+                        color: 'rgba(255, 255, 255, 0.5)',
+						zeroLineColor: 'rgba(255, 255, 255, 0.5)'
                     }
                 }],
 				yAxes: [{
@@ -200,7 +201,8 @@ function tempChartInit(){
 						suggestedMax: 105 
                     },
                     gridLines: {
-                        color: 'rgba(255, 255, 255, 0.5)'
+                        color: 'rgba(255, 255, 255, 0.5)',
+						zeroLineColor: 'rgba(255, 255, 255, 0.5)'
                     }
 				}],es: [{
 					scaleLabel: {
@@ -256,7 +258,8 @@ function presChartInit(){
 			scales: {
 				xAxes: [{
 					gridLines: {
-						color: 'rgba(255, 255, 255, 0.5)'
+						color: 'rgba(255, 255, 255, 0.5)',
+						zeroLineColor: 'rgba(255, 255, 255, 0.5)'
 					}
 				}],
 				yAxes: [{
@@ -269,7 +272,8 @@ function presChartInit(){
 						suggestedMax: 1260 
 					},
 					gridLines: {
-						color: 'rgba(255, 255, 255, 0.5)'
+						color: 'rgba(255, 255, 255, 0.5)',
+						zeroLineColor: 'rgba(255, 255, 255, 0.5)'
 					}
 				}],es: [{
 					scaleLabel: {
@@ -323,7 +327,8 @@ function humChartInit(){
 			scales: {
 				xAxes: [{
 					gridLines: {
-						color: 'rgba(255, 255, 255, 0.5)'
+						color: 'rgba(255, 255, 255, 0.5)',
+						zeroLineColor: 'rgba(255, 255, 255, 0.5)'
 					}
 				}],
 				yAxes: [{
@@ -336,7 +341,8 @@ function humChartInit(){
 						suggestedMax: 100 
 					},
 					gridLines: {
-						color: 'rgba(255, 255, 255, 0.5)'
+						color: 'rgba(255, 255, 255, 0.5)',
+						zeroLineColor: 'rgba(255, 255, 255, 0.5)'
 					}
 				}],es: [{
 					scaleLabel: {

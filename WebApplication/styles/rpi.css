@@ -102,7 +102,6 @@ tr{
 }
 
 th, td {
-
     text-align: center;
 }
 
@@ -156,4 +155,8 @@ td{
     border-radius: .25rem;
     border-color: #343a40;
     
+}
+
+.setcolorrow{
+    padding: 0.35em;
 }

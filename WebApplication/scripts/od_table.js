@@ -87,15 +87,15 @@ function updateTable(oriObj){
         oriObj[2].data.yaw = DegreesToRadians(oriObj[2].data.yaw);  
     }
 
-    $("#AXValue").html(oriObj[0].data.roll);
-    $("#AYValue").html(oriObj[0].data.pitch);
-    $("#AZValue").html(oriObj[0].data.yaw);
-    $("#MXValue").html(oriObj[1].data.x);
-    $("#MYValue").html(oriObj[1].data.y);
-    $("#MZValue").html(oriObj[1].data.z);
-    $("#GXValue").html(oriObj[2].data.roll);
-    $("#GYValue").html(oriObj[2].data.pitch);
-    $("#GZValue").html(oriObj[2].data.yaw);
+    $("#AXValue").html((oriObj[0].data.roll).toFixed(5));
+    $("#AYValue").html((oriObj[0].data.pitch).toFixed(5));
+    $("#AZValue").html((oriObj[0].data.yaw).toFixed(5));
+    $("#MXValue").html((oriObj[1].data.x).toFixed(5));
+    $("#MYValue").html((oriObj[1].data.y).toFixed(5));
+    $("#MZValue").html((oriObj[1].data.z).toFixed(5));
+    $("#GXValue").html((oriObj[2].data.roll).toFixed(5));
+    $("#GYValue").html((oriObj[2].data.pitch).toFixed(5));
+    $("#GZValue").html((oriObj[2].data.yaw).toFixed(5));
 }
 
 /**

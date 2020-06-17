@@ -88,10 +88,10 @@ function updateTable(envObj){
     if(humUnit == "F"){ envObj[3].data = PercentToDecimal(envObj[3].data); }
    
 
-    $("#tempFromHumValue").html(envObj[0].data);
-    $("#tempFromPresValue").html(envObj[1].data);
-    $("#presValue").html(envObj[2].data);
-    $("#humValue").html(envObj[3].data);
+    $("#tempFromHumValue").html((envObj[0].data).toFixed(5));
+    $("#tempFromPresValue").html((envObj[1].data).toFixed(5));
+    $("#presValue").html((envObj[2].data).toFixed(5));
+    $("#humValue").html((envObj[3].data).toFixed(5));
 }
 
 /**
