@@ -8,8 +8,6 @@ sense = SenseHat()
 
 counters = {'Counter': 0, 'X': 0, 'Y': 0}
 
-previousJSON = 0
-
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -20,7 +18,6 @@ sock.bind(server_address)
 
 # Listen for incoming connections
 sock.listen(1)
-print('hey')
 while True:
     connection, client_address = sock.accept()
     try:
@@ -43,20 +40,14 @@ while True:
                             counters['X'] += 1
 
                 dataJSON = json.dumps(counters)
-
-                if not previousJSON == dataJSON:
-                    previousJSON = dataJSON
-                    msg = dataJSON.encode('utf-8') 
-                    connection.sendall(msg)
+                msg = dataJSON.encode('utf-8') 
+                connection.sendall(msg)
             if cmd == b'rst':
                 counters = {'Counter': 0, 'X': 0, 'Y': 0}
 
-                dataJSON = json.dumps(counters)
-                
-                if not previousJSON == dataJSON:
-                    previousJSON = dataJSON
-                    msg = dataJSON.encode('utf-8') 
-                    connection.sendall(msg)
+                dataJSON = json.dumps(counters)      
+                msg = dataJSON.encode('utf-8') 
+                connection.sendall(msg)
             else:
                 break
     finally:
