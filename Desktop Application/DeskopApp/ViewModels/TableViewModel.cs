@@ -32,58 +32,6 @@ namespace RpiApp.ViewModels
             }
         }
 
-        private double _roll;
-        public string Roll
-        {
-            get
-            {
-                return _roll.ToString("0.0####", CultureInfo.InvariantCulture);
-            }
-            set
-            {
-                if (Double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out double tmp) && _roll != tmp)
-                {
-                    _roll = tmp;
-                    OnPropertyChanged("Data");
-                }
-            }
-        }
-
-        private double _pitch;
-        public string Pitch
-        {
-            get
-            {
-                return _pitch.ToString("0.0####", CultureInfo.InvariantCulture);
-            }
-            set
-            {
-                if (Double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out double tmp) && _pitch != tmp)
-                {
-                    _pitch = tmp;
-                    OnPropertyChanged("Data");
-                }
-            }
-        }
-
-        private double _yaw;
-        public string Yaw
-        {
-
-            get
-            {
-                return _yaw.ToString("0.0####", CultureInfo.InvariantCulture);
-            }
-            set
-            {
-                if (Double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out double tmp) && _yaw != tmp)
-                {
-                    _yaw = tmp;
-                    OnPropertyChanged("Data");
-                }
-            }
-        }
-
         private double _data;
         public string Data
         {
@@ -122,28 +70,18 @@ namespace RpiApp.ViewModels
         {
             UpdateWithModel(model);
         }
-        public class DataOri
-        {
-            public double Roll { get; set; }
-            public double Pitch { get; set; }
-            public double Yaw { get; set; }
-        }
 
+      
         public void UpdateWithModel(MeasurementModel model)
         {
             _name = model.Name;
             OnPropertyChanged("Name");
-            _data = model.Data;
+            _data = model.data;
             OnPropertyChanged("Data");
             _unit = model.Unit;
             OnPropertyChanged("Unit");
-            _roll = model.Roll;
-            OnPropertyChanged("Roll");
-            _pitch = model.Pitch;
-            OnPropertyChanged("Pitch");
-            _yaw = model.Yaw;
-            OnPropertyChanged("Yaw");
         }
+
 
         #region PropertyChanged
 

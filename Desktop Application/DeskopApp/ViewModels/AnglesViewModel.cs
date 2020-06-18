@@ -35,13 +35,65 @@ namespace RpiApp.ViewModels
     public class AnglesViewModel
     {
         #region Properties
-        private string ipAddress;
 
-        private int sampleTime; 
+        private string ipAddress;
+        public string IpAddress
+        {
+            get
+            {
+                return ipAddress;
+            }
+            set
+            {
+                if (ipAddress != value)
+                {
+                    ipAddress = value;
+                    OnPropertyChanged("IpAddress");
+                }
+            }
+        }
+
+        private int sampleTime;
+        public string SampleTime
+        {
+            get
+            {
+                return sampleTime.ToString();
+            }
+            set
+            {
+                if (Int32.TryParse(value, out int st))
+                {
+                    if (sampleTime != st)
+                    {
+                        sampleTime = st;
+                        OnPropertyChanged("SampleTime");
+                    }
+                }
+            }
+        }
 
         private int maxSampleNumber;
+        public string MaxSampleNumber
+        {
+            get
+            {
+                return maxSampleNumber.ToString();
+            }
+            set
+            {
+                if (Int32.TryParse(value, out int msn))
+                {
+                    if (maxSampleNumber != msn)
+                    {
+                        maxSampleNumber = msn;
+                        OnPropertyChanged("MaxSampleNumber");
+                    }
+                }
+            }
+        }
 
-        public ObservableCollection<TableViewModel> OriMeasurements { get; set; }
+        public ObservableCollection<TableViewModelOri> OriMeasurements { get; set; }
 
         public ButtonCommand RefreshOri { get; set; }
 
@@ -62,7 +114,11 @@ namespace RpiApp.ViewModels
         public ButtonCommand StartButtonRPY2 { get; set; }
         public ButtonCommand StopButtonRPY2 { get; set; }
 
+        public ButtonCommand UpdateConfigOriG { get; set; }
+        public ButtonCommand UpdateConfigOriT { get; set; }
 
+        public ButtonCommand DefaultConfigOriG { get; set; }
+        public ButtonCommand DefaultConfigOriT { get; set; }
 
         #endregion
 
@@ -162,7 +218,13 @@ namespace RpiApp.ViewModels
             StartButtonRPY2 = new ButtonCommand(StartTimerRPY2);
             StopButtonRPY2 = new ButtonCommand(StopTimerRPY2);
 
-            OriMeasurements = new ObservableCollection<TableViewModel>();
+            UpdateConfigOriG = new ButtonCommand(UpdateConfigOrG);
+            UpdateConfigOriT = new ButtonCommand(UpdateConfigOrT);
+
+            DefaultConfigOriG = new ButtonCommand(DefaultConfigOrG);
+            DefaultConfigOriT = new ButtonCommand(DefaultConfigOrT);
+
+            OriMeasurements = new ObservableCollection<TableViewModelOri>();
 
             RefreshOri = new ButtonCommand(RefreshHandlerOri);
 
@@ -176,25 +238,23 @@ namespace RpiApp.ViewModels
         void RefreshHandlerOri()
         {
             // Read data from server in JSON array format
-            dynamic measurementsJsonArray = iotTableOri.getMeasurementsOri();
+            JArray measurementsJsonArray = iotTableOri.getMeasurementsOri();
 
             // Convert generic JSON array container to list of specific type
-            dynamic measurementsListA = measurementsJsonArray.ToObject<List<MeasurementModel>>();
-
+            var measurementsListA = measurementsJsonArray.ToObject<List<MeasurementModelOri>>();
 
             // Add new elements to collection
-            if (OriMeasurements.Count < measurementsListA[0].Count)
+            if (OriMeasurements.Count < measurementsListA.Count)
             {
-                foreach (var m in measurementsListA[0])
-                    OriMeasurements.Add(new TableViewModel(m));
-                
+                foreach (var m in measurementsListA)
+                    OriMeasurements.Add(new TableViewModelOri(m));
             }
             // Update existing elements in collection
             else
             {
                 for (int i = 0; i < OriMeasurements.Count; i++)
                 {
-                    OriMeasurements[i].UpdateWithModel(measurementsListA[0]);
+                    OriMeasurements[i].UpdateWithModelOri(measurementsListA[i]);
                 }
             }
 
@@ -605,6 +665,88 @@ namespace RpiApp.ViewModels
                 RequestTimerRPY2.Enabled = false;
                 RequestTimerRPY2 = null;
             }
+        }
+
+        private void UpdateConfigOrG()
+        {
+      
+            if (RequestTimerRPY != null) { StopTimerRPY(); }
+
+            if (RequestTimerRPY1 != null) { StopTimerRPY1(); }
+
+            if (RequestTimerRPY2 != null) { StopTimerRPY2(); }
+
+            config = new ConfigParams(ipAddress, sampleTime, maxSampleNumber);
+            Server = new IoTServer(IpAddress);
+
+            if (RequestTimerRPY != null) { StartTimerRPY(); }
+
+            if (RequestTimerRPY1 != null) { StartTimerRPY1(); }
+
+            if (RequestTimerRPY2 != null) { StartTimerRPY2(); }
+        }
+
+        private void UpdateConfigOrT()
+        {
+            if (RequestTimerRPY != null) { StopTimerRPY(); }
+
+            if (RequestTimerRPY1 != null) { StopTimerRPY1(); }
+
+            if (RequestTimerRPY2 != null) { StopTimerRPY2(); }
+
+            config = new ConfigParams(ipAddress, sampleTime, maxSampleNumber);
+            Server = new IoTServer(IpAddress);
+
+            if (RequestTimerRPY != null) { StartTimerRPY(); }
+
+            if (RequestTimerRPY1 != null) { StartTimerRPY1(); }
+
+            if (RequestTimerRPY2 != null) { StartTimerRPY2(); }
+        }
+        /**
+          * @brief Configuration parameters defualt values
+          */
+        private void DefaultConfigOrG()
+        {
+
+            if (RequestTimerRPY != null) { StopTimerRPY(); }
+
+            if (RequestTimerRPY1 != null) { StopTimerRPY1(); }
+
+            if (RequestTimerRPY2 != null) { StopTimerRPY2(); }
+
+            config = new ConfigParams();
+            IpAddress = config.IpAddress;
+            SampleTime = config.SampleTime.ToString();
+            MaxSampleNumber = config.MaxSampleNumber.ToString();
+            Server = new IoTServer(IpAddress);
+
+            if (RequestTimerRPY != null) { StartTimerRPY(); }
+
+            if (RequestTimerRPY1 != null) { StartTimerRPY1(); }
+
+            if (RequestTimerRPY2 != null) { StartTimerRPY2(); }
+
+        }
+        private void DefaultConfigOrT()
+        {
+
+            if (RequestTimerRPY != null) { StopTimerRPY(); }
+
+            if (RequestTimerRPY1 != null) { StopTimerRPY1(); }
+
+            if (RequestTimerRPY2 != null) { StopTimerRPY2(); }
+
+            config = new ConfigParams();
+            IpAddress = config.IpAddress;
+            SampleTime = config.SampleTime.ToString();
+            Server = new IoTServer(IpAddress);
+
+            if (RequestTimerRPY != null) { StartTimerRPY(); }
+
+            if (RequestTimerRPY1 != null) { StartTimerRPY1(); }
+
+            if (RequestTimerRPY2 != null) { StartTimerRPY2(); }
         }
         #endregion
 

@@ -27,21 +27,81 @@ namespace RpiApp.ViewModels
     using System.Net.Http.Headers;
     using System.Data;
     using OxyPlot.Reporting;
+    using RpiApp.Views;
     using System.Collections.ObjectModel;
 
-    public class EnvViewModel
+    public class EnvViewModel : INotifyPropertyChanged
     {
         #region Properties
         private string ipAddress;
+        public string IpAddress
+        {
+            get
+            {
+                return ipAddress;
+            }
+            set
+            {
+                if (ipAddress != value)
+                {
+                    ipAddress = value;
+                    OnPropertyChanged("IpAddress");
+                }
+            }
+        }
 
         private int sampleTime;
+        public string SampleTime
+        {
+            get
+            {
+                return sampleTime.ToString();
+            }
+            set
+            {
+                if (Int32.TryParse(value, out int st))
+                {
+                    if (sampleTime != st)
+                    {
+                        sampleTime = st;
+                        OnPropertyChanged("SampleTime");
+                    }
+                }
+            }
+        }
 
         private int maxSampleNumber;
+        public string MaxSampleNumber
+        {
+            get
+            {
+                return maxSampleNumber.ToString();
+            }
+            set
+            {
+                if (Int32.TryParse(value, out int msn))
+                {
+                    if (maxSampleNumber != msn)
+                    {
+                        maxSampleNumber = msn;
+                        OnPropertyChanged("MaxSampleNumber");
+                    }
+                }
+            }
+        }
 
 
         public ObservableCollection<TableViewModel> EnvMeasurements { get; set; }
 
         public ButtonCommand Refresh { get; set; }
+
+        public ButtonCommand UpdateConfigEnvG { get; set; }
+
+        public ButtonCommand UpdateConfigEnvT { get; set; }
+
+        public ButtonCommand DefaultConfigEnvG { get; set; }
+
+        public ButtonCommand DefaultConfigEnvT { get; set; }
 
         private tableServer iotTable = new tableServer();
 
@@ -152,6 +212,12 @@ namespace RpiApp.ViewModels
             StartButtonHumid = new ButtonCommand(StartTimerHumid);
             StopButtonHumid = new ButtonCommand(StopTimerHumid);
 
+            UpdateConfigEnvG = new ButtonCommand(UpdateConfigG);
+            UpdateConfigEnvT = new ButtonCommand(UpdateConfigT);
+
+            DefaultConfigEnvG = new ButtonCommand(DefaultConfigG);
+            DefaultConfigEnvT = new ButtonCommand(DefaultConfigT);
+
             EnvMeasurements = new ObservableCollection<TableViewModel>();
 
             Refresh = new ButtonCommand(RefreshHandler);
@@ -160,7 +226,7 @@ namespace RpiApp.ViewModels
             sampleTime = config.SampleTime;
             maxSampleNumber = config.MaxSampleNumber;
 
-            
+            Server = new IoTServer(IpAddress);
         }
 
         void RefreshHandler()
@@ -404,6 +470,7 @@ namespace RpiApp.ViewModels
             UpdatePlotWithServerResponseHumid();
 
         }
+
         #region ButtonCommands
 
         /**
@@ -421,7 +488,9 @@ namespace RpiApp.ViewModels
 
             }
         }
-
+        /**
+         * @brief RequestTimer start procedure.
+         */
         private void StartTimerPress()
         {
             if (RequestTimerPress == null)
@@ -434,7 +503,6 @@ namespace RpiApp.ViewModels
 
             }
         }
-
         private void StartTimerHumid()
         {
             if (RequestTimerHumid == null)
@@ -444,10 +512,8 @@ namespace RpiApp.ViewModels
                 RequestTimerHumid.Enabled = true;
 
                 Humid.ResetAllAxes();
-
             }
         }
-
         /**
          * @brief RequestTimer stop procedure.
          */
@@ -459,7 +525,6 @@ namespace RpiApp.ViewModels
                 RequestTimerTemp = null;
             }
         }
-
         private void StopTimerPress()
         {
             if (RequestTimerPress != null)
@@ -468,7 +533,6 @@ namespace RpiApp.ViewModels
                 RequestTimerPress = null;
             }
         }
-
         private void StopTimerHumid()
         {
             if (RequestTimerHumid != null)
@@ -478,7 +542,93 @@ namespace RpiApp.ViewModels
             }
         }
 
-        
+        /**
+         * @brief Update configuration with new parameters
+         */
+        private void UpdateConfigG()
+        {
+            bool restartTimer = (RequestTimerTemp != null && RequestTimerPress != null && RequestTimerHumid != null);
+
+            if (RequestTimerTemp != null) { StopTimerTemp(); }
+
+            if (RequestTimerPress != null) { StopTimerPress(); }
+
+            if (RequestTimerHumid != null) { StopTimerHumid(); }
+
+            config = new ConfigParams(ipAddress, sampleTime, maxSampleNumber);
+            Server = new IoTServer(IpAddress);
+
+            if (RequestTimerTemp != null) { StartTimerTemp(); }
+
+            if (RequestTimerPress != null) { StartTimerPress(); }
+
+            if (RequestTimerHumid != null) { StartTimerHumid(); }
+        }
+
+        private void UpdateConfigT()
+        {
+
+            if (RequestTimerTemp != null) { StopTimerTemp(); }
+
+            if (RequestTimerPress != null) { StopTimerPress(); }
+
+            if (RequestTimerHumid != null) { StopTimerHumid(); }
+
+            config = new ConfigParams(ipAddress, sampleTime, maxSampleNumber);
+            Server = new IoTServer(IpAddress);
+
+            if (RequestTimerTemp != null) { StartTimerTemp(); }
+
+            if (RequestTimerPress != null) { StartTimerPress(); }
+
+            if (RequestTimerHumid != null) { StartTimerHumid(); }
+        }
+        /**
+          * @brief Configuration parameters defualt values
+          */
+        private void DefaultConfigG()
+        {
+
+            if (RequestTimerTemp != null) { StopTimerTemp(); }
+                
+            if(RequestTimerPress != null) { StopTimerPress(); }
+                
+            if(RequestTimerHumid != null) { StopTimerHumid(); }
+                
+            config = new ConfigParams();
+            IpAddress = config.IpAddress;
+            SampleTime = config.SampleTime.ToString();
+            MaxSampleNumber = config.MaxSampleNumber.ToString();
+            Server = new IoTServer(IpAddress);
+
+            if (RequestTimerTemp != null) {  StartTimerTemp(); }
+               
+            if (RequestTimerPress != null) { StartTimerPress(); }
+                
+            if (RequestTimerHumid != null) { StartTimerHumid(); }     
+        }
+        private void DefaultConfigT()
+        {
+            
+
+            if (RequestTimerTemp != null) { StopTimerTemp(); }
+
+            if (RequestTimerPress != null) { StopTimerPress(); }
+
+            if (RequestTimerHumid != null) { StopTimerHumid(); }
+
+            config = new ConfigParams();
+            IpAddress = config.IpAddress;
+            SampleTime = config.SampleTime.ToString();
+            Server = new IoTServer(IpAddress);
+
+            if (RequestTimerTemp != null) { StartTimerTemp(); }
+
+            if (RequestTimerPress != null) { StartTimerPress(); }
+
+            if (RequestTimerHumid != null) { StartTimerHumid(); }
+        }
+
         #endregion
 
         #region PropertyChanged

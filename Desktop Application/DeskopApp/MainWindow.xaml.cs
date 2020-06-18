@@ -37,10 +37,6 @@ namespace RpiApp
             DataContext = new AnglesViewModel();
         }
 
-        private void Config_click(object sender, RoutedEventArgs e)
-        {
-            DataContext = new ConfigViewModel();
-        }
 
         private void LEDBtn_click(object sender, RoutedEventArgs e)
         {

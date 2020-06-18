@@ -32,22 +32,44 @@ namespace RpiApp.ViewModels
 
     public class JoyViewModel
     {
-        #region Fields
+        #region Properties
         private string ipAddress;
-        private int maxSampleNumber;
+        public string IpAddress
+        {
+            get
+            {
+                return ipAddress;
+            }
+            set
+            {
+                if (ipAddress != value)
+                {
+                    ipAddress = value;
+                    OnPropertyChanged("IpAddress");
+                }
+            }
+        }
         private int sampleTime;
-        private int timeStamp = 0;
-        private IoTServer Server;
-        private Timer RequestTimerJoy;
+        private int maxSampleNumber;
+        #endregion
+
+        
 
         public ButtonCommand Reset { get; set; }
 
+        public ButtonCommand UpdateConfigJoy { get; set; }
+        public ButtonCommand DefaultConfigJoy { get; set; }
         public PlotModel Joy { get; set; }
         
         private ConfigParams config = new ConfigParams();
 
+        
+        #region Fields;
+        private IoTServer Server;
+        private Timer RequestTimerJoy;
         int yMax = 10, xMax = 10;
 
+        
         #endregion
 
         public JoyViewModel()
@@ -79,12 +101,13 @@ namespace RpiApp.ViewModels
 
             Reset = new ButtonCommand(ResetGraph);
 
-           
+            UpdateConfigJoy = new ButtonCommand(UpdateJoy);
+            DefaultConfigJoy = new ButtonCommand(DefaultJoy);
 
             Server = new IoTServer(ipAddress);
 
-            sampleTime = config.SampleTime;
             ipAddress = config.IpAddress;
+            sampleTime = config.SampleTime;
             maxSampleNumber = config.MaxSampleNumber;
 
             RequestTimerJoy = new Timer(100);
@@ -104,30 +127,32 @@ namespace RpiApp.ViewModels
             if (x >= xMax)
             {
                 xMax = x;
-                Joy.Axes[0].Minimum = xMax - 20;
-                Joy.Axes[0].Maximum = xMax + 5;
+                Joy.Axes[0].Minimum = xMax - 21;
+                Joy.Axes[0].Maximum = xMax + 1;
             }
 
             if (x <= -xMax)
             {
                 xMax = -x;
-                Joy.Axes[0].Minimum = -xMax - 5;
-                Joy.Axes[0].Maximum = -xMax + 20;
+                Joy.Axes[0].Minimum = -xMax - 1;
+                Joy.Axes[0].Maximum = -xMax + 21;
             }
 
             if (y >= yMax)
             {
                 yMax = y;
-                Joy.Axes[1].Minimum = yMax - 20;
-                Joy.Axes[1].Maximum = yMax + 5;
+                Joy.Axes[1].Minimum = yMax - 21;
+                Joy.Axes[1].Maximum = yMax + 1;
             }
 
             if (y <= -yMax)
             {
                 yMax = -y;
-                Joy.Axes[1].Minimum = -yMax - 5;
-                Joy.Axes[1].Maximum = -yMax + 20;
+                Joy.Axes[1].Minimum = -yMax - 1;
+                Joy.Axes[1].Maximum = -yMax + 21;
             }
+            bool btnPressed = false;
+
 
             Joy.InvalidatePlot(true);
         }
@@ -143,20 +168,54 @@ namespace RpiApp.ViewModels
                
         }
 
+
         private void RequestTimerElapsedJoy(object sender, ElapsedEventArgs e)
         {
             UpdatePlotWithServerResponseJoy();
         }
 
+
+        #region Button Comands
         public void ResetGraph()
-        { 
-            UpdatePlotJoy(0, 0);
+        {
+            string json = new WebClient().DownloadString("http://192.168.1.26/web_app/server/joystick_via_deamon.php?id=rst");
+
+            dynamic clean = JObject.Parse(json);
+
+            UpdatePlotJoy((int)clean.X, (int)clean.Y);
             Joy.Series.Clear();
-            Joy.Axes.Clear();
-            //Joy.Axes[0].Minimum = -xMax;
-            //Joy.Axes[0].Maximum = xMax;
-            //Joy.Axes[1].Minimum = -yMax;
-            //Joy.Axes[1].Maximum = yMax;
+            Joy.Axes[0].Minimum = -xMax;
+            Joy.Axes[0].Maximum = xMax;
+            Joy.Axes[1].Minimum = -yMax;
+            Joy.Axes[1].Maximum = yMax;
+            
         }
+
+        private void UpdateJoy()
+        {
+            config = new ConfigParams(ipAddress, sampleTime, maxSampleNumber);
+            Server = new IoTServer(IpAddress);
+        }
+        private void DefaultJoy()
+        {
+            config = new ConfigParams();
+            IpAddress = config.IpAddress;
+            Server = new IoTServer(IpAddress);
+        }
+        #endregion
+
+        #region PropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /**
+         * @brief Simple function to trigger event handler
+         * @params propertyName Name of ViewModel property as string
+         */
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 }

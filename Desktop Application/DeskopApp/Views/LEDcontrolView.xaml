@@ -8,7 +8,7 @@
              xmlns:viewmodels="clr-namespace:RpiApp.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800">
-    <Grid>
+    <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -148,6 +148,17 @@
                     CLEAR
                 </Button>
             </Grid>
+            <Button Content="UPDATE CONFIG" Margin="82,710,565,52" Command="{Binding UpdateConfigLED}"/>
+            <Button Content="DEFAULT CONFIG" Margin="240,710,407,52" Command="{Binding DefaultConfigLED}"/>
+            <TextBlock 
+                        Grid.Column="0" 
+                        Margin="16,677,718,98" 
+                        Text="IP address: " VerticalAlignment="Center" Height="15"/>
+            <TextBox 
+                        Margin="82,677,0,98" 
+                        Width="100" 
+                        HorizontalAlignment="Left" 
+                        Text="{Binding IpAddress}"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -15,9 +15,6 @@
         <DataTemplate x:Name="AnglesViewTemplate" DataType="{x:Type viewmodels:AnglesViewModel}">
             <views:AnglesView DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="ConfigViewTemplate" DataType="{x:Type viewmodels:ConfigViewModel}">
-            <views:ConfigView DataContext="{Binding}"/>
-        </DataTemplate>
         <DataTemplate x:Name="LEDViewTemplate" DataType="{x:Type viewmodels:LEDViewModel}">
             <views:LEDcontrolView DataContext="{Binding}"/>
         </DataTemplate>
@@ -26,6 +23,25 @@
         </DataTemplate>
     </Window.Resources>
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="C:\Users\hp\source\repos\RpiApp\putlogo.png" Stretch="none" AlignmentX="Center" AlignmentY="Top">
+                <ImageBrush.Transform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                    </TransformGroup>
+                </ImageBrush.Transform>
+                <ImageBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                        <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                        <TranslateTransform X="0.1"/>
+                    </TransformGroup>
+                </ImageBrush.RelativeTransform>
+            </ImageBrush>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
@@ -40,13 +56,13 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
+        <TextBlock Grid.ColumnSpan="4" Margin="10,0,10,10" Grid.RowSpan="2" Grid.Column="1" Grid.Row="3" FontSize="48" TextAlignment="Center">Mobile and embedded applications <LineBreak/> for Internet of Things<LineBreak/><LineBreak/>Desktop Application</TextBlock>
         <DockPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Background="Gray" x:Name="Menu">
             <StackPanel>
                 <Button Content="Enviromental Data" Height="50" FontSize="20" Click="EnvData_click"/>
                 <Button Content="Angles" Height="50" FontSize="20" Click="Angles_click"/>
                 <Button Content="Joystick" Height="50" FontSize="20" Click="JoyBtn_click"/>
                 <Button Content="LED Control" Height="50" FontSize="20" Click="LEDBtn_click"/>
-                <Button Content="Config" Height="50" FontSize="20" Click="Config_click"/>
             </StackPanel>
         </DockPanel>
         <ContentControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" Grid.ColumnSpan="4" Content="{Binding}"/>

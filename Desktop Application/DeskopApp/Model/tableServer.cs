@@ -25,7 +25,7 @@ namespace RpiApp.Model
 
         public dynamic getMeasurementsOri() 
         {
-            var json = new WebClient().DownloadString("http://192.168.1.26/web_app/server/sensors_via_deamon.php?id=ori");
+            string json = new WebClient().DownloadString("http://192.168.1.26/web_app/server/sensors_via_deamon.php?id=ori");
 
             return JArray.Parse(json);
         }

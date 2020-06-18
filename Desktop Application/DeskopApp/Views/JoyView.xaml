@@ -8,7 +8,7 @@
              xmlns:local="clr-namespace:RpiApp.Views"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800">
-    <Grid>
+    <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -23,10 +23,9 @@
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4">
-
             <oxy:PlotView x:Name="Joystick"
-                        Margin="80,100,80,0" 
-                        Model="{Binding Joy}" Height="504" VerticalAlignment="Top"  RenderTransformOrigin="0.5,0.5">
+                        Margin="10,52,10,0" 
+                        Model="{Binding Joy}" Height="548" VerticalAlignment="Top"  RenderTransformOrigin="0.5,0.5">
                 <oxy:PlotView.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="1"/>
@@ -36,14 +35,45 @@
                     </TransformGroup>
                 </oxy:PlotView.RenderTransform>
             </oxy:PlotView>
-            <Grid Margin="80,100,80,0" Height="Auto" VerticalAlignment="Stretch">
+            <Grid Margin="10,600,0,10" RenderTransformOrigin="0.5,0.5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="37*"/>
+                    <ColumnDefinition Width="38*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Grid.RenderTransform>
+                <Button
+                    Content="UPDATE CONFIG"
+                    Margin="10,108,268,10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{Binding UpdateConfigJoy}"/>
+                <Button Content="DEFAULT CONFIG"
+                        Margin="127,108,147,10"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding DefaultConfigJoy}"/>
+                <TextBlock  
+                        Margin="10,0,320,60" 
+                        Text="IP address: " VerticalAlignment="Bottom" Height="16"/>
+                <TextBox 
+                        Margin="70,0,215,60" 
+                        VerticalAlignment="Bottom" 
+                        Text="{Binding IpAddress}"/>
                 <Button 
+                    HorizontalAlignment="center"
+                    VerticalAlignment="center"
                     Height="30" 
-                    Margin="388,518,72,52" 
-                    Command="{Binding Reset}">
-                    RESET
-                </Button>
+                    Margin="0,0,-750,100" 
+                    Command="{Binding Reset}" Width="116" Content="RESET"/>
             </Grid>
+
         </Grid>
     </Grid>
 </UserControl>

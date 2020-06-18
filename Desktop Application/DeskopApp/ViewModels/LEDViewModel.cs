@@ -58,6 +58,9 @@ namespace RpiApp.ViewModels
 
         private ConfigParams config = new ConfigParams();
         private IoTServer Server;
+
+        private int sampleTime;
+        private int maxSampleNumber;
         #endregion
 
         
@@ -65,11 +68,20 @@ namespace RpiApp.ViewModels
 
         public ButtonCommand SendData { get; set; }
 
+        public ButtonCommand UpdateConfigLED { get; set; }
+        public ButtonCommand DefaultConfigLED { get; set; }
+
         public ButtonCommand ClearButton { get; set; }
 
         public LEDViewModel()
         {
             ipAddress = config.IpAddress;
+            sampleTime = config.SampleTime;
+            maxSampleNumber = config.MaxSampleNumber;
+
+            UpdateConfigLED = new ButtonCommand(UpdateLED);
+            DefaultConfigLED = new ButtonCommand(DefaultLED);
+
             Server = new IoTServer(IpAddress);
 
             SendData = new ButtonCommand(sendControlRequest);
@@ -127,6 +139,18 @@ namespace RpiApp.ViewModels
             {
                 var result = streamReader.ReadToEnd();
             }
+        }
+
+        private void UpdateLED()
+        {
+            config = new ConfigParams(ipAddress, sampleTime, maxSampleNumber);
+            Server = new IoTServer(IpAddress);
+        }
+        private void DefaultLED()
+        {
+            config = new ConfigParams();
+            IpAddress = config.IpAddress;
+            Server = new IoTServer(IpAddress);
         }
 
         #region PropertyChanged

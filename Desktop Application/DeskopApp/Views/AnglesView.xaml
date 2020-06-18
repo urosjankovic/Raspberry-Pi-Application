@@ -8,7 +8,7 @@
              xmlns:oxy="http://oxyplot.org/wpf"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800">
-    <Grid>
+    <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -26,9 +26,9 @@
                 <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4">
 
                     <oxy:PlotView x:Name="Angless"
-                        Margin="30,0,52,0" 
+                        Margin="0,0,10,0" 
                         Model="{Binding RPY}"
-                        Height="240" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
+                        Height="210" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
                     <Grid Margin="100,-5,500,710">
                         <Button 
                             Grid.Column="0"
@@ -46,61 +46,94 @@
                             Command="{Binding StopButtonRPY}">
                             STOP
                         </Button>
+                    </Grid>
 
-                        <oxy:PlotView x:Name="Angless1"
-                        Margin="-70,242,-456,-425" 
-                        Model="{Binding RPY1}" Height="240" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                            <oxy:PlotView.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform ScaleX="1"/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </oxy:PlotView.RenderTransform>
-                        </oxy:PlotView>
-                        <Grid Margin="10,242,-8,-242">
-                            <Button 
+                    <oxy:PlotView x:Name="Angless1"
+                        Margin="0,200,10,0" 
+                        Model="{Binding RPY1}" Height="210" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+                        <oxy:PlotView.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </oxy:PlotView.RenderTransform>
+                    </oxy:PlotView>
+                    <Grid Margin="100,147,500,468">
+                        <Button 
                             Grid.Column="0"
                             Height="30" 
                             Width="54"
                             Margin="0,11,130,11" 
                             Command="{Binding StartButtonRPY1}" HorizontalAlignment="Right" RenderTransformOrigin="-1.82,0.867">
-                                START
-                            </Button>
-                            <Button 
+                            START
+                        </Button>
+                        <Button 
                             Grid.Column="1" 
                             Height="30" 
                             Width="50" 
                             Margin="0,10,15,10" 
                             Command="{Binding StopButtonRPY1}">
-                                STOP
-                            </Button>
-                        </Grid>
+                            STOP
+                        </Button>
+                    </Grid>
 
-                        <oxy:PlotView x:Name="Angless2"
-                        Margin="-70,487,-436,-640" 
-                        Model="{Binding RPY2}" Height="240" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"  Width="700"/>
-                        <Grid Margin="10,475,-8,-472" RenderTransformOrigin="0.5,0.5">
-                            <Button 
+                    <oxy:PlotView x:Name="Angless2"
+                        Margin="0,400,10,0" 
+                        Model="{Binding RPY2}" Height="210" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
+                    <Grid Margin="100,370,500,316" RenderTransformOrigin="0.5,0.5">
+                        <Button 
                             Grid.Column="0"
                             Height="30" 
                             Width="54"
                             Margin="0,11,130,11" 
                             Command="{Binding StartButtonRPY2}" HorizontalAlignment="Right" RenderTransformOrigin="-1.82,0.867">
-                                START
-                            </Button>
-                            <Button 
+                            START
+                        </Button>
+                        <Button 
                             Grid.Column="1" 
                             Height="30" 
                             Width="50" 
                             Margin="0,10,15,10" 
                             Command="{Binding StopButtonRPY2}">
-                                STOP
-                            </Button>
-                        </Grid>
-
+                            STOP
+                        </Button>
                     </Grid>
+                    <Button Content="UPDATE CONFIG" Margin="88,690,559,52" Command="{Binding UpdateConfigOriG}"/>
+                    <Button Content="DEFAULT CONFIG" Margin="245,690,402,52" Command="{Binding DefaultConfigOriG}"/>
+                    <TextBlock 
+                        Grid.Column="0" 
+                        Margin="20,652,714,95" 
+                        Text="IP address: " VerticalAlignment="Center" Height="15"/>
+                    <TextBox 
+                        Margin="80,652,0,95" 
+                        Width="100" 
+                        HorizontalAlignment="Left" 
+                        Text="{Binding IpAddress}"/>
+                    <TextBlock 
+                        Margin="0,651,515,96"  
+                        Text="Sample time: " 
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Height="15"/>
+                    <TextBox 
+                        Margin="284,652,0,95" 
+                        Width="50" 
+                        HorizontalAlignment="Left" 
+                        Text="{Binding SampleTime}"/>
+                    <TextBlock 
+                        Margin="0,652,436,95" 
+                        Text=" ms"  
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Height="15"/>
+                    <TextBlock 
+                        Margin="0,651,296,96"  
+                        Text="Max. sample number: " 
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Height="15"/>
+                    <TextBox 
+                        Margin="503,652,0,96" 
+                        Width="50" 
+                        HorizontalAlignment="Left" 
+                        Text="{Binding MaxSampleNumber}"/>
+
                 </Grid>
             </TabItem>
             <TabItem Header="Table">
@@ -109,17 +142,52 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="Roll" Width="100" DisplayMemberBinding="{Binding Roll}"/>
-                                <GridViewColumn Header="Pitch" Width="100" DisplayMemberBinding="{Binding Pitch}"/>
-                                <GridViewColumn Header="Yaw" Width="100" DisplayMemberBinding="{Binding Yaw}"/>
-                                <GridViewColumn Header="Data" Width="100" DisplayMemberBinding="{Binding DataOri}"/>
+                                <GridViewColumn Header="Roll" Width="100" DisplayMemberBinding="{Binding Path=Roll}"/>
+                                <GridViewColumn Header="Pitch" Width="100" DisplayMemberBinding="{Binding Path=Pitch}"/>
+                                <GridViewColumn Header="Yaw" Width="100" DisplayMemberBinding="{Binding Path=Yaw}"/>
+                                <GridViewColumn Header="x" Width="100" DisplayMemberBinding="{Binding Path=x}"/>
+                                <GridViewColumn Header="y" Width="100" DisplayMemberBinding="{Binding Path=y}"/>
+                                <GridViewColumn Header="z" Width="100" DisplayMemberBinding="{Binding Path=z}"/>
                                 <GridViewColumn Header="Unit" Width="100" DisplayMemberBinding="{Binding Unit}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Command="{Binding RefreshOri}" Margin="300,600,300,100">REFRESH</Button>
-    </Grid>
-    </TabItem>
+                    <Button Command="{Binding RefreshOri}" Margin="300,240,300,500">REFRESH</Button>
+                    <Button Content="UPDATE CONFIG" Margin="88,690,559,52" Command="{Binding UpdateConfigOriT}"/>
+                    <Button Content="DEFAULT CONFIG" Margin="245,690,402,52" Command="{Binding DefaultConfigOriT}"/>
+                    <TextBlock 
+                        Grid.Column="0" 
+                        Margin="20,652,714,95" 
+                        Text="IP address: " VerticalAlignment="Center" Height="15"/>
+                    <TextBox 
+                        Margin="80,652,0,95" 
+                        Width="100" 
+                        HorizontalAlignment="Left" 
+                        Text="{Binding IpAddress}"/>
+                    <TextBlock 
+                        Margin="0,651,515,96"  
+                        Text="Sample time: " 
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Height="15"/>
+                    <TextBox 
+                        Margin="284,652,0,95" 
+                        Width="50" 
+                        HorizontalAlignment="Left" 
+                        Text="{Binding SampleTime}"/>
+                    <TextBlock 
+                        Margin="0,652,436,95" 
+                        Text=" ms"  
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Height="15"/>
+                    <TextBlock 
+                        Margin="0,651,296,96"  
+                        Text="Max. sample number: " 
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Height="15"/>
+                    <TextBox 
+                        Margin="503,652,0,96" 
+                        Width="50" 
+                        HorizontalAlignment="Left" 
+                        Text="{Binding MaxSampleNumber}"/>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>
