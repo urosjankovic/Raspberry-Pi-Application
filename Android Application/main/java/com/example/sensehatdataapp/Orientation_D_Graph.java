@@ -425,9 +425,9 @@ public class Orientation_D_Graph extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        
+
                         //ERROR HERE
-                        showGraphA(response);
+                        showGraphA(JSONArray(response));
                     }
                 }, null);
                /* new Response.ErrorListener() {
