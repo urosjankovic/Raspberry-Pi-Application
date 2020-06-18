@@ -59,14 +59,14 @@ public class Orientation_D_Graph extends AppCompatActivity {
     private boolean rqTimerFirstRequestAfterStop;
 
 
-    public static String MAG_FILE="pressValues.json";
-    public static String GYRO_FILE ="tempValues.json";
-    public static String ACCEL_FILE ="humidValues.json";
+    public static String JSON_FILE="sensors_via_deamon.php?id=ori";
+
+
 
 
 
     TextView tv1, tv2, tv3;
-    String ipAddress;
+    String ipAddress,url;
     int sampleTime, samplesvalue, dataGraphMaxDataPointsNumber;
 
     @Override
@@ -78,6 +78,8 @@ public class Orientation_D_Graph extends AppCompatActivity {
         ipAddress =Server_param.globalip;
         sampleTime = Server_param.globalsampletime;
         samplesvalue = Server_param.globalsamples;
+
+        url = getURL(ipAddress);
 
         dataGraphMaxDataPointsNumber = samplesvalue;
 
@@ -310,17 +312,15 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
 
 
-    private String getURLA(String ip) {
-        return ("http://" + ip + "/" + ACCEL_FILE);
+    private String getURL(String ip) {
+        return ("http://" + ip + "/" + JSON_FILE);
     }
 
-    private String getURLB(String ip) {
-        return ("http://" + ip + "/" + GYRO_FILE);
-    }
+    //private String getURLB(String ip) { return ("http://" + ip + "/" + GYRO_FILE); }
 
-    private String getURLC(String ip) {
-        return ("http://" + ip + "/" + MAG_FILE);
-    }
+    //private String getURLC(String ip) {
+        //return ("http://" + ip + "/" + MAG_FILE);
+    //}
 
     /**
      * @brief Initialize request timer period task with 'Handler' post method as 'sendGetRequest'.
@@ -349,41 +349,7 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
 
     private double getRawDataFromResponseB(String response) {
-        double x = Double.NaN;
-        /*JSONObject jObject;
-        JSONArray anglearray=[];
-
-        double y = Double.NaN;
-        double z = Double.NaN;
-
-        // Create generic JSON object form string
-        try {
-            jObject = new JSONObject(response);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return x;
-        }
-
-        // Read chart data form JSON object
-        try {
-            anglearray=jObject.getJSONArray("data");
-            //x = (Double) jObject.get("data");
-            x= (Double) anglearray.get(0);
-            y= (Double) anglearray.get(1);
-            z= (Double) anglearray.get(2);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        */
-        return x;
-
-    }
-
-
-    private double getRawDataFromResponseA(JSONArray response) {
         JSONArray jarray;
-        JSONObject jObject;
         double x = Double.NaN;
 
         // Create generic JSON object form string
@@ -397,20 +363,23 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            x = (double)jarray[0].get("data");
+            x = (double)jarray.getJSONObject(1).get("gyroscope");
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return x;
+
     }
 
-    private double getRawDataFromResponseC(String response) {
-        JSONObject jObject;
+
+    private double getRawDataFromResponseA(JSONArray response) {
+        JSONArray jarray;
         double x = Double.NaN;
 
         // Create generic JSON object form string
         try {
-            jObject = new JSONObject(response);
+            jarray = new JSONArray(response);
+
         } catch (JSONException e) {
             e.printStackTrace();
             return x;
@@ -418,7 +387,29 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            x = (double)jObject.get("data2");
+            x = (double)jarray.getJSONObject(0).get("acceleration");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return x;
+    }
+
+    private double getRawDataFromResponseC(String response) {
+        JSONArray jarray;
+        double x = Double.NaN;
+
+        // Create generic JSON object form string
+        try {
+            jarray = new JSONArray(response);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return x;
+        }
+
+        // Read chart data form JSON object
+        try {
+            x = (double)jarray.getJSONObject(2).get("magnetic");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -427,13 +418,15 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
     public void sendGetRequestA(){
 
-        String url = getURLA(ipAddress);
+
 
         // Request a string response from the provided URL
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        
+                        //ERROR HERE
                         showGraphA(response);
                     }
                 }, null);
@@ -447,7 +440,7 @@ public class Orientation_D_Graph extends AppCompatActivity {
     }
 
     public void sendGetRequestB(){
-        String url = getURLB(ipAddress);
+
 
         // Request a string response from the provided URL
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -467,7 +460,7 @@ public class Orientation_D_Graph extends AppCompatActivity {
     }
 
     public void sendGetRequestC(){
-        String url = getURLC(ipAddress);
+
 
         // Request a string response from the provided URL
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -516,7 +509,7 @@ public class Orientation_D_Graph extends AppCompatActivity {
     }
 
 
-    public void showGraphA(String response){
+    public void showGraphA(JSONArray response){
 
         if(rqTimerA != null) {
             // get time stamp with SystemClock
