@@ -22,6 +22,7 @@ import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,15 +35,15 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
     private final double dataGraphMaxX = 10.0d;
     private final double dataGraphMinX =  0.0d;
-    private final double dataGraphMaxY =  1.0d;
-    private final double dataGraphMinY = -1.0d;
+    private final double dataGraphMaxY =  190.0d;
+    private final double dataGraphMinY = -190.0d;
     private GraphView dataGraph;
     private GraphView dataGraph2;
     private GraphView dataGraph3;
     private LineGraphSeries<DataPoint> dataSeriesA;
     private LineGraphSeries<DataPoint> dataSeriesB;
     private LineGraphSeries<DataPoint> dataSeriesC;
-    private final int dataGraphMaxDataPointsNumber = 1000;
+
 
     private RequestQueue queue;
     private Timer rqTimerA;
@@ -57,30 +58,28 @@ public class Orientation_D_Graph extends AppCompatActivity {
     private boolean rqTimerFirstRequest = true;
     private boolean rqTimerFirstRequestAfterStop;
 
-    public static String ipAddress ="192.168.0.23";
-    public static int sampleTime = 500;
-    public static int serverPort = 22;
-    public static String PRESS_FILE="pressValues.json";
-    public static String TEMP_FILE="tempValues.json";
-    public static String HUMID_FILE="humidValues.json";
+
+    public static String MAG_FILE="pressValues.json";
+    public static String GYRO_FILE ="tempValues.json";
+    public static String ACCEL_FILE ="humidValues.json";
 
 
 
     TextView tv1, tv2, tv3;
+    String ipAddress;
+    int sampleTime, samplesvalue, dataGraphMaxDataPointsNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orientationd__graph);
 
-        Button SettingsBtn2= (Button) findViewById(R.id.SettingsBtn2);
-        SettingsBtn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent firstIntent= new Intent(getApplicationContext(),Config.class);
-                startActivity(firstIntent);
-            }
-        });
+
+        ipAddress =Server_param.globalip;
+        sampleTime = Server_param.globalsampletime;
+        samplesvalue = Server_param.globalsamples;
+
+        dataGraphMaxDataPointsNumber = samplesvalue;
 
         /* BEGIN initialize GraphView */
         // https://github.com/jjoe64/GraphView/wiki
@@ -147,7 +146,7 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
         tv1.setText("IP address: "+ipAddress);
         tv2.setText("Sample time: "+Integer.toString(sampleTime)+"ms");
-        tv3.setText("Server Port: "+Integer.toString(serverPort));
+        tv3.setText("No. of samples: "+Integer.toString(samplesvalue));
 
 
 
@@ -298,7 +297,7 @@ public class Orientation_D_Graph extends AppCompatActivity {
             }*/
 
         if (val1 != 1 && val2 != 1 && val3 != 1) {
-            Toast.makeText(Orientation_D_Graph.this, "No variables selected. \nSelect variables on main page to view.", Toast.LENGTH_LONG).show();
+            Toast.makeText(Orientation_D_Graph.this, "No variables selected. \nSelect variables on variables page to view.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -312,15 +311,15 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
 
     private String getURLA(String ip) {
-        return ("http://" + ip + "/" + HUMID_FILE);
+        return ("http://" + ip + "/" + ACCEL_FILE);
     }
 
     private String getURLB(String ip) {
-        return ("http://" + ip + "/" + TEMP_FILE);
+        return ("http://" + ip + "/" + GYRO_FILE);
     }
 
     private String getURLC(String ip) {
-        return ("http://" + ip + "/" + PRESS_FILE);
+        return ("http://" + ip + "/" + MAG_FILE);
     }
 
     /**
@@ -350,8 +349,12 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
 
     private double getRawDataFromResponseB(String response) {
-        JSONObject jObject;
         double x = Double.NaN;
+        /*JSONObject jObject;
+        JSONArray anglearray=[];
+
+        double y = Double.NaN;
+        double z = Double.NaN;
 
         // Create generic JSON object form string
         try {
@@ -363,20 +366,30 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            x = (double)jObject.get("data");
+            anglearray=jObject.getJSONArray("data");
+            //x = (Double) jObject.get("data");
+            x= (Double) anglearray.get(0);
+            y= (Double) anglearray.get(1);
+            z= (Double) anglearray.get(2);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        */
         return x;
+
     }
 
-    private double getRawDataFromResponseA(String response) {
+
+    private double getRawDataFromResponseA(JSONArray response) {
+        JSONArray jarray;
         JSONObject jObject;
         double x = Double.NaN;
 
         // Create generic JSON object form string
         try {
-            jObject = new JSONObject(response);
+            jarray = new JSONArray(response);
+
         } catch (JSONException e) {
             e.printStackTrace();
             return x;
@@ -384,7 +397,7 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            x = (double)jObject.get("data1");
+            x = (double)jarray[0].get("data");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -574,8 +587,6 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
             // remember previous time stamp
             requestTimerPreviousTime = requestTimerCurrentTime;
-        }else{
-            dataGraph2.getGridLabelRenderer().setHorizontalLabelsVisible(false);
         }
     }
 
@@ -602,7 +613,7 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
                 dataSeriesC.setColor(Color.BLUE);
 
- 
+
                 dataSeriesC.appendData(new DataPoint(timeStamp, rawData), scrollGraph, dataGraphMaxDataPointsNumber);
 
 
