@@ -57,6 +57,7 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Grid.ColumnSpan="4" Margin="10,0,10,10" Grid.RowSpan="2" Grid.Column="1" Grid.Row="3" FontSize="48" TextAlignment="Center">Mobile and embedded applications <LineBreak/> for Internet of Things<LineBreak/><LineBreak/>Desktop Application</TextBlock>
+        <TextBlock Grid.ColumnSpan="4" Margin="10,109,10,10" Grid.Column="1" Grid.Row="4" FontSize="24" TextAlignment="Center">By Uros Jankovic</TextBlock>
         <DockPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Background="Gray" x:Name="Menu">
             <StackPanel>
                 <Button Content="Enviromental Data" Height="50" FontSize="20" Click="EnvData_click"/>

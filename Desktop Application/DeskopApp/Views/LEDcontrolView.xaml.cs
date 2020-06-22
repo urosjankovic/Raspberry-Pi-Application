@@ -35,9 +35,8 @@ namespace RpiApp.Views
         
         public void changeColor(Button button)
         {
-            (DataContext as LEDViewModel).colorChanges(SeekR, SeekG, SeekB, button);
-        }
-    
+            (DataContext as LEDViewModel).colorChangesNEW(LEDchange, button);
+        }  
         private void changeLedIndicatiorColor(object sender, RoutedEventArgs e)
         {
             changeColor(sender as Button);

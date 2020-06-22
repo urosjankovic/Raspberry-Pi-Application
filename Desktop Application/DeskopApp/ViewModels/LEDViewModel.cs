@@ -21,6 +21,7 @@ using Newtonsoft.Json.Linq;
 using RpiApp.Model;
 using System.Windows.Controls;
 using System.Web;
+using System.Drawing;
 
 
 
@@ -34,6 +35,7 @@ namespace RpiApp.ViewModels
     using RpiApp.Views;
     using RpiApp.ViewModel;
     using System.Security.Cryptography.X509Certificates;
+    using Xceed.Wpf.Toolkit;
 
     public class LEDViewModel : INotifyPropertyChanged
     {
@@ -88,38 +90,40 @@ namespace RpiApp.ViewModels
 
         }
 
-        
-        Dictionary<String, List<int>> paramsss = new Dictionary<String, List<int>>();
-        byte rr, gg, bb;
-        Color cc;
+
         SolidColorBrush colorBrush;
 
+        byte R, G, B;
+        Color cc;
 
-        public void colorChanges(Slider seekR, Slider seekG, Slider seekB, Button button)
+        Dictionary<String, List<int>> paramsLED = new Dictionary<String, List<int>>();
+
+        public void colorChangesNEW(ColorPicker cLED, Button button)
         {
-            List<int> ledColors = new List<int>();
-            rr = (byte)seekR.Value;
-            gg = (byte)seekG.Value;
-            bb = (byte)seekB.Value;
 
-            cc = Color.FromRgb(rr, gg, bb); //Create object of Color class.
+            List<int> ledcolorled = new List<int>();
+
+            R = cLED.SelectedColor.Value.R;
+            G = cLED.SelectedColor.Value.G;
+            B = cLED.SelectedColor.Value.B;
+
+            cc = Color.FromRgb(R, G, B);
+            //Create object of Color class.
             colorBrush = new SolidColorBrush(cc); //Creating object of SolidColorBruch class.
             button.Background = colorBrush; //Setting background of a button.
 
-            ledColors.Add(rr);
-            ledColors.Add(gg);
-            ledColors.Add(bb);
+            ledcolorled.Add(R);
+            ledcolorled.Add(G);
+            ledcolorled.Add(B);            
 
-            paramsss.Add(button.Name, ledColors);
+            paramsLED.Add(button.Name, ledcolorled);    
 
-            
         }
-        
+
         public void offColor()
         {
-            paramsss.Clear();
+            paramsLED.Clear();
         }
-
 
         public void sendControlRequest()
         {
@@ -128,7 +132,7 @@ namespace RpiApp.ViewModels
             httpWebRequest.Method = "POST";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                string json = JsonConvert.SerializeObject(paramsss);
+                string json = JsonConvert.SerializeObject(paramsLED);
 
                 streamWriter.Write(json);
 

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:RpiApp.Views"
              xmlns:viewmodels="clr-namespace:RpiApp.ViewModels"
@@ -23,6 +24,7 @@
         </Grid.ColumnDefinitions>
         <!-- Configuration: IoT server ip address and request sample time -->
         <Grid Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4" HorizontalAlignment="Left" Height="790" Margin="0,10,0,0" Grid.Row="0" VerticalAlignment="Top" Width="800">
+            
             <Grid Margin="230,114,230,346" AutomationProperties.Name="ledMatrix" Tag="ledMatrix"  x:Name="ledMatrix">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -117,14 +119,8 @@
                 <Button Grid.Row="7" Grid.Column="7" Height="40" Width="40" Command="{Binding LEDBtn}" Background="#FFAAAAAA" Name="LED77" Click="changeLedIndicatiorColor"/>
             </Grid>
             <Grid Margin="230,480,230,170">
-                <Slider Name="SeekR" Margin="0,0,0,120" Tag="seekR" Maximum="255" Background="Red"  ></Slider>
-                <Slider x:Name="SeekG" Margin="0,50,0,70" Tag="seekG" Maximum="255" Background="Green"></Slider>
-                <Slider x:Name="SeekB" Margin="0,100,0,20" Tag="seekB" Maximum="255" Background="Blue"></Slider>
-            </Grid>
-            <Grid Margin="178,480,575,148">
-                <TextBlock FontSize="20" HorizontalAlignment="Right" Margin="0,0,0,115">R</TextBlock>
-                <TextBlock FontSize="20" HorizontalAlignment="Right" Margin="0,52,0,62">G</TextBlock>
-                <TextBlock FontSize="20" HorizontalAlignment="Right" Margin="0,101,0,17">B</TextBlock>
+                <TextBlock HorizontalAlignment="Center" FontSize="30">Pick the color</TextBlock>
+                <xctk:ColorPicker x:Name="LEDchange" Margin="0,0,0,0" Grid.Row="0" Grid.Column="0" Width="50" Height="50"></xctk:ColorPicker>
             </Grid>
             <Grid Margin="195,625,172,130">
                 <Grid.ColumnDefinitions>
