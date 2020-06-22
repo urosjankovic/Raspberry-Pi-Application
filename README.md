@@ -13,4 +13,4 @@ applications prepared during the course
 
 -Wojciech Szyszka (Web App)
 
--Krzysztof Wozniak & Wojciech Szyszka (Server App)
+-Wojciech Szyszka (Server App)
