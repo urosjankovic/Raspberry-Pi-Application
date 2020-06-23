@@ -26,8 +26,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Vector;
 
 import static java.lang.Double.isNaN;
 
@@ -35,14 +40,24 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
     private final double dataGraphMaxX = 10.0d;
     private final double dataGraphMinX =  0.0d;
-    private final double dataGraphMaxY =  190.0d;
-    private final double dataGraphMinY = -190.0d;
+    private final double dataGraphMaxY =  360.0d;
+    private final double dataGraphMinY = 0.0d;
+
+    private final double dataGraphMaxYM =  50.0d;
+    private final double dataGraphMinYM = -50.0d;
+
     private GraphView dataGraph;
     private GraphView dataGraph2;
     private GraphView dataGraph3;
-    private LineGraphSeries<DataPoint> dataSeriesA;
-    private LineGraphSeries<DataPoint> dataSeriesB;
-    private LineGraphSeries<DataPoint> dataSeriesC;
+    private LineGraphSeries<DataPoint> dataSeriesA_roll;
+    private LineGraphSeries<DataPoint> dataSeriesB_roll;
+    private LineGraphSeries<DataPoint> dataSeriesC_roll;
+    private LineGraphSeries<DataPoint> dataSeriesA_pitch;
+    private LineGraphSeries<DataPoint> dataSeriesB_pitch;
+    private LineGraphSeries<DataPoint> dataSeriesC_pitch;
+    private LineGraphSeries<DataPoint> dataSeriesA_yaw;
+    private LineGraphSeries<DataPoint> dataSeriesB_yaw;
+    private LineGraphSeries<DataPoint> dataSeriesC_yaw;
 
 
     private RequestQueue queue;
@@ -88,17 +103,35 @@ public class Orientation_D_Graph extends AppCompatActivity {
         dataGraph = (GraphView)findViewById(R.id.dataGraph);
         dataGraph2 = (GraphView)findViewById(R.id.dataGraph2);
         dataGraph3 = (GraphView)findViewById(R.id.dataGraph3);
-        dataSeriesA = new LineGraphSeries<>(new DataPoint[]{});
-        dataSeriesB = new LineGraphSeries<>(new DataPoint[]{});
-        dataSeriesC = new LineGraphSeries<>(new DataPoint[]{});
+        dataSeriesA_roll = new LineGraphSeries<>(new DataPoint[]{});
+        dataSeriesB_roll = new LineGraphSeries<>(new DataPoint[]{});
+        dataSeriesC_roll = new LineGraphSeries<>(new DataPoint[]{});
+        dataSeriesA_pitch = new LineGraphSeries<>(new DataPoint[]{});
+        dataSeriesB_pitch = new LineGraphSeries<>(new DataPoint[]{});
+        dataSeriesC_pitch = new LineGraphSeries<>(new DataPoint[]{});
+        dataSeriesA_yaw = new LineGraphSeries<>(new DataPoint[]{});
+        dataSeriesB_yaw = new LineGraphSeries<>(new DataPoint[]{});
+        dataSeriesC_yaw = new LineGraphSeries<>(new DataPoint[]{});
 
-        dataSeriesA.setTitle("Accelerometer");
-        dataSeriesB.setTitle("Gyroscope");
-        dataSeriesC.setTitle("Magnetometer");
+        dataSeriesA_roll.setTitle("x");
+        dataSeriesB_roll.setTitle("x");
+        dataSeriesC_roll.setTitle("x");
+        dataSeriesA_pitch.setTitle("y");
+        dataSeriesB_pitch.setTitle("y");
+        dataSeriesC_pitch.setTitle("y");
+        dataSeriesA_yaw.setTitle("z");
+        dataSeriesB_yaw.setTitle("z");
+        dataSeriesC_yaw.setTitle("z");
 
-        dataGraph2.addSeries(dataSeriesB);
-        dataGraph.addSeries(dataSeriesA);
-        dataGraph3.addSeries(dataSeriesC);
+        dataGraph2.addSeries(dataSeriesB_roll);
+        dataGraph2.addSeries(dataSeriesB_pitch);
+        dataGraph2.addSeries(dataSeriesB_yaw);
+        dataGraph.addSeries(dataSeriesA_roll);
+        dataGraph.addSeries(dataSeriesA_pitch);
+        dataGraph.addSeries(dataSeriesA_yaw);
+        dataGraph3.addSeries(dataSeriesC_roll);
+        dataGraph3.addSeries(dataSeriesC_pitch);
+        dataGraph3.addSeries(dataSeriesC_yaw);
 
         dataGraph.getViewport().setXAxisBoundsManual(true);
         dataGraph.getViewport().setMinX(dataGraphMinX);
@@ -108,7 +141,9 @@ public class Orientation_D_Graph extends AppCompatActivity {
         dataGraph.getViewport().setMaxY(dataGraphMaxY);
         dataGraph.getLegendRenderer().setVisible(true);
         dataGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        dataGraph.getLegendRenderer().setFixedPosition(650,-3);
+        dataGraph.getLegendRenderer().setFixedPosition(800,-3);
+        dataGraph.getGridLabelRenderer().setVerticalAxisTitle("Degrees");
+        dataGraph.setTitle("Accelerometer");
 
         dataGraph2.getViewport().setXAxisBoundsManual(true);
         dataGraph2.getViewport().setMinX(dataGraphMinX);
@@ -118,18 +153,22 @@ public class Orientation_D_Graph extends AppCompatActivity {
         dataGraph2.getViewport().setMaxY(dataGraphMaxY);
         dataGraph2.getLegendRenderer().setVisible(true);
         //dataGraph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        dataGraph2.getLegendRenderer().setFixedPosition(650,82);
+        dataGraph2.getLegendRenderer().setFixedPosition(800,-6);
+        dataGraph2.getGridLabelRenderer().setVerticalAxisTitle("Degrees");
+        dataGraph2.setTitle("Gyroscope");
 
 
         dataGraph3.getViewport().setXAxisBoundsManual(true);
         dataGraph3.getViewport().setMinX(dataGraphMinX);
         dataGraph3.getViewport().setMaxX(dataGraphMaxX);
         dataGraph3.getViewport().setYAxisBoundsManual(true);
-        dataGraph3.getViewport().setMinY(dataGraphMinY);
-        dataGraph3.getViewport().setMaxY(dataGraphMaxY);
+        dataGraph3.getViewport().setMinY(dataGraphMinYM);
+        dataGraph3.getViewport().setMaxY(dataGraphMaxYM);
         dataGraph3.getLegendRenderer().setVisible(true);
         dataGraph3.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        dataGraph3.getLegendRenderer().setFixedPosition(650,165);
+        dataGraph3.getLegendRenderer().setFixedPosition(800,0);
+        dataGraph3.getGridLabelRenderer().setVerticalAxisTitle("microTesla");
+        dataGraph3.setTitle("Magnetometer");
 
 
         /* END initialize GraphView */
@@ -348,9 +387,13 @@ public class Orientation_D_Graph extends AppCompatActivity {
     }*/
 
 
-    private double getRawDataFromResponseB(String response) {
+    private JSONArray getRawDataFromResponseB(String response) {
         JSONArray jarray;
+        JSONObject jObject=new JSONObject();
         double x = Double.NaN;
+        double y = Double.NaN;
+        double z = Double.NaN;
+        JSONArray values =new JSONArray();
 
         // Create generic JSON object form string
         try {
@@ -358,23 +401,34 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
         } catch (JSONException e) {
             e.printStackTrace();
-            return x;
+            return values;
         }
 
         // Read chart data form JSON object
         try {
-            x = (double)jarray.getJSONObject(1).get("gyroscope");
+            jObject = (JSONObject) jarray.getJSONObject(2).get("data");
+            x=(Double) jObject.get("roll");
+            y=(Double) jObject.get("pitch");
+            z=(Double) jObject.get("yaw");
+            values.put(x);
+            values.put(y);
+            values.put(z);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return x;
+        return values;
 
     }
 
 
-    private double getRawDataFromResponseA(JSONArray response) {
+    private JSONArray getRawDataFromResponseA(String response) {
+
         JSONArray jarray;
+        JSONObject jObject=new JSONObject();
         double x = Double.NaN;
+        double y = Double.NaN;
+        double z = Double.NaN;
+        JSONArray values =new JSONArray();
 
         // Create generic JSON object form string
         try {
@@ -382,21 +436,31 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
         } catch (JSONException e) {
             e.printStackTrace();
-            return x;
+            return values;
         }
 
         // Read chart data form JSON object
         try {
-            x = (double)jarray.getJSONObject(0).get("acceleration");
+            jObject = (JSONObject) jarray.getJSONObject(0).get("data");
+            x=(Double) jObject.get("roll");
+            y=(Double) jObject.get("pitch");
+            z=(Double) jObject.get("yaw");
+            values.put(x);
+            values.put(y);
+            values.put(z);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return x;
+        return values;
     }
 
-    private double getRawDataFromResponseC(String response) {
+    private JSONArray getRawDataFromResponseC(String response) {
         JSONArray jarray;
+        JSONObject jObject=new JSONObject();
         double x = Double.NaN;
+        double y = Double.NaN;
+        double z = Double.NaN;
+        JSONArray values =new JSONArray();
 
         // Create generic JSON object form string
         try {
@@ -404,16 +468,23 @@ public class Orientation_D_Graph extends AppCompatActivity {
 
         } catch (JSONException e) {
             e.printStackTrace();
-            return x;
+            return values;
         }
 
         // Read chart data form JSON object
         try {
-            x = (double)jarray.getJSONObject(2).get("magnetic");
+            jObject = (JSONObject) jarray.getJSONObject(1).get("data");
+            x=(Double) jObject.get("x");
+            y=(Double) jObject.get("y");
+            z=(Double) jObject.get("z");
+            values.put(x);
+            values.put(y);
+            values.put(z);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return x;
+        return values;
     }
 
     public void sendGetRequestA(){
@@ -427,7 +498,11 @@ public class Orientation_D_Graph extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         //ERROR HERE
-                        showGraphA(JSONArray(response));
+                        try {
+                            showGraphA(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, null);
                /* new Response.ErrorListener() {
@@ -447,7 +522,11 @@ public class Orientation_D_Graph extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        showGraphB(response);
+                        try {
+                            showGraphB(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, null);
                /* new Response.ErrorListener() {
@@ -467,7 +546,11 @@ public class Orientation_D_Graph extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        showGraphC(response);
+                        try {
+                            showGraphC(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, null);
                /* new Response.ErrorListener() {
@@ -509,7 +592,7 @@ public class Orientation_D_Graph extends AppCompatActivity {
     }
 
 
-    public void showGraphA(JSONArray response){
+    public void showGraphA(String response) throws JSONException {
 
         if(rqTimerA != null) {
             // get time stamp with SystemClock
@@ -517,10 +600,10 @@ public class Orientation_D_Graph extends AppCompatActivity {
             rqTimerTimeStamp += timingIncrease(requestTimerCurrentTime);
 
             // get raw data from JSON response
-            double rawData = getRawDataFromResponseA(response);
+            double rawDataA = getRawDataFromResponseA(response).getDouble(0);
 
             // update chart
-            if (isNaN(rawData)) {
+            if (isNaN(rawDataA)) {
                 // errorHandling(COMMON.ERROR_NAN_DATA);
 
             } else {
@@ -529,10 +612,14 @@ public class Orientation_D_Graph extends AppCompatActivity {
                 double timeStamp = rqTimerTimeStamp / 1000.0; // [sec]
                 boolean scrollGraph = (timeStamp > dataGraphMaxX);
 
-                dataSeriesA.setColor(Color.GREEN);
+                dataSeriesA_yaw.setColor(Color.BLUE);
+                dataSeriesA_roll.setColor(Color.RED);
+                dataSeriesA_pitch.setColor(Color.GREEN);
 
 
-                dataSeriesA.appendData(new DataPoint(timeStamp, rawData), scrollGraph, dataGraphMaxDataPointsNumber);
+                dataSeriesA_roll.appendData(new DataPoint(timeStamp, rawDataA), scrollGraph, dataGraphMaxDataPointsNumber);
+                dataSeriesA_pitch.appendData(new DataPoint(timeStamp, getRawDataFromResponseB(response).getDouble(1)), scrollGraph, dataGraphMaxDataPointsNumber);
+                dataSeriesA_yaw.appendData(new DataPoint(timeStamp, getRawDataFromResponseB(response).getDouble(2)), scrollGraph, dataGraphMaxDataPointsNumber);
 
 
                 // refresh chart
@@ -544,7 +631,7 @@ public class Orientation_D_Graph extends AppCompatActivity {
         }
     }
 
-    public void showGraphB(String response){
+    public void showGraphB(String response) throws JSONException {
 
         if(rqTimerB != null) {
             // get time stamp with SystemClock
@@ -552,10 +639,10 @@ public class Orientation_D_Graph extends AppCompatActivity {
             rqTimerTimeStamp += timingIncrease(requestTimerCurrentTime);
 
             // get raw data from JSON response
-            double rawData = getRawDataFromResponseB(response);
+            double rawDataA = getRawDataFromResponseB(response).getDouble(0);
 
             // update chart
-            if (isNaN(rawData)) {
+            if (isNaN(rawDataA)) {
                 // errorHandling(COMMON.ERROR_NAN_DATA);
 
             } else {
@@ -565,12 +652,16 @@ public class Orientation_D_Graph extends AppCompatActivity {
                 boolean scrollGraph = (timeStamp > dataGraphMaxX);
 
 
-                dataSeriesB.setColor(Color.RED);
+                dataSeriesB_yaw.setColor(Color.BLUE);
+                dataSeriesB_roll.setColor(Color.RED);
+                dataSeriesB_pitch.setColor(Color.GREEN);
 
 
 
 
-                dataSeriesB.appendData(new DataPoint(timeStamp, rawData), scrollGraph, dataGraphMaxDataPointsNumber);
+                dataSeriesB_roll.appendData(new DataPoint(timeStamp, rawDataA), scrollGraph, dataGraphMaxDataPointsNumber);
+                dataSeriesB_pitch.appendData(new DataPoint(timeStamp, getRawDataFromResponseB(response).getDouble(1)), scrollGraph, dataGraphMaxDataPointsNumber);
+                dataSeriesB_yaw.appendData(new DataPoint(timeStamp, getRawDataFromResponseB(response).getDouble(2)), scrollGraph, dataGraphMaxDataPointsNumber);
 
 
 
@@ -583,7 +674,7 @@ public class Orientation_D_Graph extends AppCompatActivity {
         }
     }
 
-    public void showGraphC(String response){
+    public void showGraphC(String response) throws JSONException {
 
         if(rqTimerC != null) {
             // get time stamp with SystemClock
@@ -591,10 +682,10 @@ public class Orientation_D_Graph extends AppCompatActivity {
             rqTimerTimeStamp += timingIncrease(requestTimerCurrentTime);
 
             // get raw data from JSON response
-            double rawData = getRawDataFromResponseC(response);
+            double rawDataA = getRawDataFromResponseC(response).getDouble(0);
 
             // update chart
-            if (isNaN(rawData)) {
+            if (isNaN(rawDataA)) {
                 // errorHandling(COMMON.ERROR_NAN_DATA);
 
             } else {
@@ -604,10 +695,14 @@ public class Orientation_D_Graph extends AppCompatActivity {
                 boolean scrollGraph = (timeStamp > dataGraphMaxX);
 
 
-                dataSeriesC.setColor(Color.BLUE);
+                dataSeriesC_yaw.setColor(Color.BLUE);
+                dataSeriesC_roll.setColor(Color.RED);
+                dataSeriesC_pitch.setColor(Color.GREEN);
 
 
-                dataSeriesC.appendData(new DataPoint(timeStamp, rawData), scrollGraph, dataGraphMaxDataPointsNumber);
+                dataSeriesC_roll.appendData(new DataPoint(timeStamp, rawDataA), scrollGraph, dataGraphMaxDataPointsNumber);
+                dataSeriesC_pitch.appendData(new DataPoint(timeStamp, getRawDataFromResponseC(response).getDouble(1)), scrollGraph, dataGraphMaxDataPointsNumber);
+                dataSeriesC_yaw.appendData(new DataPoint(timeStamp, getRawDataFromResponseC(response).getDouble(2)), scrollGraph, dataGraphMaxDataPointsNumber);
 
 
                 // refresh chart

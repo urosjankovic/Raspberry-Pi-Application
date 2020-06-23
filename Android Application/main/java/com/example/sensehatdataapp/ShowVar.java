@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,17 +38,28 @@ import androidx.core.content.ContextCompat;
 
 public class ShowVar extends AppCompatActivity {
 
+
+
     private final double dataGraphMaxX = 10.0d;
     private final double dataGraphMinX =  0.0d;
-    private final double dataGraphMaxY =  1500.0d;
-    private final double dataGraphMinY = -1.0d;
+
+    private final double dataGraphMaxYP =  1300.0d;
+    private final double dataGraphMinYP = 0.0d;
+
+
+    private final double dataGraphMaxYT =  120.0d;
+    private final double dataGraphMinYT = -40.0d;
+
+
+    private final double dataGraphMaxYH =  100.0d;
+    private final double dataGraphMinYH = 0.0d;
+
     private GraphView dataGraph;
     private GraphView dataGraph2;
     private GraphView dataGraph3;
     private LineGraphSeries<DataPoint> dataSeriesA;
     private LineGraphSeries<DataPoint> dataSeriesB;
     private LineGraphSeries<DataPoint> dataSeriesC;
-    private final int dataGraphMaxDataPointsNumber = 1000;
 
     private RequestQueue queue;
     private Timer rqTimerA;
@@ -62,16 +74,15 @@ public class ShowVar extends AppCompatActivity {
     private boolean rqTimerFirstRequest = true;
     private boolean rqTimerFirstRequestAfterStop;
 
-    public static String ipAddress ="192.168.0.23";
-    public static int sampleTime = 500;
-    public static int serverPort = 22;
-    public static String PRESS_FILE="pressValues.json";
-    public static String TEMP_FILE="tempValues.json";
-    public static String HUMID_FILE="humidValues.json";
+
+    public static String JSON_DATA="sensors_via_deamon.php?id=env";
 
 
 
     TextView tv1, tv2, tv3;
+
+    String ipAddress,url;
+    int sampleTime, samplesvalue, dataGraphMaxDataPointsNumber;
 
 
 
@@ -81,15 +92,13 @@ public class ShowVar extends AppCompatActivity {
         setContentView(R.layout.activity_showvar);
 
 
+        ipAddress =Server_param.globalip;
+        sampleTime = Server_param.globalsampletime;
+        samplesvalue = Server_param.globalsamples;
 
-        Button SettingsBtn2= (Button) findViewById(R.id.SettingsBtn2);
-        SettingsBtn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent firstIntent= new Intent(getApplicationContext(),Config.class);
-                startActivity(firstIntent);
-            }
-        });
+        url = getURL(ipAddress);
+
+        dataGraphMaxDataPointsNumber = samplesvalue;
 
         /* BEGIN initialize GraphView */
         // https://github.com/jjoe64/GraphView/wiki
@@ -112,32 +121,37 @@ public class ShowVar extends AppCompatActivity {
         dataGraph.getViewport().setMinX(dataGraphMinX);
         dataGraph.getViewport().setMaxX(dataGraphMaxX);
         dataGraph.getViewport().setYAxisBoundsManual(true);
-        dataGraph.getViewport().setMinY(dataGraphMinY);
-        dataGraph.getViewport().setMaxY(dataGraphMaxY);
+        dataGraph.getViewport().setMinY(dataGraphMinYH);
+        dataGraph.getViewport().setMaxY(dataGraphMaxYH);
         dataGraph.getLegendRenderer().setVisible(true);
         dataGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
         dataGraph.getLegendRenderer().setFixedPosition(650,-3);
+        dataGraph.getGridLabelRenderer().setVerticalAxisTitle("[%]");
 
         dataGraph2.getViewport().setXAxisBoundsManual(true);
         dataGraph2.getViewport().setMinX(dataGraphMinX);
         dataGraph2.getViewport().setMaxX(dataGraphMaxX);
         dataGraph2.getViewport().setYAxisBoundsManual(true);
-        dataGraph2.getViewport().setMinY(dataGraphMinY);
-        dataGraph2.getViewport().setMaxY(dataGraphMaxY);
+        dataGraph2.getViewport().setMinY(dataGraphMinYT);
+        dataGraph2.getViewport().setMaxY(dataGraphMaxYT);
         dataGraph2.getLegendRenderer().setVisible(true);
         //dataGraph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
         dataGraph2.getLegendRenderer().setFixedPosition(650,82);
+        dataGraph2.getGridLabelRenderer().setVerticalAxisTitle("Celcius");
 
 
         dataGraph3.getViewport().setXAxisBoundsManual(true);
         dataGraph3.getViewport().setMinX(dataGraphMinX);
         dataGraph3.getViewport().setMaxX(dataGraphMaxX);
         dataGraph3.getViewport().setYAxisBoundsManual(true);
-        dataGraph3.getViewport().setMinY(dataGraphMinY);
-        dataGraph3.getViewport().setMaxY(dataGraphMaxY);
+        dataGraph3.getViewport().setMinY(dataGraphMinYP);
+        dataGraph3.getViewport().setMaxY(dataGraphMaxYP);
         dataGraph3.getLegendRenderer().setVisible(true);
         dataGraph3.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
         dataGraph3.getLegendRenderer().setFixedPosition(650,165);
+        dataGraph3.getGridLabelRenderer().setHorizontalAxisTitle("Time (ms)");
+        dataGraph3.getGridLabelRenderer().setVerticalAxisTitle("Milibars");
+
 
 
         /* END initialize GraphView */
@@ -156,7 +170,7 @@ public class ShowVar extends AppCompatActivity {
 
         tv1.setText("IP address: "+ipAddress);
         tv2.setText("Sample time: "+Integer.toString(sampleTime)+"ms");
-        tv3.setText("Server Port: "+Integer.toString(serverPort));
+        tv3.setText("No. of Samples: "+Integer.toString(samplesvalue));
 
 
 
@@ -304,31 +318,24 @@ public class ShowVar extends AppCompatActivity {
 
 
 
-    private String getURLA(String ip) {
-        return ("http://" + ip + "/" + HUMID_FILE);
+    private String getURL(String ip) {
+        return ("http://" + ip + "/" + JSON_DATA);
     }
 
-    private String getURLB(String ip) {
-        return ("http://" + ip + "/" + TEMP_FILE);
-    }
-
-    private String getURLC(String ip) {
-        return ("http://" + ip + "/" + PRESS_FILE);
-    }
 
     /**
      * @brief Initialize request timer period task with 'Handler' post method as 'sendGetRequest'.
      */
 
+    private double getRawDataFromResponseA(String response) {
+        JSONArray jarray;
 
-
-    private double getRawDataFromResponse(String response) {
-        JSONObject jObject;
         double x = Double.NaN;
 
         // Create generic JSON object form string
         try {
-            jObject = new JSONObject(response);
+            jarray = new JSONArray(response);
+
         } catch (JSONException e) {
             e.printStackTrace();
             return x;
@@ -336,7 +343,57 @@ public class ShowVar extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            x = (double)jObject.get("data");
+            x = (Double) jarray.getJSONObject(3).get("data");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return x;
+    }
+
+
+    private double getRawDataFromResponseB(String response) {
+        JSONArray jarray;
+
+        double x = Double.NaN;
+
+        // Create generic JSON object form string
+        try {
+            jarray = new JSONArray(response);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return x;
+        }
+
+        // Read chart data form JSON object
+        try {
+            x = (Double) jarray.getJSONObject(0).get("data");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return x;
+    }
+
+    private double getRawDataFromResponseC(String response) {
+        JSONArray jarray;
+
+        double x = Double.NaN;
+
+        // Create generic JSON object form string
+        try {
+            jarray = new JSONArray(response);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return x;
+        }
+
+        // Read chart data form JSON object
+        try {
+            x = (Double) jarray.getJSONObject(2).get("data");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -345,7 +402,6 @@ public class ShowVar extends AppCompatActivity {
 
     public void sendGetRequestA(){
 
-            String url = getURLA(ipAddress);
 
             // Request a string response from the provided URL
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -365,7 +421,6 @@ public class ShowVar extends AppCompatActivity {
         }
 
     public void sendGetRequestB(){
-            String url = getURLB(ipAddress);
 
             // Request a string response from the provided URL
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -385,7 +440,6 @@ public class ShowVar extends AppCompatActivity {
         }
 
     public void sendGetRequestC(){
-            String url = getURLC(ipAddress);
 
             // Request a string response from the provided URL
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -442,7 +496,7 @@ public class ShowVar extends AppCompatActivity {
             rqTimerTimeStamp += timingIncrease(requestTimerCurrentTime);
 
             // get raw data from JSON response
-            double rawData = getRawDataFromResponse(response);
+            double rawData = getRawDataFromResponseA(response);
 
             // update chart
             if (isNaN(rawData)) {
@@ -477,7 +531,7 @@ public class ShowVar extends AppCompatActivity {
             rqTimerTimeStamp += timingIncrease(requestTimerCurrentTime);
 
             // get raw data from JSON response
-            double rawData = getRawDataFromResponse(response);
+            double rawData = getRawDataFromResponseB(response);
 
             // update chart
             if (isNaN(rawData)) {
@@ -518,7 +572,7 @@ public class ShowVar extends AppCompatActivity {
             rqTimerTimeStamp += timingIncrease(requestTimerCurrentTime);
 
             // get raw data from JSON response
-            double rawData = getRawDataFromResponse(response);
+            double rawData = getRawDataFromResponseC(response);
 
             // update chart
             if (isNaN(rawData)) {
@@ -534,11 +588,14 @@ public class ShowVar extends AppCompatActivity {
                 dataSeriesC.setColor(Color.BLUE);
 
 
-                dataSeriesC.appendData(new DataPoint(timeStamp, rawData), scrollGraph, dataGraphMaxDataPointsNumber);
+
+                    dataSeriesC.appendData(new DataPoint(timeStamp, rawData), scrollGraph, dataGraphMaxDataPointsNumber);
+
 
 
                 // refresh chart
                 dataGraph3.onDataChanged(true, true);
+
             }
 
             // remember previous time stamp

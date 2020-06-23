@@ -4,21 +4,32 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.ArraySet;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -27,14 +38,14 @@ import javax.xml.transform.ErrorListener;
 public class LEDActivity extends AppCompatActivity {
 
     int redActiveColor=0x00, greenActiveColor=0x00, blueActiveColor=0x00, ledActivecolor, alphaval, ledOffClr=0xFFB1ABAB;
-    String ip="192.168.0.2";
+    String ip, url;
     Integer[][][] ledModel=new Integer[8][8][3];
 
     private RequestQueue queue;
 
-    String url= getURL(ip);
+
     String FILE_NAME="ledmatrix.php";
-    Map<String, String> LedsClear= new HashMap<String, String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +53,8 @@ public class LEDActivity extends AppCompatActivity {
 
         final Button ClrShadeBtn= (Button) findViewById(R.id.ClrShadeBtn);
 
+        ip=Server_param.globalip;
+        url= getURL(ip);
 
         SeekBar seekBarR= (SeekBar) findViewById(R.id.seekBarR);
         SeekBar seekBarG= (SeekBar) findViewById(R.id.seekBarG);
@@ -114,6 +127,12 @@ public class LEDActivity extends AppCompatActivity {
             }
         });
 
+        queue=Volley.newRequestQueue(this);
+
+
+
+
+
 
     }
 
@@ -130,7 +149,7 @@ public class LEDActivity extends AppCompatActivity {
 
     }
 
-    public void ClearUIandModel(View v){
+    public void ClearLeds(View v){
 
         TableLayout Table= (TableLayout) findViewById(R.id.Table);
         View L;
@@ -182,68 +201,113 @@ public class LEDActivity extends AppCompatActivity {
         return "LED"+Integer.toString(x)+Integer.toString(y);
     }
 
-    String indexToJson(int x, int y){
+
+
+    JSONArray indexToJson(int x, int y){
+
+        JSONArray J=new JSONArray();
         String xJ=Integer.toString(x);
         String yJ=Integer.toString(y);
         String rJ=Integer.toString(ledModel[x][y][0]);
         String gJ=Integer.toString(ledModel[x][y][1]);
         String bJ=Integer.toString(ledModel[x][y][2]);
 
-        return "["+xJ+","+yJ+","+rJ+","+gJ+","+bJ+"]";
+        //"["+rJ+","+gJ+","+bJ+"]";
+        J.put(rJ);
+        J.put(gJ);
+        J.put(bJ);
+        return  J;
     }
 
     Boolean LedNotNull(int x, int y){
         return !((ledModel[x][y][0]==null)||(ledModel[x][y][1])==null||(ledModel[x][y][2]==null));
     }
 
-    public Map<String, String> getChangedLeds(){
 
-        String ledIndex, ledJson;
-        Map <String, String> Values =new HashMap<>();
+
+    public JSONObject getChangedLeds(){
+
+        String ledIndex;
+        JSONArray ledJsonarray= new JSONArray();
+        //Map <String, String> Values =new HashMap<>();
+        JSONObject Values= new JSONObject();
 
         for (int i=0; i<8; i++){
             for (int j=0; j<8; j++){
                 if(LedNotNull(i,j)) {
                     ledIndex = indexTotag(i, j);
-                    ledJson = indexToJson(i, j);
-                    Values.put(ledIndex, ledJson);
+                    ledJsonarray = indexToJson(i, j);
+
+
+
+                    try {
+                        Values.put(ledIndex,ledJsonarray);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
         return Values;
     }
 
-    public void SendColor(View v){
-        url="";
-        StringRequest requestv= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("response",response);
+    public JSONObject ClearPhyLED(){
+        JSONArray jarray=new JSONArray();
+        JSONObject LedsClear= new JSONObject();
+        String ledIndex;
+
+        for (int i=0; i<8; i++){
+            for (int j=0; j<8; j++) {
+                if (LedNotNull(i, j)) {
+                    jarray = indexToJson(i, j);
+                    ledIndex = indexTotag(i, j);
+                    try {
+                        LedsClear.put(ledIndex, jarray);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        }, null){
+        }
+        return LedsClear;
+    }
+
+    public void SendColor(View v){
+
+        JsonObjectRequest requestv= new JsonObjectRequest(Request.Method.POST, url, getChangedLeds(), new Response.Listener<JSONObject>() {
             @Override
-        protected Map<String, String> getParams(){
-        return getChangedLeds();
-        }};
+            public void onResponse(JSONObject response) {
+
+                    Toast.makeText(LEDActivity.this, "Sent.", Toast.LENGTH_SHORT).show();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(LEDActivity.this, "Not Sent. Verify IP Address.", Toast.LENGTH_LONG).show();
+            }
+        }
+        );
 
         queue.add(requestv);
+
 
     }
 
-    public void SendClearRequest(){
-        url="";
-        StringRequest requestv= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+    public void SendClearRequest() {
+
+
+        JsonObjectRequest requestv = new JsonObjectRequest(Request.Method.POST, url, ClearPhyLED(), new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(String response) {
-                Log.d("response",response);
+            public void onResponse(JSONObject response) {
+
             }
-        }, null){
-            @Override
-            protected Map<String, String> getParams(){
-                return LedsClear;
-            }};
+        }, null
+        );
 
         queue.add(requestv);
+
+
     }
 
 }
