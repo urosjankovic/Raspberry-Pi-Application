@@ -50,7 +50,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED01"
+                    android:tag="LED10"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -61,7 +61,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED02"
+                    android:tag="LED20"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -72,7 +72,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED03"
+                    android:tag="LED30"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -83,7 +83,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED04"
+                    android:tag="LED40"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -94,7 +94,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED05"
+                    android:tag="LED50"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -105,7 +105,7 @@
                     android:layout_marginRight="3dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED06"
+                    android:tag="LED60"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -115,7 +115,7 @@
                     android:layout_height="match_parent"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED07"
+                    android:tag="LED70"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
             </TableRow>
@@ -132,7 +132,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED10"
+                    android:tag="LED01"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -154,7 +154,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED12"
+                    android:tag="LED21"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -165,7 +165,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED13"
+                    android:tag="LED31"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -176,7 +176,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED14"
+                    android:tag="LED41"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -187,7 +187,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED15"
+                    android:tag="LED51"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -198,7 +198,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED16"
+                    android:tag="LED61"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -208,7 +208,7 @@
                     android:layout_height="37dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED17"
+                    android:tag="LED71"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
             </TableRow>
@@ -225,7 +225,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED20"
+                    android:tag="LED02"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -236,7 +236,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED21"
+                    android:tag="LED12"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -258,7 +258,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED23"
+                    android:tag="LED32"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -269,7 +269,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED24"
+                    android:tag="LED42"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -280,7 +280,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED25"
+                    android:tag="LED52"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -291,7 +291,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED26"
+                    android:tag="LED62"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -301,7 +301,7 @@
                     android:layout_height="37dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED27"
+                    android:tag="LED72"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
             </TableRow>
@@ -318,7 +318,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED30"
+                    android:tag="LED03"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -329,7 +329,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED31"
+                    android:tag="LED13"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -340,7 +340,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED32"
+                    android:tag="LED23"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -362,7 +362,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED34"
+                    android:tag="LED43"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -373,7 +373,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED35"
+                    android:tag="LED53"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -384,7 +384,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED36"
+                    android:tag="LED63"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -394,7 +394,7 @@
                     android:layout_height="37dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED37"
+                    android:tag="LED73"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
             </TableRow>
@@ -411,7 +411,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED40"
+                    android:tag="LED04"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -422,7 +422,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED41"
+                    android:tag="LED14"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -433,7 +433,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED42"
+                    android:tag="LED24"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -444,7 +444,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED43"
+                    android:tag="LED34"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -466,7 +466,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED45"
+                    android:tag="LED54"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -477,7 +477,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED46"
+                    android:tag="LED64"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -487,7 +487,7 @@
                     android:layout_height="37dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED47"
+                    android:tag="LED74"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
             </TableRow>
@@ -504,7 +504,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED50"
+                    android:tag="LED05"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -515,7 +515,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED51"
+                    android:tag="LED15"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -526,7 +526,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED52"
+                    android:tag="LED25"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -537,7 +537,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED53"
+                    android:tag="LED35"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -548,7 +548,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED54"
+                    android:tag="LED45"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -570,7 +570,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED56"
+                    android:tag="LED65"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -580,7 +580,7 @@
                     android:layout_height="37dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED57"
+                    android:tag="LED75"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
             </TableRow>
@@ -597,7 +597,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED60"
+                    android:tag="LED06"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -608,7 +608,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED61"
+                    android:tag="LED16"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -619,7 +619,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED62"
+                    android:tag="LED26"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -630,7 +630,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED63"
+                    android:tag="LED36"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -641,7 +641,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED64"
+                    android:tag="LED46"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -652,7 +652,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED65"
+                    android:tag="LED56"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -673,7 +673,7 @@
                     android:layout_height="37dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED67"
+                    android:tag="LED76"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
             </TableRow>
@@ -690,7 +690,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED70"
+                    android:tag="LED07"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -701,7 +701,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED71"
+                    android:tag="LED17"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -712,7 +712,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED72"
+                    android:tag="LED27"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -723,7 +723,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED73"
+                    android:tag="LED37"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -734,7 +734,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED74"
+                    android:tag="LED47"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -745,7 +745,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED75"
+                    android:tag="LED57"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -756,7 +756,7 @@
                     android:layout_marginRight="2dp"
                     android:background="#B1ABAB"
                     android:onClick="LEDOnClick"
-                    android:tag="LED76"
+                    android:tag="LED67"
                     tools:layout_editor_absoluteX="21dp"
                     tools:layout_editor_absoluteY="394dp" />
 
@@ -834,7 +834,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:onClick="ClearUIandModel"
+        android:onClick="ClearLeds"
         android:text="clear all colors"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button5"
