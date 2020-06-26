@@ -56,7 +56,7 @@ public class Environ_D_Table extends AppCompatActivity {
         int val3=extras.getInt("val3");
 
         if(val1==1){
-            //display data -read the data from json array? with units and variable name
+            //display data 
 
         }
 
