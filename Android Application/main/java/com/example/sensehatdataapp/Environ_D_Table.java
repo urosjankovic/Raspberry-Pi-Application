@@ -19,8 +19,7 @@ public class Environ_D_Table extends AppCompatActivity {
 
     private ActivityEnvirondTableBinding binding;
 
-    // Main view model (can be bind with other activities)
-    //private MainViewModelMock viewModel;
+   
     private MainViewModel viewModel;
 
     @Override
