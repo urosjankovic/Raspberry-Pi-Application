@@ -25,17 +25,22 @@ namespace RpiApp.Model
          */
         private string GetFileUrl()
         {
-            return "http://" + ip + "/web_app/server/sensors_via_deamon.php?id=env";
+            return "http://" + ip + "/server/sensors_via_deamon.php?id=env";
         }
 
         private string GetFileUrlAngles()
         {
-            return "http://" + ip + "/web_app/server/sensors_via_deamon.php?id=ori";
+            return "http://" + ip + "/server/sensors_via_deamon.php?id=ori";
         }
 
         private string GetFileUrlJoy()
         {
-            return "http://" + ip + "/web_app/server/joystick_via_deamon.php?id=get";
+            return "http://" + ip + "/server/joystick_via_deamon.php?id=get";
+        }
+        
+        private string GetFileUrlJoyClear()
+        {
+            return "http://" + ip + "/server/joystick_via_deamon.php?id=rst";
         }
 
 
@@ -106,7 +111,7 @@ namespace RpiApp.Model
         {
             HttpClient httpClient = new HttpClient();
 
-            string responseText = await httpClient.GetStringAsync("http://192.168.1.26/web_app/server/joystick_via_deamon.php?id=get");
+            string responseText = await httpClient.GetStringAsync(GetFileUrlJoy());
 
             httpClient.Dispose();
             return responseText;
@@ -116,7 +121,7 @@ namespace RpiApp.Model
         {
             HttpClient httpClient = new HttpClient();
 
-            string responseText = await httpClient.GetStringAsync("http://192.168.1.26/web_app/server/joystick_via_deamon.php?id=rst");
+            string responseText = await httpClient.GetStringAsync(GetFileUrlJoyClear());
 
             httpClient.Dispose();
             return responseText;
@@ -194,7 +199,7 @@ namespace RpiApp.Model
                     requestDataCollection.Add(new KeyValuePair<string, string>("filename", "joystick_via_deamon.php"));
                     var requestData = new FormUrlEncodedContent(requestDataCollection);
                     // Sent POST request
-                    var result = await client.PostAsync("http://192.168.1.26/web_app/server/joystick_via_deamon.php?id=get", requestData);
+                    var result = await client.PostAsync(GetFileUrlJoy(), requestData);
                     // Read response content
                     responseText = await result.Content.ReadAsStringAsync();
 
@@ -274,7 +279,7 @@ namespace RpiApp.Model
             try
             {
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://192.168.1.26/web_app/server/joystick_via_deamon.php?id=get");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlJoy());
 
                 request.Method = "GET";
 
@@ -379,7 +384,7 @@ namespace RpiApp.Model
 
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://192.168.1.26/web_app/server/joystick_via_deamon.php?id=get");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetFileUrlJoy());
 
                 // POST Request data 
 
