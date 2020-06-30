@@ -127,7 +127,7 @@ namespace RpiApp.ViewModels
 
         public void sendControlRequest()
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://192.168.1.26/web_app/ledControl/ledmatrix.php");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("../server/ledmatrix_via_deamon.php");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
