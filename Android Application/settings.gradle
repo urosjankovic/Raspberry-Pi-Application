@@ -1,0 +1,2 @@
+rootProject.name='SenseHat Data App'
+include ':app'
