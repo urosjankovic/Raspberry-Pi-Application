@@ -9,30 +9,26 @@
             type="com.example.sensehatdataapp.MainViewModel" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Environ_D_Table">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/RefreshBtn"
-        android:layout_width="143dp"
-        android:layout_height="49dp"
-        android:onClick="@{view_model::updateMeasurements}"
-        android:text="REFRESH"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvMeasurements"
-        app:layout_constraintVertical_bias="0.872" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_measurements"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_weight="1" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMeasurements"
-        android:layout_width="396dp"
-        android:layout_height="485dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{view_model::updateMeasurements}"
+            android:text="REFRESH" />
+
+    </LinearLayout>
 </layout>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <data>
+        <variable
+            name="measurement"
+            type="com.example.sensehatdataapp.MeasurementViewModel" />
+    </data>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/item_name"
+            android:text="@{measurement.name}"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:paddingRight="15dp"
+            android:layout_weight="1" />
+
+
+
+        <LinearLayout
+            android:layout_width="61dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_yaw"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="20dp"
+                android:text="@{measurement.yaw ?? measurement.x}" />
+
+            <TextView
+                android:id="@+id/item_roll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="10dp"
+                android:text="@{measurement.roll ?? measurement.y}" />
+
+            <TextView
+                android:id="@+id/item_pitch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="10dp"
+                android:text="@{measurement.pitch ?? measurement.z }" />
+
+            <TextView
+                android:id="@+id/item_x"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="20dp"
+                android:text="@{measurement.x }" />
+
+            <TextView
+                android:id="@+id/item_y"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="20dp"
+                android:text="@{measurement.y}" />
+
+            <TextView
+                android:id="@+id/item_z"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_weight="1"
+                android:paddingRight="20dp"
+                android:text="@{measurement.z}" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_unit"
+            android:text="@{measurement.unit}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="textStart" />
+
+    </LinearLayout>
+</layout>

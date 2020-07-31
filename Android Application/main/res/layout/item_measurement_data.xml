@@ -19,6 +19,7 @@
             android:text="@{measurement.name}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:paddingRight="20dp"
             android:layout_weight="1" />
 
         <TextView
@@ -26,6 +27,7 @@
             android:text="@{measurement.value}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:paddingRight="20dp"
             android:layout_weight="1" />
 
 
