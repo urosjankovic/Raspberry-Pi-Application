@@ -35,7 +35,9 @@ import static java.lang.Double.isNaN;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-
+/**
+ * @brief handles Environmental data graph view
+ */
 public class ShowVar extends AppCompatActivity {
 
 
@@ -177,6 +179,9 @@ public class ShowVar extends AppCompatActivity {
     }
 
 
+    /**
+     * @brief Starts request timer
+     */
     private void startRequestTimer() {
 
         Bundle extras=getIntent().getExtras();
@@ -240,6 +245,9 @@ public class ShowVar extends AppCompatActivity {
         }
     }
 
+    /**
+     * @brief Stops request timer
+     */
     private void stopRequestTimer() {
         // stop the timer, if it's not already null
         if (rqTimerA != null) {
@@ -259,6 +267,9 @@ public class ShowVar extends AppCompatActivity {
         }
     }
 
+    /**
+     * @brief Initializes request timer task for temperature data acquisition
+     */
     private void initializeRequestTimerTaskA() {
         rqTimertaskA = new TimerTask() {
             public void run() {
@@ -269,7 +280,9 @@ public class ShowVar extends AppCompatActivity {
         };
     }
 
-
+    /**
+     * @brief Initializes request timer task for pressure data acquisition
+     */
     private void initializeRequestTimerTaskB() {
         rqTimertaskB = new TimerTask() {
             public void run() {
@@ -279,7 +292,9 @@ public class ShowVar extends AppCompatActivity {
             }
         };
     }
-
+    /**
+     * @brief Initializes request timer task for humidity data acquisition
+     */
     private void initializeRequestTimerTaskC() {
         rqTimertaskC = new TimerTask() {
             public void run() {
@@ -290,7 +305,10 @@ public class ShowVar extends AppCompatActivity {
         };
     }
 
-
+    /**
+     * @brief 'Start' button onClick event handler for data acquisition.
+     * @param v 'Start' button view in graph window
+     */
     public void startclick(View v){
         //startRQTimer();
 
@@ -309,7 +327,10 @@ public class ShowVar extends AppCompatActivity {
             }
         }
 
-
+    /**
+     * @brief 'Stop' button onClick event handler for data acquisition stop.
+     * @param v 'Stop' button view in graph window
+     */
     public void stopclick(View v){
 
         //stopRQTimer();
@@ -317,14 +338,16 @@ public class ShowVar extends AppCompatActivity {
     }
 
 
-
+    /**
+     * @brief Returns url
+     */
     private String getURL(String ip) {
         return ("http://" + ip + "/" + JSON_DATA);
     }
 
 
     /**
-     * @brief Initialize request timer period task with 'Handler' post method as 'sendGetRequest'.
+     * @brief Initialize request timer period task with 'Handler' post method as 'sendGetRequestA' for temperature data.
      */
 
     private double getRawDataFromResponseA(String response) {
@@ -351,7 +374,9 @@ public class ShowVar extends AppCompatActivity {
         return x;
     }
 
-
+    /**
+     * @brief Initialize request timer period task with 'Handler' post method as 'sendGetRequestB' for pressure data.
+     */
     private double getRawDataFromResponseB(String response) {
         JSONArray jarray;
 
@@ -375,7 +400,9 @@ public class ShowVar extends AppCompatActivity {
         }
         return x;
     }
-
+    /**
+     * @brief Initialize request timer period task with 'Handler' post method as 'sendGetRequestC' for humidity data.
+     */
     private double getRawDataFromResponseC(String response) {
         JSONArray jarray;
 
@@ -400,6 +427,9 @@ public class ShowVar extends AppCompatActivity {
         return x;
     }
 
+    /**
+     * @brief Sends GET request for temperature data
+     */
     public void sendGetRequestA(){
 
 
@@ -419,7 +449,9 @@ public class ShowVar extends AppCompatActivity {
             // Add the request to the RequestQueue.
             queue.add(stringRequest);
         }
-
+    /**
+     * @brief Sends GET request for pressure data
+     */
     public void sendGetRequestB(){
 
             // Request a string response from the provided URL
@@ -438,7 +470,9 @@ public class ShowVar extends AppCompatActivity {
             // Add the request to the RequestQueue.
             queue.add(stringRequest);
         }
-
+    /**
+     * @brief Sends GET request for humidity data
+     */
     public void sendGetRequestC(){
 
             // Request a string response from the provided URL
@@ -487,7 +521,9 @@ public class ShowVar extends AppCompatActivity {
         return (currentTime - requestTimerPreviousTime);
     }
 
-
+    /**
+     * @brief Displays temperature line graph
+     */
     public void showGraphA(String response){
 
         if(rqTimerA != null) {
@@ -522,7 +558,9 @@ public class ShowVar extends AppCompatActivity {
             requestTimerPreviousTime = requestTimerCurrentTime;
         }
     }
-
+    /**
+     * @brief Displays pressure line graph
+     */
     public void showGraphB(String response){
 
         if(rqTimerB != null) {
@@ -563,7 +601,9 @@ public class ShowVar extends AppCompatActivity {
             dataGraph2.getGridLabelRenderer().setHorizontalLabelsVisible(false);
         }
     }
-
+    /**
+     * @brief Displays humidity line graph
+     */
     public void showGraphC(String response){
 
         if(rqTimerC != null) {

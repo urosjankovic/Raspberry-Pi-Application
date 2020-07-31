@@ -35,7 +35,9 @@ import java.util.TimerTask;
 import java.util.Vector;
 
 import static java.lang.Double.isNaN;
-
+/**
+ * @brief handles Orientation data graph view
+ */
 public class Orientation_D_Graph extends AppCompatActivity {
 
     private final double dataGraphMaxX = 10.0d;

@@ -34,7 +34,9 @@ import java.util.Map;
 import java.util.Vector;
 
 import javax.xml.transform.ErrorListener;
-
+/**
+ * @brief Class for LED activity view
+ */
 public class LEDActivity extends AppCompatActivity {
 
     int redActiveColor=0x00, greenActiveColor=0x00, blueActiveColor=0x00, ledActivecolor, alphaval, ledOffClr=0xFFB1ABAB;
@@ -136,7 +138,9 @@ public class LEDActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * @brief Clears colors of LED model
+     */
     public void ClearModel(){
     //send all colors to zero
         for (int i=0; i<8; i++){
@@ -148,7 +152,9 @@ public class LEDActivity extends AppCompatActivity {
         }
 
     }
-
+    /**
+     * @brief Clears all colors of physical LED
+     */
     public void ClearLeds(View v){
 
         TableLayout Table= (TableLayout) findViewById(R.id.Table);
@@ -166,15 +172,22 @@ public class LEDActivity extends AppCompatActivity {
         SendClearRequest();
 
     }
-
+    /**
+     * @brief Converts argb to Int
+     */
     public int argbtoInt(int r, int g, int b, int a){
         return (r&0xff)<<16 | (g&0xff)<<8 |(b&0xff) |(a&0xff)<<24;
     }
-
+    /**
+     * @brief Returns url
+     */
     private String getURL(String ip) {
         return ("http://" + ip + "/" + FILE_NAME);
     }
 
+    /**
+     * @brief sets color of selected LED
+     */
     public void LEDOnClick(View v){
         v.setBackgroundColor(ledActivecolor);
 
@@ -189,7 +202,9 @@ public class LEDActivity extends AppCompatActivity {
         ledModel[x][y][1]=greenActiveColor;
         ledModel[x][y][2]=blueActiveColor;
     }
-
+    /**
+     * @brief converts LED tag to vector
+     */
     Vector tagToindex(String tag){
         Vector v=new Vector(2);
         v.add(0,Character.getNumericValue(tag.charAt(3)));
@@ -202,7 +217,9 @@ public class LEDActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * @brief converts LED index to JSON format
+     */
     JSONArray indexToJson(int x, int y){
 
         JSONArray J=new JSONArray();
@@ -218,13 +235,17 @@ public class LEDActivity extends AppCompatActivity {
         J.put(bJ);
         return  J;
     }
-
+    /**
+     * @brief Checks if selected LED has no color
+     */
     Boolean LedNotNull(int x, int y){
         return !((ledModel[x][y][0]==null)||(ledModel[x][y][1])==null||(ledModel[x][y][2]==null));
     }
 
 
-
+    /**
+     * @brief Returns LEDs that have been changed
+     */
     public JSONObject getChangedLeds(){
 
         String ledIndex;
@@ -250,7 +271,9 @@ public class LEDActivity extends AppCompatActivity {
         }
         return Values;
     }
-
+    /**
+     * @brief Clears physical LED
+     */
     public JSONObject ClearPhyLED(){
         JSONArray jarray=new JSONArray();
         JSONObject LedsClear= new JSONObject();
@@ -271,7 +294,10 @@ public class LEDActivity extends AppCompatActivity {
         }
         return LedsClear;
     }
-
+    /**
+     * @brief 'Send Colors' button onClick event handler for sending colors to sensehat.
+     * @param v 'Send Colors' button view.
+     */
     public void SendColor(View v){
 
         JsonObjectRequest requestv= new JsonObjectRequest(Request.Method.POST, url, getChangedLeds(), new Response.Listener<JSONObject>() {
@@ -284,7 +310,7 @@ public class LEDActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LEDActivity.this, "Not Sent. Verify IP Address.", Toast.LENGTH_LONG).show();
+
             }
         }
         );

@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+/**
+ * @brief handles Configuration/settings view
+ */
 public class Config extends AppCompatActivity {
 
 

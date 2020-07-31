@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+/**
+ * @brief handles selection of radio buttons for environmental data
+ */
 public class ChooseVar1 extends AppCompatActivity {
 
     public CheckBox Humiditycb, tempcb, pressurecb;

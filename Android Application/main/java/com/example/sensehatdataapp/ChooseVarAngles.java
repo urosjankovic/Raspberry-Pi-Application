@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-
+/**
+ * @brief handles selection of radio buttons for orientation data
+ */
 public class ChooseVarAngles extends AppCompatActivity {
 
     public CheckBox Acccb, Mgcb, Gycb;
